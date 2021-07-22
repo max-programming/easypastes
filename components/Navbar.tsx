@@ -52,16 +52,19 @@ export default function WithSubnavigation() {
 					flex={{ base: 1 }}
 					justify={{ base: 'center', md: 'start' }}
 				>
-					<Text
-						textAlign={useBreakpointValue({
-							base: 'center',
-							md: 'left'
-						})}
-						fontFamily={'heading'}
-						color={useColorModeValue('gray.800', 'white')}
-					>
-						Logo
-					</Text>
+					<NextLink href="/" passHref>
+						<Text
+							as="a"
+							textAlign={useBreakpointValue({
+								base: 'center',
+								md: 'left'
+							})}
+							fontFamily={'heading'}
+							color={useColorModeValue('gray.800', 'white')}
+						>
+							Logo
+						</Text>
+					</NextLink>
 
 					<Flex display={{ base: 'none', md: 'flex' }} ml={10}>
 						<DesktopNav />
