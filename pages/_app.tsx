@@ -1,4 +1,4 @@
-import Prism from 'prismjs';
+import Prism from 'prism-react-renderer/prism';
 import nProgress from 'nprogress';
 import Router, { useRouter } from 'next/router';
 import { ChakraProvider, CSSReset } from '@chakra-ui/react';
