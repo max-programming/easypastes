@@ -14,6 +14,7 @@ import {
 	useBreakpointValue,
 	useDisclosure
 } from '@chakra-ui/react';
+import { SignedIn, SignedOut, UserButton, WithUser } from '@clerk/clerk-react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { HiMenu, HiX } from 'react-icons/hi';
@@ -73,31 +74,36 @@ export default function WithSubnavigation() {
 					direction={'row'}
 					spacing={6}
 				>
-					<NextLink href="/sign-in" passHref>
-						<Button
-							as={'a'}
-							fontSize={'sm'}
-							fontWeight={400}
-							variant={'link'}
-						>
-							Sign In
-						</Button>
-					</NextLink>
-					<NextLink href="sign-up" passHref>
-						<Button
-							as="a"
-							display={{ base: 'none', md: 'inline-flex' }}
-							fontSize={'sm'}
-							fontWeight={600}
-							color={'white'}
-							bg={'purple.400'}
-							_hover={{
-								bg: 'purple.300'
-							}}
-						>
-							Sign Up
-						</Button>
-					</NextLink>
+					<SignedIn>
+						<UserButton />
+					</SignedIn>
+					<SignedOut>
+						<NextLink href="/sign-in" passHref>
+							<Button
+								as={'a'}
+								fontSize={'sm'}
+								fontWeight={400}
+								variant={'link'}
+							>
+								Sign In
+							</Button>
+						</NextLink>
+						<NextLink href="sign-up" passHref>
+							<Button
+								as="a"
+								display={{ base: 'none', md: 'inline-flex' }}
+								fontSize={'sm'}
+								fontWeight={600}
+								color={'white'}
+								bg={'purple.400'}
+								_hover={{
+									bg: 'purple.300'
+								}}
+							>
+								Sign Up
+							</Button>
+						</NextLink>
+					</SignedOut>
 				</Stack>
 			</Flex>
 
@@ -115,27 +121,30 @@ const DesktopNav = () => {
 
 	return (
 		<Stack direction={'row'} spacing={4}>
-			{NAV_ITEMS.map(navItem => (
-				<Box key={navItem.label}>
-					<Popover trigger={'hover'} placement={'bottom-start'}>
-						<PopoverTrigger>
-							<Link
-								p={2}
-								href={navItem.href ?? '#'}
-								fontSize={'sm'}
-								fontWeight={500}
-								color={linkColor}
-								_hover={{
-									textDecoration: 'none',
-									color: linkHoverColor
-								}}
-							>
-								{navItem.label}
-							</Link>
-						</PopoverTrigger>
-					</Popover>
-				</Box>
-			))}
+			<WithUser>
+				{user => (
+					<Box>
+						<Popover trigger={'hover'} placement={'bottom-start'}>
+							<PopoverTrigger>
+								<Link
+									as={NextLink}
+									p={2}
+									href={`/user/pastes/${user.username}`}
+									fontSize={'sm'}
+									fontWeight={500}
+									color={linkColor}
+									_hover={{
+										textDecoration: 'none',
+										color: linkHoverColor
+									}}
+								>
+									My Pastes
+								</Link>
+							</PopoverTrigger>
+						</Popover>
+					</Box>
+				)}
+			</WithUser>
 		</Stack>
 	);
 };
@@ -147,9 +156,14 @@ const MobileNav = () => {
 			p={4}
 			display={{ md: 'none' }}
 		>
-			{NAV_ITEMS.map(navItem => (
-				<MobileNavItem key={navItem.label} {...navItem} />
-			))}
+			<WithUser>
+				{user => (
+					<MobileNavItem
+						label="My Pastes"
+						href={`/user/pastes/${user.username}`}
+					/>
+				)}
+			</WithUser>
 		</Stack>
 	);
 };
@@ -184,10 +198,3 @@ interface NavItem {
 	label: string;
 	href?: string;
 }
-
-const NAV_ITEMS: Array<NavItem> = [
-	{
-		label: 'My Pastes',
-		href: '/user/pastes'
-	}
-];

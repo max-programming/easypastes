@@ -4,12 +4,12 @@ import {
 	Input,
 	useColorModeValue,
 	theme,
-	Flex,
+	Flex
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { FiArrowRight } from 'react-icons/fi';
-import { ILanguage } from 'types';
+import { ILanguage, PasteType } from 'types';
 import axios from 'axios';
 
 // Components imports
@@ -19,12 +19,13 @@ import PublicPastes from 'components/CodePastes/PublicPastes';
 import Visibility from 'components/CodePastes/Visibility';
 import Layout from 'components/Layout';
 import useSWR from 'swr';
+import { v4 } from 'uuid';
 
 const links = [
 	{
 		url: '/',
-		text: 'Home',
-	},
+		text: 'Home'
+	}
 ];
 
 export default function Pastes() {
@@ -49,26 +50,31 @@ export default function Pastes() {
 			_public: visibility === 'public',
 			_private: visibility === 'private',
 			userId: window.Clerk?.user?.id,
+			pasteId: v4(),
+			hasVanity: false
 		});
 
 		const { data, error } = res.data;
 
 		if (data) {
-			await router.push(`/pastes/${data[0].id}`);
+			await router.push(`/pastes/${data[0].pasteId}`);
 			setLoading(false);
 		}
 	};
 
 	return (
 		<>
-			<Layout title='Code Pastes' links={links}>
-				<Container maxW='container.xl' my='6'>
+			<Layout title="Code Pastes" links={links}>
+				<Container maxW="container.xl" my="6">
 					{/* Selecting the paste lang */}
-					<SelectLanguage language={language} setLanguage={setLanguage} />
+					<SelectLanguage
+						language={language}
+						setLanguage={setLanguage}
+					/>
 
 					{/* Setting the title */}
 					<Input
-						placeholder='Title (optional)'
+						placeholder="Title (optional)"
 						value={title}
 						onChange={e => setTitle(e.target.value)}
 						focusBorderColor={useColorModeValue(
@@ -78,25 +84,32 @@ export default function Pastes() {
 					/>
 
 					{/* Visibility */}
-					<Flex justify='center' align='center' my='3'>
+					<Flex justify="center" align="center" my="3">
 						<label style={{ marginRight: 8 }}>Visibility: </label>
-						<Visibility visibility={visibility} setVisibility={setVisibility} />
+						<Visibility
+							visibility={visibility}
+							setVisibility={setVisibility}
+						/>
 					</Flex>
 
 					{/* Code for the paste */}
-					<InputCode code={code} setCode={setCode} langauge={language} />
+					<InputCode
+						code={code}
+						setCode={setCode}
+						langauge={language}
+					/>
 
 					{/* Creating button */}
 					<Button
-						fontWeight='normal'
-						my='4'
-						colorScheme='purple'
-						float='right'
+						fontWeight="normal"
+						my="4"
+						colorScheme="purple"
+						float="right"
 						rightIcon={<FiArrowRight />}
 						onClick={handleClick}
 						isLoading={loading}
-						spinnerPlacement='end'
-						loadingText='Creating'
+						spinnerPlacement="end"
+						loadingText="Creating"
 					>
 						Create
 					</Button>
