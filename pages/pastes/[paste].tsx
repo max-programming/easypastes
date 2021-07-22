@@ -32,6 +32,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
 	const { data: pastes, error } = await supabaseClient
 		.from<PasteType>('Pastes')
 		.select('*')
+		// @ts-ignore
 		.eq('pasteId', paste);
 
 	console.error(error);
