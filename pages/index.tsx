@@ -36,7 +36,7 @@ export default function Pastes() {
 	const [visibility, setVisibility] = useState('public');
 	const [language, setLanguage] = useLocalStorage<ILanguage>(
 		'language',
-		'diff'
+		'none'
 	);
 	const [loading, setLoading] = useState(false);
 

@@ -37,4 +37,5 @@ export type ILanguage =
 	| 'visual-basic'
 	| 'php'
 	| 'aspnet'
-	| 'rust';
+	| 'rust'
+	| 'none';
