@@ -20,6 +20,7 @@ import Visibility from 'components/CodePastes/Visibility';
 import Layout from 'components/Layout';
 import useSWR from 'swr';
 import { v4 } from 'uuid';
+import useLocalStorage from 'use-local-storage';
 
 const links = [
 	{
@@ -33,7 +34,10 @@ export default function Pastes() {
 	const [code, setCode] = useState('');
 	const [title, setTitle] = useState('');
 	const [visibility, setVisibility] = useState('public');
-	const [language, setLanguage] = useState<ILanguage>('diff');
+	const [language, setLanguage] = useLocalStorage<ILanguage>(
+		'language',
+		'diff'
+	);
 	const [loading, setLoading] = useState(false);
 
 	const router = useRouter();
