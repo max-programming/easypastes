@@ -1,7 +1,6 @@
-import { Box, useColorModeValue } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import Highlight, { defaultProps, Language } from 'prism-react-renderer';
 import nightOwl from 'prism-react-renderer/themes/nightOwl';
-import nightOwlLight from 'prism-react-renderer/themes/nightOwlLight';
 import Editor from 'react-simple-code-editor';
 import { Dispatch, SetStateAction } from 'react';
 import { ILanguage } from 'types';
@@ -14,11 +13,10 @@ interface Props {
 
 const InputCode = ({ code, setCode, langauge }: Props) => {
 	const handleValueChange = (code: string) => setCode(code);
-	const theme = useColorModeValue(nightOwlLight, nightOwl);
 	const highlight = (code: string) => (
 		<Highlight
 			{...defaultProps}
-			theme={theme}
+			theme={nightOwl}
 			code={code}
 			// @ts-ignore
 			language={langauge || 'diff'}
@@ -54,7 +52,7 @@ const InputCode = ({ code, setCode, langauge }: Props) => {
 					fontFamily: 'Fira Code',
 					boxSizing: 'border-box',
 					minHeight: 250,
-					...theme.plain
+					...nightOwl.plain
 				}}
 			/>
 		</Box>
