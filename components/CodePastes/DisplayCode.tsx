@@ -14,7 +14,7 @@ const DisplayCode = ({ paste, language }: Props) => {
 	return (
 		<Box mt="8" position="relative">
 			{/* <CopyButton code={code} /> */}
-			<ActionsButton code={paste.code} id={paste.pasteId} />
+			<ActionsButton paste={paste} />
 			<Highlight
 				{...defaultProps}
 				code={paste.code.trim()}

@@ -9,10 +9,11 @@ import {
 	Container,
 	Heading,
 	Button,
-	Center
+	Center,
+	Input
 } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
-import { PasteType } from 'types';
+import { PasteType, User } from 'types';
 import { SignedIn, SignedOut, useUser } from '@clerk/clerk-react';
 import { motion } from 'framer-motion';
 import InputCode from 'components/CodePastes/InputCode';
@@ -66,7 +67,7 @@ const InfoAlert = () => (
 		initial={{ translateY: -75 }}
 		animate={{ translateY: 0 }}
 	>
-		This is a private paste
+		You can&apos;t edit this paste.
 	</MotionAlert>
 );
 
@@ -100,6 +101,11 @@ const EditPaste = ({ paste }: { paste: PasteType }) => {
 	};
 	return (
 		<>
+			<Input
+				value={title}
+				onChange={e => setTitle(e.target.value)}
+				mb="5"
+			/>
 			<SelectLanguage language={language} setLanguage={setLanguage} />
 			<Center>
 				<Visibility
@@ -117,24 +123,10 @@ const EditPaste = ({ paste }: { paste: PasteType }) => {
 				onClick={handleClick}
 				isLoading={loading}
 				spinnerPlacement="end"
-				loadingText="Creating"
+				loadingText="Saving"
 			>
 				Save
 			</Button>
-		</>
-	);
-};
-
-const PrivatePaste = ({ paste }: Props) => {
-	const user = useUser();
-	return user.id !== paste.userId ? (
-		<InfoAlert />
-	) : (
-		<>
-			{paste.title !== '' && (
-				<Heading textAlign="center">{paste.title}</Heading>
-			)}
-			<EditPaste paste={paste} />
 		</>
 	);
 };
@@ -144,23 +136,14 @@ const Paste = ({ paste }: Props) => {
 	return (
 		<Layout title={paste.title || 'Paste'} links={links}>
 			<Container maxW="full" my="6">
-				{paste.private ? (
-					<>
-						<SignedIn>
-							<PrivatePaste paste={paste} />
-						</SignedIn>
-						<SignedOut>
-							<InfoAlert />
-						</SignedOut>
-					</>
-				) : (
-					<>
-						{paste.title !== '' && (
-							<Heading textAlign="center">{paste.title}</Heading>
-						)}
+				<>
+					<SignedIn>
 						<EditPaste paste={paste} />
-					</>
-				)}
+					</SignedIn>
+					<SignedOut>
+						<InfoAlert />
+					</SignedOut>
+				</>
 			</Container>
 		</Layout>
 	);
