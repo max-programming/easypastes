@@ -30,7 +30,6 @@ export const languages = [
 	'ocaml',
 	'python',
 	'reason',
-	'sass',
 	'scss',
 	'sql',
 	'stylus',
