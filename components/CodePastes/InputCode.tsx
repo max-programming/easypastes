@@ -8,10 +8,10 @@ import { ILanguage } from 'types';
 interface Props {
 	code: string;
 	setCode: Dispatch<SetStateAction<string>>;
-	langauge?: ILanguage;
+	language?: ILanguage;
 }
 
-const InputCode = ({ code, setCode, langauge }: Props) => {
+const InputCode = ({ code, setCode, language }: Props) => {
 	const handleValueChange = (code: string) => setCode(code);
 	const highlight = (code: string) => (
 		<Highlight
@@ -19,7 +19,7 @@ const InputCode = ({ code, setCode, langauge }: Props) => {
 			theme={nightOwl}
 			code={code}
 			// @ts-ignore
-			language={langauge || 'diff'}
+			language={language || 'diff'}
 		>
 			{({ tokens, getLineProps, getTokenProps }) => (
 				<>

@@ -11,7 +11,7 @@ const Paste = ({ paste }: { paste: PasteType }) => {
 					<a>{paste.title || 'Untitled'}</a>
 				</Link>
 			</Heading>
-			<DisplayCode code={paste.code} language={paste.language} />
+			<DisplayCode paste={paste} language={paste.language} />
 		</Box>
 	);
 };

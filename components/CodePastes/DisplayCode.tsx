@@ -2,20 +2,22 @@ import Highlight, { defaultProps, Language } from 'prism-react-renderer';
 import nightOwl from 'prism-react-renderer/themes/nightOwl';
 import { Box } from '@chakra-ui/react';
 import CopyButton from './CopyButton';
-import { ILanguage } from 'types';
+import ActionsButton from './ActionsButton';
+import { ILanguage, PasteType } from 'types';
 
 interface Props {
-	code: string;
+	paste: PasteType;
 	language?: ILanguage;
 }
 
-const DisplayCode = ({ code, language }: Props) => {
+const DisplayCode = ({ paste, language }: Props) => {
 	return (
 		<Box mt="8" position="relative">
-			<CopyButton code={code} />
+			{/* <CopyButton code={code} /> */}
+			<ActionsButton code={paste.code} id={paste.pasteId} />
 			<Highlight
 				{...defaultProps}
-				code={code.trim()}
+				code={paste.code.trim()}
 				// @ts-ignore
 				language={language || 'diff'}
 				theme={nightOwl}
@@ -35,6 +37,7 @@ const DisplayCode = ({ code, language }: Props) => {
 						m="1em 0"
 						p="0.5em"
 						overflow="auto"
+						fontFamily="Fira Code"
 					>
 						{tokens.map((line, i) => (
 							<Box

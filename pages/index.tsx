@@ -100,7 +100,7 @@ export default function Pastes() {
 					<InputCode
 						code={code}
 						setCode={setCode}
-						langauge={language}
+						language={language}
 					/>
 
 					{/* Creating button */}
