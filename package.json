@@ -23,7 +23,7 @@
 		"framer-motion": "^4",
 		"javascript-time-ago": "^2.3.8",
 		"next": "11.0.1",
-		"nprogress": "^0.2.0",
+		"nextjs-progressbar": "^0.0.11",
 		"prism-react-renderer": "^1.2.1",
 		"prismjs": "^1.24.1",
 		"react": "17.0.2",
@@ -35,7 +35,6 @@
 	},
 	"devDependencies": {
 		"@types/javascript-time-ago": "^2.0.3",
-		"@types/nprogress": "^0.2.0",
 		"@types/prismjs": "^1.16.6",
 		"@types/react": "^17.0.14",
 		"@types/uuid": "^8.3.1",
