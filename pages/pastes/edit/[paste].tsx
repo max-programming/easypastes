@@ -8,7 +8,8 @@ import {
 	AlertProps,
 	Container,
 	Heading,
-	Button
+	Button,
+	Center
 } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import { PasteType } from 'types';
@@ -19,6 +20,8 @@ import { useState } from 'react';
 import { FiArrowRight } from 'react-icons/fi';
 import SelectLanguage from 'components/CodePastes/SelectLanguage';
 import { useRouter } from 'next/router';
+import Visibility from 'components/CodePastes/Visibility';
+import axios from 'axios';
 
 // Define the links
 const links = [
@@ -67,10 +70,63 @@ const InfoAlert = () => (
 	</MotionAlert>
 );
 
+const EditPaste = ({ paste }: { paste: PasteType }) => {
+	const user = useUser();
+	const [title, setTitle] = useState(paste.title);
+	const [code, setCode] = useState(paste.code);
+	const [loading, setLoading] = useState(false);
+	const [language, setLanguage] = useState(paste.language);
+	const [visibility, setVisibility] = useState(
+		paste.public ? 'public' : paste.private ? 'private' : 'unlisted'
+	);
+	const router = useRouter();
+
+	const handleClick = async () => {
+		setLoading(true);
+		const {
+			data: { data, error }
+		} = await axios.post('/api/pastes/update', {
+			code,
+			language,
+			title,
+			pasteId: paste.pasteId,
+			_public: visibility === 'public',
+			_private: visibility === 'private'
+		});
+		if (!error) {
+			router.push(`/pastes/${paste.pasteId}`);
+			setLoading(false);
+		}
+	};
+	return (
+		<>
+			<SelectLanguage language={language} setLanguage={setLanguage} />
+			<Center>
+				<Visibility
+					visibility={visibility}
+					setVisibility={setVisibility}
+				/>
+			</Center>
+			<InputCode code={code} setCode={setCode} language={language} />
+			<Button
+				fontWeight="normal"
+				my="4"
+				colorScheme="purple"
+				float="right"
+				rightIcon={<FiArrowRight />}
+				onClick={handleClick}
+				isLoading={loading}
+				spinnerPlacement="end"
+				loadingText="Creating"
+			>
+				Save
+			</Button>
+		</>
+	);
+};
+
 const PrivatePaste = ({ paste }: Props) => {
 	const user = useUser();
-	const [code, setCode] = useState(paste.code);
-	const [language, setLanguage] = useState(paste.language);
 	return user.id !== paste.userId ? (
 		<InfoAlert />
 	) : (
@@ -78,29 +134,13 @@ const PrivatePaste = ({ paste }: Props) => {
 			{paste.title !== '' && (
 				<Heading textAlign="center">{paste.title}</Heading>
 			)}
-			<SelectLanguage language={language} setLanguage={setLanguage} />
-			<InputCode code={code} setCode={setCode} language={language} />
+			<EditPaste paste={paste} />
 		</>
 	);
 };
 
 // Paste component
 const Paste = ({ paste }: Props) => {
-	const [code, setCode] = useState(paste.code);
-	const [language, setLanguage] = useState(paste.language);
-	const [loading, setLoading] = useState(false);
-	const router = useRouter();
-	const handleClick = async () => {
-		setLoading(true);
-		const { data, error } = await supabaseClient
-			.from<PasteType>('Pastes')
-			.update({ code, language })
-			.eq('pasteId', paste.pasteId);
-		if (!error) {
-			router.push(`/pastes/${paste.pasteId}`);
-			setLoading(false);
-		}
-	};
 	return (
 		<Layout title={paste.title || 'Paste'} links={links}>
 			<Container maxW="full" my="6">
@@ -118,28 +158,7 @@ const Paste = ({ paste }: Props) => {
 						{paste.title !== '' && (
 							<Heading textAlign="center">{paste.title}</Heading>
 						)}
-						<SelectLanguage
-							language={language}
-							setLanguage={setLanguage}
-						/>
-						<InputCode
-							code={code}
-							setCode={setCode}
-							language={language}
-						/>
-						<Button
-							fontWeight="normal"
-							my="4"
-							colorScheme="purple"
-							float="right"
-							rightIcon={<FiArrowRight />}
-							onClick={handleClick}
-							isLoading={loading}
-							spinnerPlacement="end"
-							loadingText="Creating"
-						>
-							Save
-						</Button>
+						<EditPaste paste={paste} />
 					</>
 				)}
 			</Container>
