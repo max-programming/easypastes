@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import {
 	Box,
 	BoxProps,
@@ -11,7 +10,6 @@ import { ClerkProvider } from '@clerk/clerk-react';
 import type { AppProps } from 'next/app';
 import '@fontsource/poppins/400.css';
 import '@fontsource/fira-code/500.css';
-import 'styles/nprogress.css';
 import 'styles/globals.css';
 import NextNProgress from 'nextjs-progressbar';
 import importLangs from 'utils/importLangs';
