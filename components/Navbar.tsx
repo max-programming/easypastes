@@ -132,7 +132,9 @@ const DesktopNav = () => {
 								<Link
 									as={NextLink}
 									p={2}
-									href={`/user/pastes/${user.username}`}
+									href={`/user/pastes/${
+										!user.username ? user.id : user.username
+									}`}
 									fontSize={'sm'}
 									fontWeight={500}
 									color={linkColor}

@@ -40,9 +40,10 @@ export const getServerSideProps: GetServerSideProps = async context => {
 			headers: { Authorization: `Bearer ${process.env.CLERK_API_KEY}` }
 		}
 	);
-	const currentUser = users.find(
-		user => user.username === context.params?.username
-	);
+	const currentUser = users.find(user => {
+		if (!user.username) return user.id === context.params?.username;
+		return user.username === context.params?.username;
+	});
 	const { data: pastes, error } = await supabaseClient
 		.from<PasteType>('Pastes')
 		.select('*')
@@ -52,27 +53,30 @@ export const getServerSideProps: GetServerSideProps = async context => {
 	return {
 		props: {
 			pastes,
-			username: context.params?.username
+			fullName: `${currentUser.first_name} ${currentUser.last_name}`,
+			id: currentUser.id
 		}
 	};
 };
 
 export default function MyPastes({
 	pastes,
-	username
+	fullName,
+	id
 }: {
 	pastes: PasteType[];
-	username: string;
+	fullName: string;
+	id: string;
 }) {
 	return (
-		<Layout title={`${username} - Pastes`} links={links}>
+		<Layout title={`${fullName} - Pastes`} links={links}>
 			<Container maxW="container.xl" mt="6">
 				<Heading textAlign="center" size="lg">
-					Pastes by {username}
+					Pastes by {fullName}
 				</Heading>
 				<WithUser>
 					{user =>
-						user.username === username ? (
+						user.id === id ? (
 							<Tabs colorScheme="purple" mt="6">
 								<TabList>
 									<Tab>
