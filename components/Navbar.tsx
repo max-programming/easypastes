@@ -18,6 +18,7 @@ import { SignedIn, SignedOut, UserButton, WithUser } from '@clerk/clerk-react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { HiMenu, HiX } from 'react-icons/hi';
+import Image from 'next/image';
 
 export default function WithSubnavigation() {
   const router = useRouter();
@@ -59,7 +60,7 @@ export default function WithSubnavigation() {
               fontFamily={'heading'}
               color={useColorModeValue('gray.800', 'white')}
             >
-              Logo
+              <Image src="/logo.png" width={35} height={35} />
             </Text>
           </NextLink>
 
