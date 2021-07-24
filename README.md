@@ -29,6 +29,19 @@ Start the server
 ```bash
   npm run dev
 ```
+
+
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env.local file
+
+`NEXT_PUBLIC_CLERK_FRONTEND_API`
+
+`CLERK_API_KEY`
+
+`NEXT_PUBLIC_SUPABASE_URL`
+
+`NEXT_PUBLIC_SUPABASE_SECRET_KEY`
   
 ## Demo
 
