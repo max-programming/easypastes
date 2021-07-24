@@ -6,6 +6,13 @@
 
 An intuitive, amazing and easy to use Code paste service using `Next.JS`
 
+## Tech Stack
+
+- [Next.js](https://nextjs.org/)
+- [Chakra UI](http://chakra-ui.com/)
+- [Supabase](http://supabase.io/)
+- [Clerk](https://clerk.dev)
+
 ## Run Locally
 
 Clone the project
