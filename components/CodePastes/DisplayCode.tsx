@@ -22,13 +22,7 @@ const DisplayCode = ({ paste, language }: Props) => {
 				language={language || 'diff'}
 				theme={nightOwl}
 			>
-				{({
-					className,
-					style,
-					tokens,
-					getLineProps,
-					getTokenProps
-				}) => (
+				{({ className, style, tokens, getLineProps, getTokenProps }) => (
 					<Box
 						as="pre"
 						className={className}

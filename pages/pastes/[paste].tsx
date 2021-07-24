@@ -107,10 +107,7 @@ const Paste = ({ paste, currentUser }: Props) => {
 				{paste.private ? (
 					<>
 						<SignedIn>
-							<PrivatePaste
-								paste={paste}
-								currentUser={currentUser}
-							/>
+							<PrivatePaste paste={paste} currentUser={currentUser} />
 						</SignedIn>
 						<SignedOut>
 							<InfoAlert />

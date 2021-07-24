@@ -71,10 +71,7 @@ export default function Pastes() {
 			<Layout title="Code Pastes" links={links}>
 				<Container maxW="container.xl" my="6">
 					{/* Selecting the paste lang */}
-					<SelectLanguage
-						language={language}
-						setLanguage={setLanguage}
-					/>
+					<SelectLanguage language={language} setLanguage={setLanguage} />
 
 					{/* Setting the title */}
 					<Input
@@ -90,18 +87,11 @@ export default function Pastes() {
 					{/* Visibility */}
 					<Flex justify="center" align="center" my="3">
 						<label style={{ marginRight: 8 }}>Visibility: </label>
-						<Visibility
-							visibility={visibility}
-							setVisibility={setVisibility}
-						/>
+						<Visibility visibility={visibility} setVisibility={setVisibility} />
 					</Flex>
 
 					{/* Code for the paste */}
-					<InputCode
-						code={code}
-						setCode={setCode}
-						language={language}
-					/>
+					<InputCode code={code} setCode={setCode} language={language} />
 
 					{/* Creating button */}
 					<Button

@@ -120,42 +120,28 @@ export default function MyPastes({ pastes, fullName, id, username }: Props) {
 								<TabPanels>
 									<TabPanel>
 										{pastes.map(paste => (
-											<Paste
-												paste={paste}
-												key={paste.id}
-											/>
+											<Paste paste={paste} key={paste.id} />
 										))}
 									</TabPanel>
 									<TabPanel>
 										{pastes
 											.filter(p => p.public)
 											.map(paste => (
-												<Paste
-													paste={paste}
-													key={paste.id}
-												/>
+												<Paste paste={paste} key={paste.id} />
 											))}
 									</TabPanel>
 									<TabPanel>
 										{pastes
 											.filter(p => p.private)
 											.map(paste => (
-												<Paste
-													paste={paste}
-													key={paste.id}
-												/>
+												<Paste paste={paste} key={paste.id} />
 											))}
 									</TabPanel>
 									<TabPanel>
 										{pastes
-											.filter(
-												p => !p.private && !p.public
-											)
+											.filter(p => !p.private && !p.public)
 											.map(paste => (
-												<Paste
-													paste={paste}
-													key={paste.id}
-												/>
+												<Paste paste={paste} key={paste.id} />
 											))}
 									</TabPanel>
 								</TabPanels>
@@ -163,9 +149,7 @@ export default function MyPastes({ pastes, fullName, id, username }: Props) {
 						) : (
 							pastes
 								.filter(p => p.public)
-								.map(paste => (
-									<Paste paste={paste} key={paste.id} />
-								))
+								.map(paste => <Paste paste={paste} key={paste.id} />)
 						)
 					}
 				</WithUser>

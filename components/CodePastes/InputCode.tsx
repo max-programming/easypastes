@@ -26,11 +26,7 @@ const InputCode = ({ code, setCode, language }: Props) => {
 					{tokens.map((line, i) => (
 						<Box {...getLineProps({ line, key: i })} key={i}>
 							{line.map((token, key) => (
-								<Box
-									as="span"
-									{...getTokenProps({ token, key })}
-									key={key}
-								/>
+								<Box as="span" {...getTokenProps({ token, key })} key={key} />
 							))}
 						</Box>
 					))}

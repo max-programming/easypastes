@@ -101,17 +101,10 @@ const EditPaste = ({ paste }: { paste: PasteType }) => {
 	};
 	return (
 		<>
-			<Input
-				value={title}
-				onChange={e => setTitle(e.target.value)}
-				mb="5"
-			/>
+			<Input value={title} onChange={e => setTitle(e.target.value)} mb="5" />
 			<SelectLanguage language={language} setLanguage={setLanguage} />
 			<Center>
-				<Visibility
-					visibility={visibility}
-					setVisibility={setVisibility}
-				/>
+				<Visibility visibility={visibility} setVisibility={setVisibility} />
 			</Center>
 			<InputCode code={code} setCode={setCode} language={language} />
 			<Button

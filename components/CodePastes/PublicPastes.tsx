@@ -41,44 +41,22 @@ const PublicPastes = ({ publicPastes }: Props) => {
 					publicPastes.map(paste => (
 						<ListItem key={paste.id} fontSize="lg">
 							{paste.title ? (
-								<Link
-									as={NextLink}
-									href={`/pastes/${paste.pasteId}`}
-								>
+								<Link as={NextLink} href={`/pastes/${paste.pasteId}`}>
 									<a>
 										{paste.title} -{' '}
-										<Tag
-											variant="solid"
-											colorScheme="purple"
-										>
+										<Tag variant="solid" colorScheme="purple">
 											{paste.language} |{' '}
-											{timeAgo.format(
-												zonedTimeToUtc(
-													paste.createdAt,
-													'gmt'
-												)
-											)}
+											{timeAgo.format(zonedTimeToUtc(paste.createdAt, 'gmt'))}
 										</Tag>
 									</a>
 								</Link>
 							) : (
-								<Link
-									as={NextLink}
-									href={`/pastes/${paste.pasteId}`}
-								>
+								<Link as={NextLink} href={`/pastes/${paste.pasteId}`}>
 									<a>
 										Untitled -{' '}
-										<Tag
-											variant="solid"
-											colorScheme="purple"
-										>
+										<Tag variant="solid" colorScheme="purple">
 											{paste.language} |{' '}
-											{timeAgo.format(
-												zonedTimeToUtc(
-													paste.createdAt,
-													'gmt'
-												)
-											)}
+											{timeAgo.format(zonedTimeToUtc(paste.createdAt, 'gmt'))}
 										</Tag>
 									</a>
 								</Link>
