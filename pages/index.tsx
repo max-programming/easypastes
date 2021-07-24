@@ -1,10 +1,10 @@
 import {
-	Button,
-	Container,
-	Input,
-	useColorModeValue,
-	theme,
-	Flex
+  Button,
+  Container,
+  Input,
+  useColorModeValue,
+  theme,
+  Flex
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -23,93 +23,93 @@ import useLocalStorage from 'use-local-storage';
 import generateId from 'utils/generateId';
 
 const links = [
-	{
-		url: '/',
-		text: 'Home'
-	}
+  {
+    url: '/',
+    text: 'Home'
+  }
 ];
 
 export default function Pastes() {
-	const { data, error } = useSWR('/api/pastes');
-	const [code, setCode] = useState('');
-	const [title, setTitle] = useState('');
-	const [visibility, setVisibility] = useState('public');
-	const [language, setLanguage] = useLocalStorage<ILanguage>(
-		'language',
-		'none'
-	);
-	const [loading, setLoading] = useState(false);
+  const { data, error } = useSWR('/api/pastes');
+  const [code, setCode] = useState('');
+  const [title, setTitle] = useState('');
+  const [visibility, setVisibility] = useState('public');
+  const [language, setLanguage] = useLocalStorage<ILanguage>(
+    'language',
+    'none'
+  );
+  const [loading, setLoading] = useState(false);
 
-	const router = useRouter();
+  const router = useRouter();
 
-	const handleClick = async () => {
-		if (code.trim() === '') return;
+  const handleClick = async () => {
+    if (code.trim() === '') return;
 
-		setLoading(true);
+    setLoading(true);
 
-		const res = await axios.post('/api/pastes/create', {
-			code,
-			language,
-			title,
-			_public: visibility === 'public',
-			_private: visibility === 'private',
-			userId: window.Clerk?.user?.id,
-			pasteId: generateId(),
-			hasVanity: false
-		});
+    const res = await axios.post('/api/pastes/create', {
+      code,
+      language,
+      title,
+      _public: visibility === 'public',
+      _private: visibility === 'private',
+      userId: window.Clerk?.user?.id,
+      pasteId: generateId(),
+      hasVanity: false
+    });
 
-		const { data, error } = res.data;
+    const { data, error } = res.data;
 
-		if (data) {
-			await router.push(`/pastes/${data[0].pasteId}`);
-			setLoading(false);
-		}
-	};
+    if (data) {
+      await router.push(`/pastes/${data[0].pasteId}`);
+      setLoading(false);
+    }
+  };
 
-	return (
-		<>
-			<Layout title="Code Pastes" links={links}>
-				<Container maxW="container.xl" my="6">
-					{/* Selecting the paste lang */}
-					<SelectLanguage language={language} setLanguage={setLanguage} />
+  return (
+    <>
+      <Layout title="Code Pastes" links={links}>
+        <Container maxW="container.xl" my="6">
+          {/* Selecting the paste lang */}
+          <SelectLanguage language={language} setLanguage={setLanguage} />
 
-					{/* Setting the title */}
-					<Input
-						placeholder="Title (optional)"
-						value={title}
-						onChange={e => setTitle(e.target.value)}
-						focusBorderColor={useColorModeValue(
-							theme.colors.purple[600],
-							theme.colors.purple[200]
-						)}
-					/>
+          {/* Setting the title */}
+          <Input
+            placeholder="Title (optional)"
+            value={title}
+            onChange={e => setTitle(e.target.value)}
+            focusBorderColor={useColorModeValue(
+              theme.colors.purple[600],
+              theme.colors.purple[200]
+            )}
+          />
 
-					{/* Visibility */}
-					<Flex justify="center" align="center" my="3">
-						<label style={{ marginRight: 8 }}>Visibility: </label>
-						<Visibility visibility={visibility} setVisibility={setVisibility} />
-					</Flex>
+          {/* Visibility */}
+          <Flex justify="center" align="center" my="3">
+            <label style={{ marginRight: 8 }}>Visibility: </label>
+            <Visibility visibility={visibility} setVisibility={setVisibility} />
+          </Flex>
 
-					{/* Code for the paste */}
-					<InputCode code={code} setCode={setCode} language={language} />
+          {/* Code for the paste */}
+          <InputCode code={code} setCode={setCode} language={language} />
 
-					{/* Creating button */}
-					<Button
-						fontWeight="normal"
-						my="4"
-						colorScheme="purple"
-						float="right"
-						rightIcon={<FiArrowRight />}
-						onClick={handleClick}
-						isLoading={loading}
-						spinnerPlacement="end"
-						loadingText="Creating"
-					>
-						Create
-					</Button>
-					<PublicPastes publicPastes={data} />
-				</Container>
-			</Layout>
-		</>
-	);
+          {/* Creating button */}
+          <Button
+            fontWeight="normal"
+            my="4"
+            colorScheme="purple"
+            float="right"
+            rightIcon={<FiArrowRight />}
+            onClick={handleClick}
+            isLoading={loading}
+            spinnerPlacement="end"
+            loadingText="Creating"
+          >
+            Create
+          </Button>
+          <PublicPastes publicPastes={data} />
+        </Container>
+      </Layout>
+    </>
+  );
 }

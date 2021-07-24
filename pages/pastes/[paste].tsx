@@ -14,126 +14,126 @@ import Link from 'next/link';
 
 // Define the links
 const links = [
-	{
-		url: '/pastes',
-		text: 'Pastes'
-	}
+  {
+    url: '/pastes',
+    text: 'Pastes'
+  }
 ];
 
 // Custom types
 interface Props {
-	paste: PasteType;
-	currentUser: string | User;
+  paste: PasteType;
+  currentUser: string | User;
 }
 
 const MotionAlert = motion<AlertProps>(Alert);
 
 // Server side props override
 export const getServerSideProps: GetServerSideProps = async context => {
-	let currentUser: string | User | null = null;
-	// @ts-ignore
-	const { paste } = context.params;
-	const { data: pastes, error } = await supabaseClient
-		.from<PasteType>('Pastes')
-		.select('*')
-		// @ts-ignore
-		.eq('pasteId', paste);
-	const currentPaste = pastes[0];
-	if (currentPaste.userId) {
-		const { data: users } = await axios.get<Array<User>>(
-			'https://api.clerk.dev/v1/users?limit=100',
-			{
-				headers: {
-					Authorization: `Bearer ${process.env.CLERK_API_KEY}`
-				}
-			}
-		);
-		currentUser = users.find(user => user.id === currentPaste.userId);
-		// currentUser = `${user.first_name} ${user.last_name}`;
-	} else {
-		currentUser = 'Anonymous';
-	}
+  let currentUser: string | User | null = null;
+  // @ts-ignore
+  const { paste } = context.params;
+  const { data: pastes, error } = await supabaseClient
+    .from<PasteType>('Pastes')
+    .select('*')
+    // @ts-ignore
+    .eq('pasteId', paste);
+  const currentPaste = pastes[0];
+  if (currentPaste.userId) {
+    const { data: users } = await axios.get<Array<User>>(
+      'https://api.clerk.dev/v1/users?limit=100',
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.CLERK_API_KEY}`
+        }
+      }
+    );
+    currentUser = users.find(user => user.id === currentPaste.userId);
+    // currentUser = `${user.first_name} ${user.last_name}`;
+  } else {
+    currentUser = 'Anonymous';
+  }
 
-	console.error(error);
-	console.log({ currentUser });
+  console.error(error);
+  console.log({ currentUser });
 
-	if (error)
-		return {
-			notFound: true
-		};
-	return {
-		props: { paste: currentPaste, currentUser }
-	};
+  if (error)
+    return {
+      notFound: true
+    };
+  return {
+    props: { paste: currentPaste, currentUser }
+  };
 };
 
 const InfoAlert = () => (
-	<MotionAlert
-		variant="left-accent"
-		status="error"
-		initial={{ translateY: -75 }}
-		animate={{ translateY: 0 }}
-	>
-		This is a private paste
-	</MotionAlert>
+  <MotionAlert
+    variant="left-accent"
+    status="error"
+    initial={{ translateY: -75 }}
+    animate={{ translateY: 0 }}
+  >
+    This is a private paste
+  </MotionAlert>
 );
 
 const PrivatePaste = ({ paste, currentUser }: Props) => {
-	const user = useUser();
-	return user.id !== paste.userId ? (
-		<InfoAlert />
-	) : (
-		<>
-			{paste.title !== '' && (
-				<Heading textAlign="center">{paste.title}</Heading>
-			)}
-			{typeof currentUser !== 'string' && (
-				<Heading textAlign="center" size="md" mt="2">
-					By&nbsp;
-					<Link href={`/user/pastes/${currentUser.id}`}>
-						<a>{`${currentUser.first_name} ${currentUser.last_name}`}</a>
-					</Link>
-				</Heading>
-			)}
-			<DisplayCode paste={paste} language={paste.language} />
-		</>
-	);
+  const user = useUser();
+  return user.id !== paste.userId ? (
+    <InfoAlert />
+  ) : (
+    <>
+      {paste.title !== '' && (
+        <Heading textAlign="center">{paste.title}</Heading>
+      )}
+      {typeof currentUser !== 'string' && (
+        <Heading textAlign="center" size="md" mt="2">
+          By&nbsp;
+          <Link href={`/user/pastes/${currentUser.id}`}>
+            <a>{`${currentUser.first_name} ${currentUser.last_name}`}</a>
+          </Link>
+        </Heading>
+      )}
+      <DisplayCode paste={paste} language={paste.language} />
+    </>
+  );
 };
 
 // Paste component
 const Paste = ({ paste, currentUser }: Props) => {
-	return (
-		<Layout title={paste.title || 'Paste'} links={links}>
-			<Container maxW="full" my="6">
-				{paste.private ? (
-					<>
-						<SignedIn>
-							<PrivatePaste paste={paste} currentUser={currentUser} />
-						</SignedIn>
-						<SignedOut>
-							<InfoAlert />
-						</SignedOut>
-					</>
-				) : (
-					<>
-						{paste.title !== '' && (
-							<Heading textAlign="center">{paste.title}</Heading>
-						)}
-						<Heading textAlign="center" size="md" mt="2">
-							By&nbsp;
-							{typeof currentUser !== 'string' ? (
-								<Link href={`/user/pastes/${currentUser.id}`}>
-									<a>{`${currentUser.first_name} ${currentUser.last_name}`}</a>
-								</Link>
-							) : (
-								currentUser
-							)}
-						</Heading>
-						<DisplayCode paste={paste} language={paste.language} />
-					</>
-				)}
-			</Container>
-		</Layout>
-	);
+  return (
+    <Layout title={paste.title || 'Paste'} links={links}>
+      <Container maxW="full" my="6">
+        {paste.private ? (
+          <>
+            <SignedIn>
+              <PrivatePaste paste={paste} currentUser={currentUser} />
+            </SignedIn>
+            <SignedOut>
+              <InfoAlert />
+            </SignedOut>
+          </>
+        ) : (
+          <>
+            {paste.title !== '' && (
+              <Heading textAlign="center">{paste.title}</Heading>
+            )}
+            <Heading textAlign="center" size="md" mt="2">
+              By&nbsp;
+              {typeof currentUser !== 'string' ? (
+                <Link href={`/user/pastes/${currentUser.id}`}>
+                  <a>{`${currentUser.first_name} ${currentUser.last_name}`}</a>
+                </Link>
+              ) : (
+                currentUser
+              )}
+            </Heading>
+            <DisplayCode paste={paste} language={paste.language} />
+          </>
+        )}
+      </Container>
+    </Layout>
+  );
 };
 
 export default Paste;

@@ -1,45 +1,45 @@
 {
-	"name": "easy-pastes",
-	"version": "0.1.0",
-	"private": true,
-	"scripts": {
-		"dev": "next dev",
-		"build": "next build",
-		"start": "next start",
-		"lint": "next lint",
-		"format": "prettier --write \"./**/*.{ts,tsx,json}\""
-	},
-	"dependencies": {
-		"@chakra-ui/react": "^1.6.5",
-		"@clerk/clerk-react": "^1.15.0",
-		"@emotion/react": "^11",
-		"@emotion/styled": "^11",
-		"@fontsource/fira-code": "^4.5.0",
-		"@fontsource/poppins": "^4.5.0",
-		"@supabase/supabase-js": "^1.20.0",
-		"axios": "^0.21.1",
-		"date-fns": "^2.22.1",
-		"date-fns-tz": "^1.1.4",
-		"framer-motion": "^4",
-		"javascript-time-ago": "^2.3.8",
-		"next": "11.0.1",
-		"nextjs-progressbar": "^0.0.11",
-		"prism-react-renderer": "^1.2.1",
-		"prismjs": "^1.24.1",
-		"react": "17.0.2",
-		"react-dom": "17.0.2",
-		"react-icons": "^4.2.0",
-		"react-simple-code-editor": "^0.11.0",
-		"swr": "^0.5.6",
-		"use-local-storage": "^2.2.1"
-	},
-	"devDependencies": {
-		"@types/javascript-time-ago": "^2.0.3",
-		"@types/prismjs": "^1.16.6",
-		"@types/react": "^17.0.14",
-		"eslint": "7.31.0",
-		"eslint-config-next": "11.0.1",
-		"prettier": "^2.3.2",
-		"typescript": "^4.3.5"
-	}
+  "name": "easy-pastes",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "format": "prettier --write \"./**/*.{ts,tsx,json}\""
+  },
+  "dependencies": {
+    "@chakra-ui/react": "^1.6.5",
+    "@clerk/clerk-react": "^1.15.0",
+    "@emotion/react": "^11",
+    "@emotion/styled": "^11",
+    "@fontsource/fira-code": "^4.5.0",
+    "@fontsource/poppins": "^4.5.0",
+    "@supabase/supabase-js": "^1.20.0",
+    "axios": "^0.21.1",
+    "date-fns": "^2.22.1",
+    "date-fns-tz": "^1.1.4",
+    "framer-motion": "^4",
+    "javascript-time-ago": "^2.3.8",
+    "next": "11.0.1",
+    "nextjs-progressbar": "^0.0.11",
+    "prism-react-renderer": "^1.2.1",
+    "prismjs": "^1.24.1",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-icons": "^4.2.0",
+    "react-simple-code-editor": "^0.11.0",
+    "swr": "^0.5.6",
+    "use-local-storage": "^2.2.1"
+  },
+  "devDependencies": {
+    "@types/javascript-time-ago": "^2.0.3",
+    "@types/prismjs": "^1.16.6",
+    "@types/react": "^17.0.14",
+    "eslint": "7.31.0",
+    "eslint-config-next": "11.0.1",
+    "prettier": "^2.3.2",
+    "typescript": "^4.3.5"
+  }
 }
