@@ -38,6 +38,13 @@ export const getServerSideProps: GetServerSideProps = async context => {
     .select('*')
     // @ts-ignore
     .eq('pasteId', paste);
+  console.log({ error });
+  console.log({ pastes });
+  if (error || pastes.length === 0) {
+    return {
+      notFound: true
+    };
+  }
   const currentPaste = pastes[0];
   if (currentPaste.userId) {
     const { data: users } = await axios.get<Array<User>>(
@@ -57,10 +64,6 @@ export const getServerSideProps: GetServerSideProps = async context => {
   console.error(error);
   console.log({ currentUser });
 
-  if (error)
-    return {
-      notFound: true
-    };
   return {
     props: { paste: currentPaste, currentUser }
   };

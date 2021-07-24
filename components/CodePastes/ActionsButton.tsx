@@ -6,18 +6,75 @@ import {
   MenuItem,
   MenuButton,
   MenuList,
-  useToast
+  Modal,
+  ModalOverlay,
+  ModalHeader,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalCloseButton,
+  Button,
+  useToast,
+  useDisclosure,
+  UseDisclosureProps
 } from '@chakra-ui/react';
-import { SignedIn, WithUser } from '@clerk/clerk-react';
+import { WithUser } from '@clerk/clerk-react';
+import axios from 'axios';
 import { useRouter } from 'next/router';
-import { FiCopy, FiEdit, FiEdit2, FiMoreHorizontal } from 'react-icons/fi';
+import { useState } from 'react';
+import { FiCopy, FiEdit2, FiMoreHorizontal, FiTrash2 } from 'react-icons/fi';
 import { PasteType } from 'types';
 
 interface Props {
   paste: PasteType;
 }
 
+const DeleteModal = ({
+  isOpen,
+  onClose,
+  paste
+}: UseDisclosureProps & { paste: PasteType }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  const deletePaste = async () => {
+    setIsLoading(true);
+    await axios.post('/api/pastes/delete', { pasteId: paste.pasteId });
+    await router.push('/');
+    setIsLoading(false);
+  };
+  return (
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>Delete Paste</ModalHeader>
+        <ModalCloseButton />
+        <ModalBody>
+          Are you sure you want to delete this paste? This action is
+          irreversible
+        </ModalBody>
+
+        <ModalFooter>
+          <Button colorScheme="blue" mr={3} onClick={onClose}>
+            Close
+          </Button>
+          <Button
+            variant="ghost"
+            colorScheme="red"
+            leftIcon={<FiTrash2 />}
+            onClick={deletePaste}
+            isLoading={isLoading}
+          >
+            Delete
+          </Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
+  );
+};
+
 const ActionsButton = ({ paste }: Props) => {
+  const { isOpen, onClose, onOpen } = useDisclosure();
+
   const toast = useToast();
   const router = useRouter();
 
@@ -31,6 +88,7 @@ const ActionsButton = ({ paste }: Props) => {
   };
   return (
     <Box position="absolute" right="1" top="1" zIndex="20">
+      <DeleteModal isOpen={isOpen} onClose={onClose} paste={paste} />
       <Tooltip hasArrow label="Options">
         <Menu>
           <MenuButton
@@ -46,13 +104,23 @@ const ActionsButton = ({ paste }: Props) => {
             </MenuItem>
             <WithUser>
               {user => (
-                <MenuItem
-                  icon={<FiEdit2 />}
-                  onClick={editCode}
-                  hidden={user.id !== paste.userId}
-                >
-                  Edit
-                </MenuItem>
+                <>
+                  <MenuItem
+                    icon={<FiEdit2 />}
+                    onClick={editCode}
+                    hidden={user.id !== paste.userId}
+                  >
+                    Edit
+                  </MenuItem>
+                  <MenuItem
+                    icon={<FiTrash2 />}
+                    onClick={onOpen}
+                    hidden={user.id !== paste.userId}
+                    color="red.400"
+                  >
+                    Delete
+                  </MenuItem>
+                </>
               )}
             </WithUser>
           </MenuList>

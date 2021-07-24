@@ -95,7 +95,7 @@ const EditPaste = ({ paste }: { paste: PasteType }) => {
       _private: visibility === 'private'
     });
     if (!error) {
-      router.push(`/pastes/${paste.pasteId}`);
+      await router.push(`/pastes/${paste.pasteId}`);
       setLoading(false);
     }
   };
