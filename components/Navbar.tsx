@@ -88,7 +88,7 @@ export default function WithSubnavigation() {
                 Sign In
               </Button>
             </NextLink>
-            <NextLink href="sign-up" passHref>
+            <NextLink href="/sign-up" passHref>
               <Button
                 as="a"
                 display={{ base: 'none', md: 'inline-flex' }}
