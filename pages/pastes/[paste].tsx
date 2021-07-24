@@ -10,6 +10,7 @@ import { PasteType, User } from 'types';
 import { SignedIn, SignedOut, useUser } from '@clerk/clerk-react';
 import { motion } from 'framer-motion';
 import axios from 'axios';
+import Link from 'next/link';
 
 // Define the links
 const links = [
@@ -22,14 +23,14 @@ const links = [
 // Custom types
 interface Props {
 	paste: PasteType;
-	currentUser: string;
+	currentUser: string | User;
 }
 
 const MotionAlert = motion<AlertProps>(Alert);
 
 // Server side props override
 export const getServerSideProps: GetServerSideProps = async context => {
-	let currentUser: string;
+	let currentUser: string | User | null = null;
 	// @ts-ignore
 	const { paste } = context.params;
 	const { data: pastes, error } = await supabaseClient
@@ -38,7 +39,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
 		// @ts-ignore
 		.eq('pasteId', paste);
 	const currentPaste = pastes[0];
-	if (currentPaste.userId !== '') {
+	if (currentPaste.userId) {
 		const { data: users } = await axios.get<Array<User>>(
 			'https://api.clerk.dev/v1/users?limit=100',
 			{
@@ -47,13 +48,14 @@ export const getServerSideProps: GetServerSideProps = async context => {
 				}
 			}
 		);
-		const user = users.find(user => user.id === currentPaste.userId);
-		currentUser = `${user.first_name} ${user.last_name}`;
+		currentUser = users.find(user => user.id === currentPaste.userId);
+		// currentUser = `${user.first_name} ${user.last_name}`;
 	} else {
 		currentUser = 'Anonymous';
 	}
 
 	console.error(error);
+	console.log({ currentUser });
 
 	if (error)
 		return {
@@ -84,6 +86,14 @@ const PrivatePaste = ({ paste, currentUser }: Props) => {
 			{paste.title !== '' && (
 				<Heading textAlign="center">{paste.title}</Heading>
 			)}
+			{typeof currentUser !== 'string' && (
+				<Heading textAlign="center" size="md" mt="2">
+					By&nbsp;
+					<Link href={`/user/pastes/${currentUser.id}`}>
+						<a>{`${currentUser.first_name} ${currentUser.last_name}`}</a>
+					</Link>
+				</Heading>
+			)}
 			<DisplayCode paste={paste} language={paste.language} />
 		</>
 	);
@@ -112,7 +122,14 @@ const Paste = ({ paste, currentUser }: Props) => {
 							<Heading textAlign="center">{paste.title}</Heading>
 						)}
 						<Heading textAlign="center" size="md" mt="2">
-							{currentUser}
+							By&nbsp;
+							{typeof currentUser !== 'string' ? (
+								<Link href={`/user/pastes/${currentUser.id}`}>
+									<a>{`${currentUser.first_name} ${currentUser.last_name}`}</a>
+								</Link>
+							) : (
+								currentUser
+							)}
 						</Heading>
 						<DisplayCode paste={paste} language={paste.language} />
 					</>
