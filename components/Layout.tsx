@@ -2,6 +2,8 @@ import type { ReactNode } from 'react';
 import Head from 'next/head';
 import { Box, useMediaQuery } from '@chakra-ui/react';
 import Navbar from './Navbar';
+import { DefaultSeo } from 'next-seo';
+import SEO from 'next-seo.config';
 
 // Types definition
 interface Props {
@@ -18,9 +20,12 @@ const Layout = ({ children, title, links }: Props) => {
   const [matches] = useMediaQuery('(prefers-color-scheme: dark)');
   return (
     <>
-      <Head>
-        <title>{title || 'Easy Tools'}</title>
-      </Head>
+      <DefaultSeo
+        {...SEO}
+        title={
+          title || 'Easy Pastes - Easiest Way to create and share code pastes'
+        }
+      />
       <header>
         <Navbar />
       </header>

@@ -23,6 +23,7 @@
     "framer-motion": "^4",
     "javascript-time-ago": "^2.3.8",
     "next": "11.0.1",
+    "next-seo": "^4.26.0",
     "nextjs-progressbar": "^0.0.11",
     "prism-react-renderer": "^1.2.1",
     "prismjs": "^1.24.1",

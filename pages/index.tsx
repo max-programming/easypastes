@@ -68,7 +68,7 @@ export default function Pastes() {
 
   return (
     <>
-      <Layout title="Code Pastes" links={links}>
+      <Layout links={links}>
         <Container maxW="container.xl" my="6">
           {/* Selecting the paste lang */}
           <SelectLanguage language={language} setLanguage={setLanguage} />
