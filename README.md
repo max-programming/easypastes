@@ -1,8 +1,17 @@
+![Logo](https://easypastes.tk/logo.png)
+
 # Easy Pastes
 
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSEs)
 
 An intuitive, amazing and easy to use Code paste service using `Next.JS`
+
+## Tech Stack
+
+- [Next.js](https://nextjs.org/)
+- [Chakra UI](http://chakra-ui.com/)
+- [Supabase](http://supabase.io/)
+- [Clerk](https://clerk.dev)
 
 ## Run Locally
 
