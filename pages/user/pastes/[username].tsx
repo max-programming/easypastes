@@ -52,9 +52,18 @@ export const getServerSideProps: GetServerSideProps = async context => {
     }
   );
   const currentUser = users.find(user => {
+    console.log(user.username);
     if (!user.username) return user.id === context.params?.username;
+    // @ts-ignore
+    if (context.params?.username.startsWith('_user'))
+      return user.id === context.params?.username;
     return user.username === context.params?.username;
   });
+  if (!currentUser) {
+    return {
+      notFound: true
+    };
+  }
   const { data: pastes, error } = await supabaseClient
     .from<PasteType>('Pastes')
     .select('*')
