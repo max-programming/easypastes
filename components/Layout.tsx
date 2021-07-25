@@ -4,6 +4,7 @@ import { Box, useMediaQuery } from '@chakra-ui/react';
 import Navbar from './Navbar';
 import { DefaultSeo } from 'next-seo';
 import SEO from 'next-seo.config';
+import Footer from './Footer';
 
 // Types definition
 interface Props {
@@ -30,6 +31,9 @@ const Layout = ({ children, title, links }: Props) => {
         <Navbar />
       </header>
       <Box fontFamily="Poppins">{children}</Box>
+      <footer>
+        <Footer />
+      </footer>
     </>
   );
 };

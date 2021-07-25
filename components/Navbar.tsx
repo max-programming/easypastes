@@ -1,3 +1,4 @@
+// Thanks to https://chakra-templates.dev/ for this 💗
 import {
   Box,
   Flex,
@@ -19,6 +20,8 @@ import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { HiMenu, HiX } from 'react-icons/hi';
 import Image from 'next/image';
+import { SocialButton } from './Footer';
+import { FaGithub } from 'react-icons/fa';
 
 export default function WithSubnavigation() {
   const router = useRouter();
@@ -75,6 +78,12 @@ export default function WithSubnavigation() {
           direction={'row'}
           spacing={6}
         >
+          <SocialButton
+            label="GitHub repository"
+            href="https://github.com/max-programming/easypastes"
+          >
+            <FaGithub />
+          </SocialButton>
           <SignedIn>
             <UserButton />
           </SignedIn>
