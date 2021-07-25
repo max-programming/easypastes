@@ -8,7 +8,7 @@ const base62Encode = (n: number) => {
 
   while (n > 0) {
     result = digits[n % digits.length] + result;
-    n = parseInt(n / digits.length, 10);
+    n = parseInt((n / digits.length).toString(), 10);
   }
 
   return result;
