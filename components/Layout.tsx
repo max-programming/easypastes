@@ -5,6 +5,7 @@ import Navbar from './Navbar';
 import { DefaultSeo } from 'next-seo';
 import SEO from 'next-seo.config';
 import Footer from './Footer';
+import { useRouter } from 'next/router';
 
 // Types definition
 interface Props {
@@ -19,6 +20,7 @@ interface Props {
 // Layout element with Footer and navbars
 const Layout = ({ children, title, links }: Props) => {
   const [matches] = useMediaQuery('(prefers-color-scheme: dark)');
+  const router = useRouter();
   return (
     <>
       <DefaultSeo
@@ -31,9 +33,11 @@ const Layout = ({ children, title, links }: Props) => {
         <Navbar />
       </header>
       <Box fontFamily="Poppins">{children}</Box>
-      <footer>
-        <Footer />
-      </footer>
+      <Box hidden={router.pathname !== '/'}>
+        <footer>
+          <Footer />
+        </footer>
+      </Box>
     </>
   );
 };
