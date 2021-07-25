@@ -14,7 +14,7 @@ import {
   useMediaQuery
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { FiAlertCircle, FiArrowRight } from 'react-icons/fi';
 import { ILanguage, PasteType } from 'types';
 import axios from 'axios';
@@ -27,7 +27,7 @@ import Visibility from 'components/CodePastes/Visibility';
 import Layout from 'components/Layout';
 import useSWR from 'swr';
 import useLocalStorage from 'use-local-storage';
-import { SignedIn, SignedOut } from '@clerk/clerk-react';
+import { SignedIn, SignedOut, useSession } from '@clerk/clerk-react';
 import Link from 'next/link';
 
 const links = [
@@ -36,6 +36,16 @@ const links = [
     text: 'Home'
   }
 ];
+
+interface ButtonProps {
+  code: string;
+  language: string;
+  title: string;
+  visibility: string;
+  url: string;
+  toast: any;
+  setIsUrlTaken: Dispatch<SetStateAction<boolean>>;
+}
 
 export default function Pastes() {
   const toast = useToast();
@@ -51,42 +61,8 @@ export default function Pastes() {
     'language',
     'none'
   );
-  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
-
-  const handleClick = async () => {
-    if (code.trim() === '') return;
-    try {
-      setLoading(true);
-
-      const res = await axios.post(`/api/pastes/create`, {
-        code,
-        language,
-        title,
-        _public: visibility === 'public',
-        _private: visibility === 'private',
-        pasteId: url
-      });
-
-      const { data, error } = res.data;
-
-      if (data) {
-        await router.push(`/pastes/${data[0].pasteId}`);
-        setLoading(false);
-      }
-    } catch (error) {
-      setLoading(false);
-      if (error.response.status === 400) {
-        setIsUrlTaken(true);
-        toast({
-          title: error.response.data.message,
-          status: 'error',
-          isClosable: true
-        });
-      }
-    }
-  };
 
   return (
     <>
@@ -165,22 +141,156 @@ export default function Pastes() {
           <InputCode code={code} setCode={setCode} language={language} />
 
           {/* Creating button */}
-          <Button
-            fontWeight="normal"
-            my="4"
-            colorScheme="purple"
-            float="right"
-            rightIcon={<FiArrowRight />}
-            onClick={handleClick}
-            isLoading={loading}
-            spinnerPlacement="end"
-            loadingText="Creating"
-          >
-            Create
-          </Button>
+          <SignedIn>
+            <SignedInButton
+              code={code}
+              language={language}
+              title={title}
+              visibility={visibility}
+              url={url}
+              toast={toast}
+              setIsUrlTaken={setIsUrlTaken}
+            />
+          </SignedIn>
+          <SignedOut>
+            <SignedOutButton
+              code={code}
+              language={language}
+              title={title}
+              visibility={visibility}
+              url={url}
+              toast={toast}
+              setIsUrlTaken={setIsUrlTaken}
+            />
+          </SignedOut>
           <PublicPastes publicPastes={data} />
         </Container>
       </Layout>
     </>
   );
 }
+
+const SignedInButton = ({
+  code,
+  language,
+  title,
+  visibility,
+  url,
+  toast,
+  setIsUrlTaken
+}: ButtonProps) => {
+  const session = useSession();
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const sessionId = session?.id;
+  const handleClick = async () => {
+    if (code.trim() === '') return;
+    try {
+      setLoading(true);
+
+      const res = await axios.post(
+        `/api/pastes/create?_clerk_session_id=${sessionId}`,
+        {
+          code,
+          language,
+          title,
+          _public: visibility === 'public',
+          _private: visibility === 'private',
+          pasteId: url
+        }
+      );
+
+      const { data, error } = res.data;
+
+      if (data) {
+        await router.push(`/pastes/${data[0].pasteId}`);
+        setLoading(false);
+      }
+    } catch (error) {
+      setLoading(false);
+      if (error.response.status === 400) {
+        setIsUrlTaken(true);
+        toast({
+          title: error.response.data.message,
+          status: 'error',
+          isClosable: true
+        });
+      }
+    }
+  };
+  return (
+    <Button
+      fontWeight="normal"
+      my="4"
+      colorScheme="purple"
+      float="right"
+      rightIcon={<FiArrowRight />}
+      onClick={handleClick}
+      isLoading={loading}
+      spinnerPlacement="end"
+      loadingText="Creating"
+    >
+      Create
+    </Button>
+  );
+};
+
+const SignedOutButton = ({
+  code,
+  language,
+  title,
+  visibility,
+  url,
+  toast,
+  setIsUrlTaken
+}: ButtonProps) => {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const handleClick = async () => {
+    if (code.trim() === '') return;
+    try {
+      setLoading(true);
+
+      const res = await axios.post(`/api/pastes/create`, {
+        code,
+        language,
+        title,
+        _public: visibility === 'public',
+        _private: visibility === 'private',
+        pasteId: url
+      });
+
+      const { data, error } = res.data;
+
+      if (data) {
+        await router.push(`/pastes/${data[0].pasteId}`);
+        setLoading(false);
+      }
+    } catch (error) {
+      setLoading(false);
+      if (error.response.status === 400) {
+        setIsUrlTaken(true);
+        toast({
+          title: error.response.data.message,
+          status: 'error',
+          isClosable: true
+        });
+      }
+    }
+  };
+  return (
+    <Button
+      fontWeight="normal"
+      my="4"
+      colorScheme="purple"
+      float="right"
+      rightIcon={<FiArrowRight />}
+      onClick={handleClick}
+      isLoading={loading}
+      spinnerPlacement="end"
+      loadingText="Creating"
+    >
+      Create
+    </Button>
+  );
+};
