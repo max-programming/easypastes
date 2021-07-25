@@ -2,10 +2,10 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { PasteType } from 'types';
 import supabaseClient from 'utils/supabase';
 import base62Encode from 'utils/encode';
-import { requireSession, RequireSessionProp } from '@clerk/clerk-sdk-node';
+import { withSession, WithSessionProp } from '@clerk/clerk-sdk-node';
 
 const handler = async (
-  req: RequireSessionProp<NextApiRequest>,
+  req: WithSessionProp<NextApiRequest>,
   res: NextApiResponse
 ) => {
   let chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -68,7 +68,7 @@ const handler = async (
         title,
         code,
         language,
-        userId: req.session.userId,
+        userId: req.session ? req.session.userId : null,
         pasteId,
         public: _public,
         private: _private
@@ -79,4 +79,4 @@ const handler = async (
   res.status(200).json({ data, error });
 };
 
-export default requireSession(handler);
+export default withSession(handler);
