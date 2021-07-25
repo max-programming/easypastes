@@ -9,7 +9,7 @@ export default async function pasteId(
   const { data: pastes, error } = await supabaseClient
     .from('Pastes')
     .select('*')
-    .eq('id', req.query.paste);
+    .eq('pasteId', req.query.paste);
 
   // Debug logging
   console.log(pastes);
