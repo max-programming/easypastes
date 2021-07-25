@@ -4,6 +4,10 @@ const config = {
     {
       property: 'keywords',
       content: 'paste, easypastes, create, pastebin, git, github, gitlab'
+    },
+    {
+      name: 'google-site-verification',
+      content: 'NdkMJQSa7meePpnwqOlgUDjoKAj8_o6G2rYH-B-1Wwo'
     }
   ],
   additionalLinkTags: [
