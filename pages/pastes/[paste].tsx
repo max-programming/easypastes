@@ -30,7 +30,7 @@ const MotionAlert = motion<AlertProps>(Alert);
 
 // Server side props override
 export const getServerSideProps: GetServerSideProps = async context => {
-  let currentUser: string | User | null = null;
+  let currentUser: string | User = null;
   // @ts-ignore
   const { paste } = context.params;
   const { data: pastes, error } = await supabaseClient
@@ -38,8 +38,6 @@ export const getServerSideProps: GetServerSideProps = async context => {
     .select('*')
     // @ts-ignore
     .eq('pasteId', paste);
-  console.log({ error });
-  console.log({ pastes });
   if (error || pastes.length === 0) {
     return {
       notFound: true
@@ -56,16 +54,12 @@ export const getServerSideProps: GetServerSideProps = async context => {
       }
     );
     currentUser = users.find(user => user.id === currentPaste.userId);
-    // currentUser = `${user.first_name} ${user.last_name}`;
   } else {
     currentUser = 'Anonymous';
   }
 
-  console.error(error);
-  console.log({ currentUser });
-
   return {
-    props: { paste: currentPaste, currentUser }
+    props: { paste: currentPaste, currentUser: currentUser || 'Anonymous' }
   };
 };
 
