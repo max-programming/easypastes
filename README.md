@@ -31,12 +31,14 @@ Install dependencies
 
 ```bash
 yarn
+# or npm install
 ```
 
 Start the server
 
 ```bash
-npm run dev
+yarn dev
+# or npm run dev
 ```
 
 
