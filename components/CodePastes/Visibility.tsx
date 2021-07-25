@@ -46,7 +46,7 @@ const VisibilityMobile = ({
   handleChange: ChangeEventHandler<HTMLSelectElement>;
 }) => {
   return (
-    <Box>
+    <Box flex="2">
       <Select
         value={visibility}
         id="select-visibility"

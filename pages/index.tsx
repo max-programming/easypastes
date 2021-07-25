@@ -10,7 +10,8 @@ import {
   Box,
   useToast,
   Alert,
-  CloseButton
+  CloseButton,
+  useMediaQuery
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -38,6 +39,7 @@ const links = [
 
 export default function Pastes() {
   const toast = useToast();
+  const [matches] = useMediaQuery('(max-width:768px)');
   const { data, error } = useSWR('/api/pastes');
   const [code, setCode] = useState('');
   const [title, setTitle] = useState('');
@@ -125,7 +127,12 @@ export default function Pastes() {
             )}
           />
 
-          <Flex align="center" justify="center" mt="4">
+          <Flex
+            align="center"
+            justify="center"
+            mt="4"
+            flexDir={matches ? 'column' : 'row'}
+          >
             <SignedIn>
               <InputGroup size="md" flex="2">
                 <InputLeftAddon>easypastes.tk/pastes/</InputLeftAddon>
@@ -138,7 +145,13 @@ export default function Pastes() {
                 />
               </InputGroup>
             </SignedIn>
-            <Flex justify="center" align="center" my="3" flex="1">
+            <Flex
+              justify="center"
+              align="center"
+              my="3"
+              flex="1"
+              w={matches ? 'full' : 'initial'}
+            >
               <label style={{ marginRight: 8 }}>Visibility: </label>
               <Visibility
                 visibility={visibility}
