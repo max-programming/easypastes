@@ -56,15 +56,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     pasteId += id;
   }
 
-  // Check if _public and _private are defined
-  if (!_public) {
-    _public = true;
-  }
-
-  if (!_private) {
-    _private = false;
-  }
-
   // Add them to supabase
   const { data, error } = await supabaseClient
     .from<PasteType>('Pastes')
