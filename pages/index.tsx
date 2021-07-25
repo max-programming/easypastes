@@ -20,7 +20,6 @@ import Visibility from 'components/CodePastes/Visibility';
 import Layout from 'components/Layout';
 import useSWR from 'swr';
 import useLocalStorage from 'use-local-storage';
-import generateId from 'utils/generateId';
 
 const links = [
   {
@@ -54,7 +53,6 @@ export default function Pastes() {
       _public: visibility === 'public',
       _private: visibility === 'private',
       userId: window.Clerk?.user?.id,
-      pasteId: generateId(),
       hasVanity: false
     });
 
