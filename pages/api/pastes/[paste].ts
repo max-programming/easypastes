@@ -12,7 +12,7 @@ export default async function pasteId(
     .eq('pasteId', req.query.paste);
 
   // Debug logging
-  console.log(pastes);
+  // console.log(pastes);
 
   // Handle error or no pastes
   if (error || !pastes) {

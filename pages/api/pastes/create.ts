@@ -34,7 +34,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (data.length !== 0) {
       res
         .status(400)
-        .send({ message: 'Vanity URL taken. Please try something else.' });
+        .send({ message: 'Custom URL taken. Please try something else.' });
       return;
     }
   } else {

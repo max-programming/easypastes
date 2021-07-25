@@ -15,7 +15,7 @@ export default async function pasteId(
     .limit(8);
 
   // Debug logging
-  console.log(pastes);
+  // console.log(pastes);
 
   // Handle error or no pastes
   if (error || !pastes) {
