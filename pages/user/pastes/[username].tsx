@@ -79,6 +79,7 @@ export default function MyPastes({ pastes, fullName, id, username }: Props) {
         status="info"
         variant="left-accent"
         hidden={!showAlert || !!username}
+        colorScheme="purple"
       >
         Add username in&nbsp;
         <Link href="/user" passHref>

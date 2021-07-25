@@ -8,11 +8,13 @@ import {
   InputGroup,
   InputLeftAddon,
   Box,
-  useToast
+  useToast,
+  Alert,
+  CloseButton
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { FiArrowRight } from 'react-icons/fi';
+import { FiAlertCircle, FiArrowRight } from 'react-icons/fi';
 import { ILanguage, PasteType } from 'types';
 import axios from 'axios';
 
@@ -24,6 +26,8 @@ import Visibility from 'components/CodePastes/Visibility';
 import Layout from 'components/Layout';
 import useSWR from 'swr';
 import useLocalStorage from 'use-local-storage';
+import { SignedIn, SignedOut } from '@clerk/clerk-react';
+import Link from 'next/link';
 
 const links = [
   {
@@ -38,6 +42,7 @@ export default function Pastes() {
   const [code, setCode] = useState('');
   const [title, setTitle] = useState('');
   const [url, setUrl] = useState('');
+  const [showAlert, setShowAlert] = useState(true);
   const [isUrlTaken, setIsUrlTaken] = useState(false);
   const [visibility, setVisibility] = useState('public');
   const [language, setLanguage] = useLocalStorage<ILanguage>(
@@ -85,6 +90,26 @@ export default function Pastes() {
   return (
     <>
       <Layout links={links}>
+        <SignedOut>
+          <Alert
+            status="info"
+            variant="left-accent"
+            hidden={!showAlert}
+            colorScheme="purple"
+          >
+            <FiAlertCircle style={{ marginRight: 5 }} />
+            <Link href="/sign-in">
+              <a>Sign in</a>
+            </Link>
+            &nbsp;to customize the URL of your paste
+            <CloseButton
+              position="absolute"
+              right="8px"
+              top="8px"
+              onClick={() => setShowAlert(false)}
+            />
+          </Alert>
+        </SignedOut>
         <Container maxW="container.xl" my="6">
           {/* Selecting the paste lang */}
           <SelectLanguage language={language} setLanguage={setLanguage} />
@@ -99,17 +124,20 @@ export default function Pastes() {
               theme.colors.purple[200]
             )}
           />
+
           <Flex align="center" justify="center" mt="4">
-            <InputGroup size="md" flex="2">
-              <InputLeftAddon>easypastes.tk/pastes/</InputLeftAddon>
-              <Input
-                placeholder="Custom URL (optional)"
-                focusBorderColor="purple.200"
-                value={url}
-                onChange={e => setUrl(e.target.value)}
-                isInvalid={isUrlTaken}
-              />
-            </InputGroup>
+            <SignedIn>
+              <InputGroup size="md" flex="2">
+                <InputLeftAddon>easypastes.tk/pastes/</InputLeftAddon>
+                <Input
+                  placeholder="Custom URL (optional)"
+                  focusBorderColor="purple.200"
+                  value={url}
+                  onChange={e => setUrl(e.target.value)}
+                  isInvalid={isUrlTaken}
+                />
+              </InputGroup>
+            </SignedIn>
             <Flex justify="center" align="center" my="3" flex="1">
               <label style={{ marginRight: 8 }}>Visibility: </label>
               <Visibility
