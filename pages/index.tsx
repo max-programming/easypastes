@@ -27,7 +27,7 @@ import Visibility from 'components/CodePastes/Visibility';
 import Layout from 'components/Layout';
 import useSWR from 'swr';
 import useLocalStorage from 'use-local-storage';
-import { SignedIn, SignedOut } from '@clerk/clerk-react';
+import { SignedIn, SignedOut, useSession } from '@clerk/clerk-react';
 import Link from 'next/link';
 
 const links = [
@@ -38,6 +38,8 @@ const links = [
 ];
 
 export default function Pastes() {
+  const session = useSession();
+  const sessionId = session?.id;
   const toast = useToast();
   const [matches] = useMediaQuery('(max-width:768px)');
   const { data, error } = useSWR('/api/pastes');
@@ -60,14 +62,17 @@ export default function Pastes() {
     try {
       setLoading(true);
 
-      const res = await axios.post('/api/pastes/create', {
-        code,
-        language,
-        title,
-        _public: visibility === 'public',
-        _private: visibility === 'private',
-        pasteId: url
-      });
+      const res = await axios.post(
+        `/api/pastes/create?_clerk_session_id=${sessionId}`,
+        {
+          code,
+          language,
+          title,
+          _public: visibility === 'public',
+          _private: visibility === 'private',
+          pasteId: url
+        }
+      );
 
       const { data, error } = res.data;
 
