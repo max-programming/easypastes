@@ -18,25 +18,27 @@ An intuitive, amazing and easy to use Code paste service using `Next.JS`
 Clone the project
 
 ```bash
-  git clone https://github.com/max-programming/easypastes
+git clone https://github.com/max-programming/easypastes
 ```
 
 Go to the project directory
 
 ```bash
-  cd easypastes
+cd easypastes
 ```
 
 Install dependencies
 
 ```bash
-  yarn
+yarn
+# or npm install
 ```
 
 Start the server
 
 ```bash
-  npm run dev
+yarn dev
+# or npm run dev
 ```
 
 
