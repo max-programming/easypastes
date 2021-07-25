@@ -66,7 +66,6 @@ export default function Pastes() {
         title,
         _public: visibility === 'public',
         _private: visibility === 'private',
-        userId: window.Clerk?.user?.id,
         pasteId: url
       });
 

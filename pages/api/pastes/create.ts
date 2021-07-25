@@ -2,8 +2,12 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { PasteType } from 'types';
 import supabaseClient from 'utils/supabase';
 import base62Encode from 'utils/encode';
+import { requireSession, RequireSessionProp } from '@clerk/clerk-sdk-node';
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (
+  req: RequireSessionProp<NextApiRequest>,
+  res: NextApiResponse
+) => {
   let chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
   // Allow only POST requests
@@ -13,7 +17,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   /// Get the records from body
-  let { title, code, language, userId, pasteId, _public, _private } = req.body;
+  let { title, code, language, pasteId, _public, _private } = req.body;
 
   // Vanity variable
   let hasVanity = false;
@@ -64,7 +68,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         title,
         code,
         language,
-        userId,
+        userId: req.session.userId,
         pasteId,
         public: _public,
         private: _private
@@ -75,4 +79,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   res.status(200).json({ data, error });
 };
 
-export default handler;
+export default requireSession(handler);
