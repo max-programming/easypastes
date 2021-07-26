@@ -45,7 +45,7 @@ export const SocialButton = ({
 
 export default function Footer() {
   return (
-    <Box bg="gray.900" color="gray.200">
+    <Box bg="gray.900" color="gray.200" fontFamily="Poppins">
       <Container
         as={Stack}
         maxW={'6xl'}
@@ -55,7 +55,9 @@ export default function Footer() {
         justify={{ base: 'center', md: 'space-between' }}
         align={{ base: 'center', md: 'center' }}
       >
-        <Text>© 2021 Easy Pastes. All rights reserved</Text>
+        <Text as="b">
+          © {new Date().getFullYear()} Easy Pastes. All rights reserved.
+        </Text>
         <Stack direction={'row'} spacing={6}>
           <SocialButton
             label={'Twitter'}

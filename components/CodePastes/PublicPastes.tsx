@@ -27,7 +27,7 @@ const PublicPastes = ({ publicPastes }: Props) => {
   return (
     <Box mt="20">
       <Heading as="h2" size="lg" _selection={{ backgroundColor: 'purple.700' }}>
-        Latest public pastes 🌐
+        🌐 Latest public pastes
       </Heading>
       <UnorderedList spacing="4" mt="4">
         {!publicPastes ? (

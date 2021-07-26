@@ -38,12 +38,15 @@ export const getServerSideProps: GetServerSideProps = async context => {
     .select('*')
     // @ts-ignore
     .eq('pasteId', paste);
+
   if (error || pastes.length === 0) {
     return {
       notFound: true
     };
   }
+
   const currentPaste = pastes[0];
+
   if (currentPaste.userId) {
     const { data: users } = await axios.get<Array<User>>(
       'https://api.clerk.dev/v1/users?limit=100',
@@ -76,6 +79,7 @@ const InfoAlert = () => (
 
 const PrivatePaste = ({ paste, currentUser }: Props) => {
   const user = useUser();
+
   return user.id !== paste.userId ? (
     <InfoAlert />
   ) : (
@@ -122,14 +126,12 @@ const Paste = ({ paste, currentUser }: Props) => {
           </>
         ) : (
           <>
-            {paste.title !== '' && (
-              <Heading
-                textAlign="center"
-                _selection={{ backgroundColor: 'purple.700' }}
-              >
-                {paste.title}
-              </Heading>
-            )}
+            <Heading
+              textAlign="center"
+              _selection={{ backgroundColor: 'purple.700' }}
+            >
+              {paste.title ? paste.title : 'Untitled Paste'}
+            </Heading>
             <Heading
               textAlign="center"
               size="md"
