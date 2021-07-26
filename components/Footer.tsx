@@ -56,7 +56,22 @@ export default function Footer() {
         align={{ base: 'center', md: 'center' }}
       >
         <Text as="b">
-          © {new Date().getFullYear()} Easy Pastes. All rights reserved.
+          Made with 💗 by{' '}
+          <a
+            href="https://twitter.com/MaxProgramming1"
+            target="_blank"
+            rel="noreferrer"
+          >
+            @MaxProgramming1
+          </a>{' '}
+          and{' '}
+          <a
+            href="https://twitter.com/janaSunrise"
+            target="_blank"
+            rel="noreferrer"
+          >
+            @janaSunrise
+          </a>
         </Text>
         <Stack direction={'row'} spacing={6}>
           <SocialButton
