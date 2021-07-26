@@ -10,7 +10,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   // Get the records from body
-  const { code, language, title, pasteId, _public, _private } = req.body;
+  const { code, language, title, pasteId, userId, _public, _private } =
+    req.body;
+
+  if (!userId) return res.status(400).send("Can't delete anonymous paste");
 
   // Add them to supabase
   const { data, error } = await supabaseClient
