@@ -52,12 +52,12 @@ export const getServerSideProps: GetServerSideProps = async context => {
     }
   );
   const currentUser = users.find(user => {
-    console.log(user.username);
-    if (!user.username) return user.id === context.params?.username;
-    // @ts-ignore
-    if (context.params?.username.startsWith('_user'))
-      return user.id === context.params?.username;
-    return user.username === context.params?.username;
+    const usernameOrId = context.params?.username;
+    if (typeof usernameOrId === 'string') {
+      if (usernameOrId.startsWith('_user')) return user.id === usernameOrId;
+      if (!user.username) return user.id === usernameOrId;
+      return user.username === usernameOrId;
+    }
   });
   if (!currentUser) {
     return {
