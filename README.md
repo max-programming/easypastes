@@ -41,6 +41,9 @@ yarn dev
 # or npm run dev
 ```
 
+### Configure Clerk
+Check out [this article](https://medium.com/geekculture/mastering-clerk-authentication-with-the-next-js-standard-setup-c66b97bac724) to configure Clerk
+
 
 ## Environment Variables
 
