@@ -1,12 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { requireSession, RequireSessionProp } from '@clerk/clerk-sdk-node';
 import { PasteType } from 'types';
 import supabaseClient from 'utils/supabase';
 
-const handler = async (
-  req: RequireSessionProp<NextApiRequest>,
-  res: NextApiResponse
-) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   // Allow only POST requests
   if (req.method !== 'POST') {
     res.status(400).send({ message: 'Only POST requests allowed.' });
@@ -14,9 +10,7 @@ const handler = async (
   }
 
   // Get the records from body
-  const { pasteId, userId } = req.body;
-  if (req.session.userId !== userId)
-    return res.status(401).send('You are not authorized');
+  const { pasteId } = req.body;
 
   // Add them to supabase
   const { data, error } = await supabaseClient
@@ -32,4 +26,4 @@ const handler = async (
   res.status(200).json({ data, error });
 };
 
-export default requireSession(handler);
+export default handler;

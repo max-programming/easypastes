@@ -91,7 +91,6 @@ const EditPaste = ({ paste }: { paste: PasteType }) => {
       language,
       title,
       pasteId: paste.pasteId,
-      userId: paste.userId,
       _public: visibility === 'public',
       _private: visibility === 'private'
     });

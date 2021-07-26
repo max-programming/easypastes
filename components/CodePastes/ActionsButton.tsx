@@ -39,8 +39,7 @@ const DeleteModal = ({
   const deletePaste = async () => {
     setIsLoading(true);
     await axios.post('/api/pastes/delete', {
-      pasteId: paste.pasteId,
-      userId: paste.userId
+      pasteId: paste.pasteId
     });
     await router.push('/');
     setIsLoading(false);

@@ -27,7 +27,7 @@ import Visibility from 'components/CodePastes/Visibility';
 import Layout from 'components/Layout';
 import useSWR from 'swr';
 import useLocalStorage from 'use-local-storage';
-import { SignedIn, SignedOut, useSession } from '@clerk/clerk-react';
+import { SignedIn, SignedOut, useSession, useUser } from '@clerk/clerk-react';
 import Link from 'next/link';
 
 const links = [
@@ -179,26 +179,25 @@ const SignedInButton = ({
   toast,
   setIsUrlTaken
 }: ButtonProps) => {
-  const session = useSession();
+  // const session = useSession();
+  const user = useUser();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const sessionId = session?.id;
+  // const sessionId = session?.id;
   const handleClick = async () => {
     if (code.trim() === '') return;
     try {
       setLoading(true);
 
-      const res = await axios.post(
-        `/api/pastes/create?_clerk_session_id=${sessionId}`,
-        {
-          code,
-          language,
-          title,
-          _public: visibility === 'public',
-          _private: visibility === 'private',
-          pasteId: url
-        }
-      );
+      const res = await axios.post(`/api/pastes/create`, {
+        code,
+        language,
+        title,
+        _public: visibility === 'public',
+        _private: visibility === 'private',
+        userId: user.id,
+        pasteId: url
+      });
 
       const { data, error } = res.data;
 
