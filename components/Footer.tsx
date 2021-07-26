@@ -55,7 +55,24 @@ export default function Footer() {
         justify={{ base: 'center', md: 'space-between' }}
         align={{ base: 'center', md: 'center' }}
       >
-        <Text>© 2021 Easy Pastes. All rights reserved</Text>
+        <Text>
+          Made with 💗 by{' '}
+          <a
+            href="https://twitter.com/MaxProgramming1"
+            target="_blank"
+            rel="noreferrer"
+          >
+            @MaxProgramming1
+          </a>{' '}
+          and{' '}
+          <a
+            href="https://twitter.com/janaSunrise"
+            target="_blank"
+            rel="noreferrer"
+          >
+            @janaSunrise
+          </a>
+        </Text>
         <Stack direction={'row'} spacing={6}>
           <SocialButton
             label={'Twitter'}
