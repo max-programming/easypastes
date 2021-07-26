@@ -7,7 +7,8 @@ import {
   Tag,
   Skeleton,
   SkeletonText,
-  Stack
+  Stack,
+  Text
 } from '@chakra-ui/react';
 import { PasteType } from 'types';
 import NextLink from 'next/link';
@@ -25,7 +26,7 @@ const PublicPastes = ({ publicPastes }: Props) => {
   const timeAgo = new TimeAgo();
   return (
     <Box mt="20">
-      <Heading as="h2" size="lg">
+      <Heading as="h2" size="lg" _selection={{ backgroundColor: 'purple.700' }}>
         Latest public pastes 🌐
       </Heading>
       <UnorderedList spacing="4" mt="4">
@@ -41,14 +42,14 @@ const PublicPastes = ({ publicPastes }: Props) => {
           publicPastes.map(paste => (
             <ListItem key={paste.id} fontSize="lg">
               {paste.title ? (
-                <Link as={NextLink} href={`/pastes/${paste.pasteId}`}>
-                  <a>
+                <Link as={NextLink} href={`/pastes/${paste.pasteId}`} passHref>
+                  <Text as="a" _selection={{ backgroundColor: 'purple.700' }}>
                     {paste.title} -{' '}
                     <Tag variant="solid" colorScheme="purple">
                       {paste.language} |{' '}
                       {timeAgo.format(zonedTimeToUtc(paste.createdAt, 'gmt'))}
                     </Tag>
-                  </a>
+                  </Text>
                 </Link>
               ) : (
                 <Link as={NextLink} href={`/pastes/${paste.pasteId}`}>

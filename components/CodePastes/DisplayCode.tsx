@@ -54,6 +54,7 @@ const DisplayCode = ({ paste, language }: Props) => {
                     <Box
                       as="span"
                       key={key}
+                      _selection={{ backgroundColor: 'blue.900' }}
                       {...getTokenProps({ token, key })}
                     />
                   ))}

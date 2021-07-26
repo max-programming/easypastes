@@ -106,7 +106,11 @@ export default function MyPastes({ pastes, fullName, id, username }: Props) {
         />
       </Alert>
       <Container maxW="container.xl" mt="6">
-        <Heading textAlign="center" size="lg">
+        <Heading
+          textAlign="center"
+          size="lg"
+          _selection={{ backgroundColor: 'purple.700' }}
+        >
           Pastes by {fullName}
         </Heading>
         <WithUser>

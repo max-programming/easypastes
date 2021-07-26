@@ -81,10 +81,20 @@ const PrivatePaste = ({ paste, currentUser }: Props) => {
   ) : (
     <>
       {paste.title !== '' && (
-        <Heading textAlign="center">{paste.title}</Heading>
+        <Heading
+          textAlign="center"
+          _selection={{ backgroundColor: 'purple.700' }}
+        >
+          {paste.title}
+        </Heading>
       )}
       {typeof currentUser !== 'string' && (
-        <Heading textAlign="center" size="md" mt="2">
+        <Heading
+          textAlign="center"
+          size="md"
+          mt="2"
+          _selection={{ backgroundColor: 'purple.700' }}
+        >
           By&nbsp;
           <Link href={`/user/pastes/${currentUser.id}`}>
             <a>{`${currentUser.first_name} ${currentUser.last_name}`}</a>
@@ -113,9 +123,19 @@ const Paste = ({ paste, currentUser }: Props) => {
         ) : (
           <>
             {paste.title !== '' && (
-              <Heading textAlign="center">{paste.title}</Heading>
+              <Heading
+                textAlign="center"
+                _selection={{ backgroundColor: 'purple.700' }}
+              >
+                {paste.title}
+              </Heading>
             )}
-            <Heading textAlign="center" size="md" mt="2">
+            <Heading
+              textAlign="center"
+              size="md"
+              mt="2"
+              _selection={{ backgroundColor: 'purple.700' }}
+            >
               By&nbsp;
               {typeof currentUser !== 'string' ? (
                 <Link href={`/user/pastes/${currentUser.id}`}>
