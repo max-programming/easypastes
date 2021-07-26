@@ -172,7 +172,7 @@ const MobileNav = () => {
         {user => (
           <MobileNavItem
             label="My Pastes"
-            href={`/user/pastes/${user.username}`}
+            href={`/user/pastes/${!user.username ? user.id : user.username}`}
           />
         )}
       </WithUser>
