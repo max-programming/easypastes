@@ -1,4 +1,5 @@
 const config = {
+  title: 'Easy Pastes - Easiest Way to create and share code pastes',
   description: `Use Easy Pastes to create, store, share code snippets by simply pasting them with syntax highlight.`,
   additionalMetaTags: [
     {
@@ -25,6 +26,7 @@ const config = {
     type: 'website',
     locale: 'en_US',
     url: 'https://easypastes.tk',
+    title: 'Easy Pastes - Easiest Way to create and share code pastes',
     description: `Use Easy Pastes to create, store, share code snippets by simply pasting them with syntax highlight.`,
     images: [
       {
