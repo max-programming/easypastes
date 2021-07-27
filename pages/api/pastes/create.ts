@@ -17,6 +17,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   /// Get the records from body
   let { title, code, language, userId, pasteId, _public, _private } = req.body;
 
+  if (code.trim() === '') return res.status(400).send('Code cannot be blank.');
+  if (_public && _private)
+    return res.status(400).send('Paste cannot be public and private.');
+  if (_private && !userId)
+    return res.status(400).send('Sign in to create a private paste.');
+  if (language.trim() === '') language = 'none';
   // Vanity variable
   let hasVanity = false;
 

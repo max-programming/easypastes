@@ -11,7 +11,8 @@ import {
   useToast,
   Alert,
   CloseButton,
-  useMediaQuery
+  useMediaQuery,
+  UseToastOptions
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useState } from 'react';
@@ -43,7 +44,7 @@ interface ButtonProps {
   title: string;
   visibility: string;
   url: string;
-  toast: any;
+  toast: (options?: UseToastOptions) => string | number;
   setIsUrlTaken: Dispatch<SetStateAction<boolean>>;
 }
 
@@ -64,7 +65,13 @@ const SignedInButton = ({
   const [loading, setLoading] = useState(false);
   // const sessionId = session?.id;
   const handleClick = async () => {
-    if (code.trim() === '') return;
+    if (code.trim() === '') {
+      return toast({
+        title: "Code can't be blank.",
+        status: 'error',
+        isClosable: true
+      });
+    }
     try {
       setLoading(true);
 
@@ -125,7 +132,13 @@ const SignedOutButton = ({
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const handleClick = async () => {
-    if (code.trim() === '') return;
+    if (code.trim() === '') {
+      return toast({
+        title: "Code can't be blank.",
+        status: 'error',
+        isClosable: true
+      });
+    }
     try {
       setLoading(true);
 
@@ -188,7 +201,6 @@ const Pastes = () => {
     'language',
     'none'
   );
-
   const router = useRouter();
 
   return (
