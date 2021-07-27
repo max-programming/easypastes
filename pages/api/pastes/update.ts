@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { PasteType } from 'types';
 import supabaseClient from 'utils/supabase';
+import filterBadWords from 'utils/filterBadWords';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   // Allow only POST requests
@@ -21,7 +22,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     .update({
       code,
       language,
-      title,
+      title: filterBadWords(title),
       public: _public,
       private: _private
     })
