@@ -2,9 +2,11 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { PasteType } from 'types';
 import supabaseClient from 'utils/supabase';
 import base62Encode from 'utils/encode';
+import filterBadWords from 'utils/filterBadWords';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  let chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const chars =
+    '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
   // Allow only POST requests
   if (req.method !== 'POST') {
@@ -19,7 +21,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   let hasVanity = false;
 
   // Check if it has vanity
-  if (pasteId) {
+  if (pasteId.trim() !== '') {
     hasVanity = true;
   }
 
@@ -31,12 +33,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       .eq('pasteId', pasteId);
 
     // Is vanity taken?
-    if (data.length !== 0) {
-      res
+    if (data.length !== 0)
+      return res
         .status(400)
         .send({ message: 'Custom URL taken. Please try something else.' });
-      return;
-    }
+
+    pasteId = filterBadWords(pasteId);
   } else {
     const { data, error, count } = await supabaseClient
       .from<PasteType>('Pastes')
@@ -61,7 +63,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     .from<PasteType>('Pastes')
     .insert([
       {
-        title,
+        title: filterBadWords(title),
         code,
         language,
         userId,

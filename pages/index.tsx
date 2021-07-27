@@ -180,7 +180,7 @@ const Pastes = () => {
   const { data, error } = useSWR('/api/pastes');
   const [code, setCode] = useState('');
   const [title, setTitle] = useState('');
-  const [url, setUrl] = useState('');
+  const [url, setUrl] = useState<string>(null);
   const [showAlert, setShowAlert] = useState(true);
   const [isUrlTaken, setIsUrlTaken] = useState(false);
   const [visibility, setVisibility] = useState('public');
@@ -295,6 +295,6 @@ const Pastes = () => {
       </Layout>
     </>
   );
-}
+};
 
 export default Pastes;
