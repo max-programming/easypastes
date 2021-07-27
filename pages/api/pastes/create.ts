@@ -96,7 +96,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     let id = '';
 
-    if (pasteId.length < 2) {
+    if (pasteId.length <= 2) {
       id = generateRandomString(3);
     }
 
