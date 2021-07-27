@@ -6,7 +6,7 @@ import filterBadWords from 'utils/filterBadWords';
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   // Allow only POST requests
   if (req.method !== 'POST') {
-    res.status(400).send({ message: 'Only POST requests allowed.' });
+    res.status(400).json({ message: 'Only POST requests allowed.' });
     return;
   }
 
@@ -14,7 +14,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { code, language, title, pasteId, userId, _public, _private } =
     req.body;
 
-  if (!userId) return res.status(400).send("Can't delete anonymous paste");
+  if (!userId) {
+    return res.status(400).json({ message: "Can't delete anonymous paste" });
+  }
 
   // Add them to supabase
   const { data, error } = await supabaseClient
@@ -33,7 +35,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   console.log(error);
 
   // Send back the responses.
-  res.status(200).json({ data, error });
+  res.json({ data, error });
 };
 
 export default handler;

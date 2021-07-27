@@ -4,25 +4,59 @@ import supabaseClient from 'utils/supabase';
 import base62Encode from 'utils/encode';
 import filterBadWords from 'utils/filterBadWords';
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const chars =
-    '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+// Variables
+const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
+const generateRandomString = (numLetters: number) => {
+  let id = '';
+  let charsLen = chars.length;
+
+  for (let i = 0; i <= numLetters; i++) {
+    id += chars.charAt(Math.floor(Math.random() * charsLen));
+  }
+
+  return id;
+};
+
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   // Allow only POST requests
   if (req.method !== 'POST') {
-    res.status(400).send({ message: 'Only POST requests allowed.' });
+    res.status(400).json({ message: 'Only POST requests allowed.' });
     return;
   }
 
   /// Get the records from body
-  let { title, code, language, userId, pasteId, _public, _private } = req.body;
+  let {
+    title,
+    code,
+    language,
+    userId,
+    pasteId,
+    pastePassword,
+    _public,
+    _private
+  } = req.body;
 
-  if (code.trim() === '') return res.status(400).send('Code cannot be blank.');
-  if (_public && _private)
-    return res.status(400).send('Paste cannot be public and private.');
-  if (_private && !userId)
-    return res.status(400).send('Sign in to create a private paste.');
-  if (language.trim() === '') language = 'none';
+  if (code.trim() === '') {
+    return res.status(400).json({ message: 'Code cannot be blank.' });
+  }
+
+  if (_public && _private) {
+    return res
+      .status(400)
+      .json({ message: 'Paste cannot be public and private.' });
+  }
+
+  if (_private && !userId) {
+    return res
+      .status(400)
+      .json({ message: 'Sign in to create a private paste.' });
+  }
+
+  if (language.trim() === '') {
+    language = 'none';
+  }
+
   // Vanity variable
   let hasVanity = false;
 
@@ -42,7 +76,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (data.length !== 0)
       return res
         .status(400)
-        .send({ message: 'Custom URL taken. Please try something else.' });
+        .json({ message: 'Custom URL taken. Please try something else.' });
+
     pasteId = filterBadWords(pasteId);
   } else {
     const { data, error, count } = await supabaseClient
@@ -52,16 +87,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     pasteId = base62Encode(count!);
 
     let id = '';
-    let charsLen = chars.length;
 
     if (pasteId.length < 2) {
-      for (let i = 0; i <= 3; i++) {
-        id += chars.charAt(Math.floor(Math.random() * charsLen));
-      }
+      id = generateRandomString(3);
     }
 
     pasteId += id;
   }
+
   // Add them to supabase
   const { data, error } = await supabaseClient
     .from<PasteType>('Pastes')
@@ -78,7 +111,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     ]);
 
   // Send back the responses.
-  res.status(200).json({ data, error });
+  res.json({ data, error });
 };
 
 export default handler;
