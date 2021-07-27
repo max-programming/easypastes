@@ -202,7 +202,7 @@ const Pastes = () => {
     'none'
   );
   const router = useRouter();
-
+  console.log({ data });
   return (
     <>
       <Layout links={links}>
@@ -302,7 +302,7 @@ const Pastes = () => {
               setIsUrlTaken={setIsUrlTaken}
             />
           </SignedOut>
-          <PublicPastes publicPastes={data} />
+          <PublicPastes publicPastes={data && data.pastes} />
         </Container>
       </Layout>
     </>

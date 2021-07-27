@@ -32,8 +32,8 @@ const PublicPastes = ({ publicPastes }: Props) => {
       <UnorderedList spacing="4" mt="4">
         {!publicPastes ? (
           <Stack>
-            {[...Array(8)].map(v => (
-              <ListItem key={v} fontSize="lg">
+            {[...Array(8)].map((v, i) => (
+              <ListItem key={i} fontSize="lg">
                 <Skeleton h="25px" />
               </ListItem>
             ))}
