@@ -21,7 +21,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   let hasVanity = false;
 
   // Check if it has vanity
-  if (pasteId.trim() !== '') {
+  if (pasteId && pasteId.trim() !== '') {
     hasVanity = true;
   }
 
@@ -37,7 +37,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       return res
         .status(400)
         .send({ message: 'Custom URL taken. Please try something else.' });
-
     pasteId = filterBadWords(pasteId);
   } else {
     const { data, error, count } = await supabaseClient
@@ -57,7 +56,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     pasteId += id;
   }
-
   // Add them to supabase
   const { data, error } = await supabaseClient
     .from<PasteType>('Pastes')
