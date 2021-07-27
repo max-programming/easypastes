@@ -13,7 +13,7 @@ An intuitive, amazing and easy to use Code paste service using `Next.JS`
 
 A sneak peak to the app
 
-![app.gif](https://cdn.hashnode.com/res/hashnode/image/upload/v1627288153998/46OuiA3Mf.gif?auto=format,compress&gif-q=60&format=webm)
+<img src="./public/easypastes.gif">
 
 ## Tech Stack
 
