@@ -11,10 +11,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   // Get the records from body
-  const { code, language, title, pasteId, userId, _public, _private } =
-    req.body;
+  let { code, language, title, pasteId, userId, _public, _private } = req.body;
 
   if (!userId) return res.status(400).send("Can't delete anonymous paste");
+  if (code.trim() === '') return res.status(400).send('Code cannot be blank.');
+  if (_public && _private)
+    return res.status(400).send('Paste cannot be public and private.');
+  if (_private && !userId)
+    return res.status(400).send('Sign in to create a private paste.');
+  if (language.trim() === '') language = 'none';
 
   // Add them to supabase
   const { data, error } = await supabaseClient
