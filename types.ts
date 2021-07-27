@@ -10,6 +10,7 @@ export interface PasteType {
   createdAt: string;
   userId: string | null;
   pasteId: string;
+  pastePassword: string | null;
   hasVanity: boolean;
 }
 

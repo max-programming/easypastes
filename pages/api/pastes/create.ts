@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import bcrypt from 'bcryptjs';
 import { PasteType } from 'types';
 import supabaseClient from 'utils/supabase';
 import base62Encode from 'utils/encode';
@@ -6,6 +7,7 @@ import filterBadWords from 'utils/filterBadWords';
 
 // Variables
 const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const salt = bcrypt.genSaltSync(10);
 
 const generateRandomString = (numLetters: number) => {
   let id = '';
@@ -57,12 +59,18 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     language = 'none';
   }
 
-  // Vanity variable
+  // Variables
   let hasVanity = false;
+  let hasPassword = false;
 
   // Check if it has vanity
   if (pasteId && pasteId.trim() !== '') {
     hasVanity = true;
+  }
+
+  // Check if password exists
+  if (pastePassword && pastePassword.trim() !== '') {
+    hasPassword = true;
   }
 
   // If it has vanity, Verify if it's not taken.
@@ -95,6 +103,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     pasteId += id;
   }
 
+  if(hasPassword){
+    pastePassword = bcrypt.hashSync(pastePassword, salt);
+  }
+
   // Add them to supabase
   const { data, error } = await supabaseClient
     .from<PasteType>('Pastes')
@@ -105,6 +117,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         language,
         userId,
         pasteId,
+        pastePassword,
         public: _public,
         private: _private
       }

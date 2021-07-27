@@ -16,9 +16,9 @@ export default async function pasteId(
 
   // Handle error or no pastes
   if (error || !pastes) {
-    return res.send(error);
+    return res.status(400).json({ error });
   }
 
   // Send the paste as response
-  res.send(pastes[0]);
+  res.json({ paste: pastes[0] });
 }
