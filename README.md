@@ -1,10 +1,17 @@
-![Logo](https://easypastes.tk/logo.png)
-
-# Easy Pastes
+<p align='center'>
+  <a href="https://easypastes.tk">
+    <img src="https://easypastes.tk/logo.png" height="128">
+    <h1 align="center">Easy Pastes</h1>
+  </a>
+</p>
 
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSEs)
 
 An intuitive, amazing and easy to use Code paste service using `Next.JS`
+
+A sneak peak to the app
+
+<img src="./public/easypastes.gif">
 
 ## Tech Stack
 
