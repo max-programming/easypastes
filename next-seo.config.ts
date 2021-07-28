@@ -49,8 +49,11 @@ const config = {
     imageHeight: 1200
   },
   twitter: {
-    handle: '@MaxProgramming1',
-    cardType: 'summary'
+    creator: '@MaxProgramming1',
+    cardType: 'summary',
+    image: 'https://easypastes.tk/logo.png',
+    title: 'Easy Pastes - Easiest Way to create and share code pastes',
+    url: 'https://easypastes.tk'
   }
 };
 
