@@ -9,6 +9,10 @@ const config = {
     {
       name: 'google-site-verification',
       content: 'NdkMJQSa7meePpnwqOlgUDjoKAj8_o6G2rYH-B-1Wwo'
+    },
+    {
+      name: 'theme-color',
+      content: '#1A202C'
     }
   ],
   additionalLinkTags: [
@@ -20,6 +24,10 @@ const config = {
       rel: 'apple-touch-icon',
       href: '/logo.png',
       sizes: '100x100'
+    },
+    {
+      rel: 'manifest',
+      href: '/manifest.json'
     }
   ],
   openGraph: {
