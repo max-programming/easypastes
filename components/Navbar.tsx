@@ -21,7 +21,7 @@ import { useRouter } from 'next/router';
 import { HiMenu, HiX } from 'react-icons/hi';
 import Image from 'next/image';
 import { SocialButton } from './Footer';
-import { FaGithub, FaBlog } from 'react-icons/fa';
+import { FaGithub, FaReadme } from 'react-icons/fa';
 
 export default function WithSubnavigation() {
   const router = useRouter();
@@ -88,7 +88,7 @@ export default function WithSubnavigation() {
             label="About - Blog Post"
             href="https://blog.usman-s.me/introducing-easy-pastes-easiest-way-to-create-and-share-code-pastes"
           >
-            <FaBlog />
+            <FaReadme />
           </SocialButton>
           <SignedIn>
             <UserButton />
