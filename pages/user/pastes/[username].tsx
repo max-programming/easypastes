@@ -25,6 +25,7 @@ import { SignedOut, WithUser } from '@clerk/clerk-react';
 import axios from 'axios';
 import useLocalStorage from 'use-local-storage';
 import Link from 'next/link';
+import NoPastes from 'components/CodePastes/NoPastes';
 
 const links = [
   {
@@ -113,60 +114,71 @@ export default function MyPastes({ pastes, fullName, id, username }: Props) {
         >
           Pastes by {fullName}
         </Heading>
-        <WithUser>
-          {user =>
-            user.id === id ? (
-              <Tabs colorScheme="purple" mt="6">
-                <TabList>
-                  <Tab>
-                    <HiOutlineViewList /> &nbsp; All
-                  </Tab>
-                  <Tab>
-                    <HiOutlineEye /> &nbsp; Public
-                  </Tab>
-                  <Tab>
-                    <HiOutlineLockClosed /> &nbsp; Private
-                  </Tab>
-                  <Tab>
-                    <HiOutlineLink /> &nbsp; Unlisted
-                  </Tab>
-                </TabList>
-                <TabPanels>
-                  <TabPanel>
-                    {pastes.map(paste => (
-                      <Paste paste={paste} key={paste.id} />
-                    ))}
-                  </TabPanel>
-                  <TabPanel>
-                    {pastes
-                      .filter(p => p.public)
-                      .map(paste => (
+        {pastes.length === 0 ? (
+          <NoPastes />
+        ) : (
+          <WithUser>
+            {user =>
+              user.id === id ? (
+                <Tabs colorScheme="purple" mt="6">
+                  <TabList>
+                    <Tab>
+                      <HiOutlineViewList /> &nbsp; All
+                    </Tab>
+                    <Tab>
+                      <HiOutlineEye /> &nbsp; Public
+                    </Tab>
+                    <Tab>
+                      <HiOutlineLockClosed /> &nbsp; Private
+                    </Tab>
+                    <Tab>
+                      <HiOutlineLink /> &nbsp; Unlisted
+                    </Tab>
+                  </TabList>
+                  <TabPanels>
+                    <TabPanel>
+                      {pastes.map(paste => (
                         <Paste paste={paste} key={paste.id} />
                       ))}
-                  </TabPanel>
-                  <TabPanel>
-                    {pastes
-                      .filter(p => p.private)
-                      .map(paste => (
-                        <Paste paste={paste} key={paste.id} />
-                      ))}
-                  </TabPanel>
-                  <TabPanel>
-                    {pastes
-                      .filter(p => !p.private && !p.public)
-                      .map(paste => (
-                        <Paste paste={paste} key={paste.id} />
-                      ))}
-                  </TabPanel>
-                </TabPanels>
-              </Tabs>
-            ) : (
-              pastes
-                .filter(p => p.public)
-                .map(paste => <Paste paste={paste} key={paste.id} />)
-            )
-          }
-        </WithUser>
+                    </TabPanel>
+                    <TabPanel>
+                      {pastes.filter(p => p.public).length === 0 ? (
+                        <NoPastes />
+                      ) : (
+                        pastes
+                          .filter(p => p.public)
+                          .map(paste => <Paste paste={paste} key={paste.id} />)
+                      )}
+                    </TabPanel>
+                    <TabPanel>
+                      {pastes.filter(p => p.private).length === 0 ? (
+                        <NoPastes />
+                      ) : (
+                        pastes
+                          .filter(p => p.private)
+                          .map(paste => <Paste paste={paste} key={paste.id} />)
+                      )}
+                    </TabPanel>
+                    <TabPanel>
+                      {pastes.filter(p => !p.private && !p.public).length ===
+                      0 ? (
+                        <NoPastes />
+                      ) : (
+                        pastes
+                          .filter(p => !p.private && !p.public)
+                          .map(paste => <Paste paste={paste} key={paste.id} />)
+                      )}
+                    </TabPanel>
+                  </TabPanels>
+                </Tabs>
+              ) : (
+                pastes
+                  .filter(p => p.public)
+                  .map(paste => <Paste paste={paste} key={paste.id} />)
+              )
+            }
+          </WithUser>
+        )}
         <SignedOut>
           {pastes
             .filter(p => p.public)
