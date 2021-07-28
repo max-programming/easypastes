@@ -63,7 +63,7 @@ export default function WithSubnavigation() {
               fontFamily={'heading'}
               color={useColorModeValue('gray.800', 'white')}
             >
-              <Image src="/logo.png" width={35} height={35} />
+              <Image src="/logo.png" width={35} height={35} alt="logo" />
             </Text>
           </NextLink>
 

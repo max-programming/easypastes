@@ -1,0 +1,22 @@
+{
+  "short_name": "Easy Pastes",
+  "name": "Easy Pastes - Easiest Way to create and share code pastes",
+  "icons": [
+    {
+      "src": "/logo-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/logo-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#1A202C",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#1A202C",
+  "description": "Use Easy Pastes to create, store, share code snippets by simply pasting them with syntax highlight."
+}
