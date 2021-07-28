@@ -114,7 +114,7 @@ const PrivatePaste = ({ paste, currentUser }: Props) => {
 const Paste = ({ paste, currentUser }: Props) => {
   return (
     <Layout title={paste.title || 'Paste'} links={links}>
-      <Container maxW="full" my="6">
+      <Container maxW="6xl" my="6">
         {paste.private ? (
           <>
             <SignedIn>
