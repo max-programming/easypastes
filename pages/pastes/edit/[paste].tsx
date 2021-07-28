@@ -14,7 +14,7 @@ import {
 } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import { PasteType, User } from 'types';
-import { SignedIn, SignedOut, useUser } from '@clerk/clerk-react';
+import { SignedIn, SignedOut, useUser, WithUser } from '@clerk/clerk-react';
 import { motion } from 'framer-motion';
 import InputCode from 'components/CodePastes/InputCode';
 import { useState } from 'react';
@@ -48,13 +48,14 @@ export const getServerSideProps: GetServerSideProps = async context => {
     .select('*')
     // @ts-ignore
     .eq('pasteId', paste);
-
-  console.error(error);
-
-  if (error)
+  if (error || pastes.length === 0) {
     return {
       notFound: true
     };
+  }
+
+  console.error(error);
+
   return {
     props: { paste: pastes[0] }
   };
@@ -131,9 +132,15 @@ const Paste = ({ paste }: Props) => {
     <Layout title={paste.title || 'Paste'} links={links}>
       <Container maxW="full" my="6">
         <>
-          <SignedIn>
-            <EditPaste paste={paste} />
-          </SignedIn>
+          <WithUser>
+            {user =>
+              user.id === paste.userId ? (
+                <EditPaste paste={paste} />
+              ) : (
+                <InfoAlert />
+              )
+            }
+          </WithUser>
           <SignedOut>
             <InfoAlert />
           </SignedOut>

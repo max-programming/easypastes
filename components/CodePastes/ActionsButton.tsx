@@ -100,7 +100,7 @@ const ActionsButton = ({ paste }: Props) => {
             icon={<FiMoreHorizontal />}
             variant="ghost"
             colorScheme="purple"
-            size="lg"
+            size="sm"
           />
           <MenuList>
             <MenuItem icon={<FiCopy />} onClick={copyCode}>
