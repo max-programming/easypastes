@@ -21,7 +21,7 @@ import { useRouter } from 'next/router';
 import { HiMenu, HiX } from 'react-icons/hi';
 import Image from 'next/image';
 import { SocialButton } from './Footer';
-import { FaGithub } from 'react-icons/fa';
+import { FaGithub, FaBlog } from 'react-icons/fa';
 
 export default function WithSubnavigation() {
   const router = useRouter();
@@ -83,6 +83,12 @@ export default function WithSubnavigation() {
             href="https://github.com/max-programming/easypastes"
           >
             <FaGithub />
+          </SocialButton>
+          <SocialButton
+            label="About - Blog Post"
+            href="https://blog.usman-s.me/introducing-easy-pastes-easiest-way-to-create-and-share-code-pastes"
+          >
+            <FaBlog />
           </SocialButton>
           <SignedIn>
             <UserButton />
