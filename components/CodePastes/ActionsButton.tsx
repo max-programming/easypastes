@@ -98,8 +98,9 @@ const ActionsButton = ({ paste }: Props) => {
             as={IconButton}
             aria-label="Options"
             icon={<FiMoreHorizontal />}
-            variant="outline"
-            size="sm"
+            variant="ghost"
+            colorScheme="purple"
+            size="lg"
           />
           <MenuList>
             <MenuItem icon={<FiCopy />} onClick={copyCode}>
