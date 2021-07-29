@@ -22,7 +22,7 @@ import { WithUser } from '@clerk/clerk-react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { FiCopy, FiEdit2, FiMoreHorizontal, FiTrash2 } from 'react-icons/fi';
+import { FiCopy, FiEdit2, FiLink2, FiMoreHorizontal, FiTrash2 } from 'react-icons/fi';
 import { PasteType } from 'types';
 
 interface Props {
@@ -84,7 +84,12 @@ const ActionsButton = ({ paste }: Props) => {
   const copyCode = () => {
     // Rewrite this for cross-browser support
     navigator.clipboard.writeText(paste.code);
-    toast({ title: 'Copied', status: 'success', isClosable: true });
+    toast({ title: 'Code copied', status: 'success', isClosable: true });
+  };
+  const copyLink = () => {
+    // Rewrite this for cross-browser support
+    navigator.clipboard.writeText(`https://easypastes.tk/pastes/${paste.pasteId}`);
+    toast({ title: 'Link copied', status: 'success', isClosable: true });
   };
   const editCode = () => {
     router.push(`/pastes/edit/${paste.pasteId}`);
@@ -103,8 +108,11 @@ const ActionsButton = ({ paste }: Props) => {
             size="sm"
           />
           <MenuList>
+            <MenuItem icon={<FiLink2 />} onClick={copyLink}>
+              Copy link
+            </MenuItem>
             <MenuItem icon={<FiCopy />} onClick={copyCode}>
-              Copy
+              Copy code
             </MenuItem>
             <WithUser>
               {user => (
