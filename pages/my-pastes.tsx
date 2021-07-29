@@ -8,7 +8,8 @@ import {
   TabPanel,
   Alert,
   CloseButton,
-  Text
+  Text,
+  useMediaQuery
 } from '@chakra-ui/react';
 import {
   HiOutlineViewList,
@@ -59,6 +60,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
 
 function MyPastes({ allPastes, user }: Props) {
   const [showAlert, setShowAlert] = useLocalStorage('username-alert', false);
+  const [matches] = useMediaQuery('(max-width: 768px)');
   // const user = useUser();
   const pastes = allPastes.filter(paste => paste.userId === user.id);
   return (
@@ -89,7 +91,7 @@ function MyPastes({ allPastes, user }: Props) {
               title="Remove alert"
             />
           </Alert>
-          <Container maxW="container.xl" mt="6">
+          <Container maxW="3xl" mt="6">
             <Heading
               textAlign="center"
               size="lg"
@@ -100,19 +102,48 @@ function MyPastes({ allPastes, user }: Props) {
             {pastes.length === 0 ? (
               <NoPastes />
             ) : (
-              <Tabs colorScheme="purple" mt="6">
+              <Tabs
+                isFitted
+                variant="solid-rounded"
+                colorScheme="purple"
+                mt="6"
+              >
                 <TabList>
                   <Tab>
-                    <HiOutlineViewList /> &nbsp; All
+                    {matches ? (
+                      <HiOutlineViewList />
+                    ) : (
+                      <>
+                        <HiOutlineViewList /> &nbsp; All
+                      </>
+                    )}
                   </Tab>
                   <Tab>
-                    <HiOutlineEye /> &nbsp; Public
+                    {matches ? (
+                      <HiOutlineEye />
+                    ) : (
+                      <>
+                        <HiOutlineEye /> &nbsp; Public
+                      </>
+                    )}
                   </Tab>
                   <Tab>
-                    <HiOutlineLockClosed /> &nbsp; Private
+                    {matches ? (
+                      <HiOutlineLockClosed />
+                    ) : (
+                      <>
+                        <HiOutlineLockClosed /> &nbsp; Private
+                      </>
+                    )}
                   </Tab>
                   <Tab>
-                    <HiOutlineLink /> &nbsp; Unlisted
+                    {matches ? (
+                      <HiOutlineLink />
+                    ) : (
+                      <>
+                        <HiOutlineLink /> &nbsp; Unlisted
+                      </>
+                    )}
                   </Tab>
                 </TabList>
                 <TabPanels>
