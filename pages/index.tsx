@@ -74,7 +74,8 @@ const SignedInButton = ({
       return toast({
         title: "Code can't be blank.",
         status: 'error',
-        isClosable: true
+        isClosable: true,
+        position: 'top-right'
       });
     }
     try {
@@ -104,7 +105,8 @@ const SignedInButton = ({
         toast({
           title: error.response.data.message,
           status: 'error',
-          isClosable: true
+          isClosable: true,
+          position: 'top-right'
         });
       }
     }
@@ -142,7 +144,8 @@ const SignedOutButton = ({
       return toast({
         title: "Code can't be blank.",
         status: 'error',
-        isClosable: true
+        isClosable: true,
+        position: 'top-right'
       });
     }
     try {
@@ -170,7 +173,8 @@ const SignedOutButton = ({
         toast({
           title: error.response.data.message,
           status: 'error',
-          isClosable: true
+          isClosable: true,
+          position: 'top-right'
         });
       }
     }
