@@ -172,10 +172,15 @@ const Paste = ({ paste, currentUser }: Props) => {
             <DisplayCode paste={paste} language={paste.language} />
           </>
         ) : (
-          <EnterPassword
-            pastePwd={paste.pastePassword}
-            setIsCorrectPassword={val => setIsCorrectPassword(val)}
-          />
+          <>
+            <Heading size="md" textAlign="center" mb="5">
+              This paste is password protected. Enter the password to view it
+            </Heading>
+            <EnterPassword
+              pastePwd={paste.pastePassword}
+              setIsCorrectPassword={val => setIsCorrectPassword(val)}
+            />
+          </>
         )}
       </Container>
     </Layout>
@@ -198,7 +203,12 @@ const EnterPassword = ({
     const matches = bcrypt.compareSync(password, pastePwd);
     if (matches) setIsCorrectPassword(true);
     else {
-      toast({ title: 'Incorrect password', status: 'error', isClosable: true });
+      toast({
+        title: 'Incorrect password',
+        status: 'error',
+        isClosable: true,
+        position: 'top-right'
+      });
       setIsCorrectPassword(false);
     }
   };
