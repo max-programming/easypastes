@@ -15,9 +15,8 @@
   ],
   "shortcuts": [
     {
-      "name": "Open Play Later",
-      "short_name": "Play Later",
-      "description": "View the list of podcasts you saved for later",
+      "name": "Open My Pastes",
+      "short_name": "My Pastes",
       "url": "/user/my-pastes"
     }
   ],
