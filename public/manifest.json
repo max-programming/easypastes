@@ -1,6 +1,6 @@
 {
   "short_name": "Easy Pastes",
-  "name": "Easy Pastes - Easiest Way to create and share code pastes",
+  "name": "Easy Pastes",
   "icons": [
     {
       "src": "/logo-192.png",
@@ -11,6 +11,14 @@
       "src": "/logo-512.png",
       "type": "image/png",
       "sizes": "512x512"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Open Play Later",
+      "short_name": "Play Later",
+      "description": "View the list of podcasts you saved for later",
+      "url": "/user/my-pastes"
     }
   ],
   "start_url": "/",
