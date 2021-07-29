@@ -1,16 +1,34 @@
+/* eslint-disable react/no-children-prop */
 // Own imports
 import Layout from 'components/Layout';
 import DisplayCode from 'components/CodePastes/DisplayCode';
 import supabaseClient from 'utils/supabase';
 
 // Other imports
-import { Alert, AlertProps, Container, Heading } from '@chakra-ui/react';
+import {
+  Alert,
+  AlertProps,
+  Container,
+  Heading,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  InputRightElement,
+  Button,
+  useToast,
+  Box,
+  Flex
+} from '@chakra-ui/react';
+import { HiOutlineKey } from 'react-icons/hi';
 import { GetServerSideProps } from 'next';
 import { PasteType, User } from 'types';
 import { SignedIn, SignedOut, useUser } from '@clerk/clerk-react';
 import { motion } from 'framer-motion';
 import axios from 'axios';
 import Link from 'next/link';
+import { useState } from 'react';
+import { FormEventHandler } from 'react';
+import bcrypt from 'bcryptjs';
 
 // Define the links
 const links = [
@@ -112,9 +130,13 @@ const PrivatePaste = ({ paste, currentUser }: Props) => {
 
 // Paste component
 const Paste = ({ paste, currentUser }: Props) => {
+  const [isCorrectPassword, setIsCorrectPassword] = useState<boolean>(
+    !paste.pastePassword
+  );
+
   return (
     <Layout title={paste.title || 'Paste'} links={links}>
-      <Container maxW="6xl" my="6">
+      <Container maxW="4xl" my="6">
         {paste.private ? (
           <>
             <SignedIn>
@@ -124,7 +146,7 @@ const Paste = ({ paste, currentUser }: Props) => {
               <InfoAlert />
             </SignedOut>
           </>
-        ) : (
+        ) : isCorrectPassword ? (
           <>
             <Heading
               textAlign="center"
@@ -149,9 +171,62 @@ const Paste = ({ paste, currentUser }: Props) => {
             </Heading>
             <DisplayCode paste={paste} language={paste.language} />
           </>
+        ) : (
+          <EnterPassword
+            pastePwd={paste.pastePassword}
+            setIsCorrectPassword={val => setIsCorrectPassword(val)}
+          />
         )}
       </Container>
     </Layout>
+  );
+};
+
+const EnterPassword = ({
+  pastePwd,
+  setIsCorrectPassword
+}: {
+  pastePwd: string;
+  setIsCorrectPassword: (val: boolean) => void;
+}) => {
+  const [password, setPassword] = useState('');
+  const [show, setShow] = useState(false);
+  const toast = useToast();
+  const togglePassword = () => setShow(!show);
+  const handleSubmit: FormEventHandler = e => {
+    e.preventDefault();
+    const matches = bcrypt.compareSync(password, pastePwd);
+    if (matches) setIsCorrectPassword(true);
+    else {
+      toast({ title: 'Incorrect password', status: 'error', isClosable: true });
+      setIsCorrectPassword(false);
+    }
+  };
+  return (
+    <Flex as="form" align="center" justify="center" onSubmit={handleSubmit}>
+      <InputGroup size="lg">
+        <InputLeftElement
+          pointerEvents="none"
+          children={<HiOutlineKey color="gray.300" />}
+        />
+        <Input
+          focusBorderColor="purple.200"
+          placeholder="Enter Password"
+          pr="4.5rem"
+          type={show ? 'text' : 'password'}
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+        />
+        <InputRightElement width="4.5rem">
+          <Button h="1.75rem" size="sm" onClick={togglePassword}>
+            {show ? 'Hide' : 'Show'}
+          </Button>
+        </InputRightElement>
+      </InputGroup>
+      <Button colorScheme="purple" type="submit" ml="3">
+        Check
+      </Button>
+    </Flex>
   );
 };
 

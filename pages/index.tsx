@@ -12,7 +12,8 @@ import {
   Alert,
   CloseButton,
   useMediaQuery,
-  UseToastOptions
+  UseToastOptions,
+  useDisclosure
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useState } from 'react';
@@ -30,6 +31,8 @@ import useSWR from 'swr';
 import useLocalStorage from 'use-local-storage';
 import { SignedIn, SignedOut, useSession, useUser } from '@clerk/clerk-react';
 import Link from 'next/link';
+import { HiLockClosed, HiOutlineLockClosed } from 'react-icons/hi';
+import PasswordModal from 'components/CodePastes/PasswordModal';
 
 const links = [
   {
@@ -44,6 +47,7 @@ interface ButtonProps {
   title: string;
   visibility: string;
   url: string;
+  password?: string;
   toast: (options?: UseToastOptions) => string | number;
   setIsUrlTaken: Dispatch<SetStateAction<boolean>>;
 }
@@ -56,6 +60,7 @@ const SignedInButton = ({
   title,
   visibility,
   url,
+  password,
   toast,
   setIsUrlTaken
 }: ButtonProps) => {
@@ -82,7 +87,8 @@ const SignedInButton = ({
         _public: visibility === 'public',
         _private: visibility === 'private',
         userId: user.id,
-        pasteId: url
+        pasteId: url,
+        pastePassword: password
       });
 
       const { data, error } = res.data;
@@ -197,12 +203,12 @@ const Pastes = () => {
   const [showAlert, setShowAlert] = useState(true);
   const [isUrlTaken, setIsUrlTaken] = useState(false);
   const [visibility, setVisibility] = useState('public');
+  const [password, setPassword] = useState('');
   const [language, setLanguage] = useLocalStorage<ILanguage>(
     'language',
     'none'
   );
-  const router = useRouter();
-  console.log({ data });
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
       <Layout links={links}>
@@ -266,6 +272,7 @@ const Pastes = () => {
               flex="1"
               w={matches ? 'full' : 'initial'}
             >
+              {/* Visibility */}
               <label style={{ marginRight: 8 }}>Visibility: </label>
               <Visibility
                 visibility={visibility}
@@ -273,8 +280,6 @@ const Pastes = () => {
               />
             </Flex>
           </Flex>
-
-          {/* Visibility */}
 
           {/* Code for the paste */}
           <InputCode code={code} setCode={setCode} language={language} />
@@ -286,9 +291,27 @@ const Pastes = () => {
               language={language}
               title={title}
               visibility={visibility}
+              password={password}
               url={url}
               toast={toast}
               setIsUrlTaken={setIsUrlTaken}
+            />
+            <Button
+              leftIcon={<HiOutlineLockClosed />}
+              colorScheme="purple"
+              variant="outline"
+              float="right"
+              mt="4"
+              mr="3"
+              onClick={onOpen}
+            >
+              Set password
+            </Button>
+            <PasswordModal
+              password={password}
+              setPassword={setPassword}
+              isOpen={isOpen}
+              onClose={onClose}
             />
           </SignedIn>
           <SignedOut>

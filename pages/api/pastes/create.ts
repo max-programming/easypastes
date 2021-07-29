@@ -103,16 +103,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     pasteId += id;
   }
 
-  if(hasPassword){
+  if (hasPassword) {
     pastePassword = bcrypt.hashSync(pastePassword, salt);
   }
-
   // Add them to supabase
+  console.log({ title });
   const { data, error } = await supabaseClient
     .from<PasteType>('Pastes')
     .insert([
       {
-        title: filterBadWords(title || ''),
+        title: filterBadWords(title),
         code,
         language,
         userId,
