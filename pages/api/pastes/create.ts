@@ -112,7 +112,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     .from<PasteType>('Pastes')
     .insert([
       {
-        title: filterBadWords(title),
+        title: filterBadWords(title || ''),
         code,
         language,
         userId,
