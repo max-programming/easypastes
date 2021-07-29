@@ -8,7 +8,8 @@ import {
   TabPanel,
   Alert,
   CloseButton,
-  Text
+  Text,
+  useMediaQuery
 } from '@chakra-ui/react';
 import {
   HiOutlineViewList,
@@ -83,6 +84,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
 
 export default function MyPastes({ pastes, fullName, id, username }: Props) {
   const [showAlert, setShowAlert] = useLocalStorage('username-alert', false);
+  const [matches] = useMediaQuery('(max-width: 768px)');
   return (
     <Layout title={`${fullName} - Pastes`} links={links}>
       <Alert
@@ -120,19 +122,48 @@ export default function MyPastes({ pastes, fullName, id, username }: Props) {
           <WithUser>
             {user =>
               user.id === id ? (
-                <Tabs colorScheme="purple" mt="6">
+                <Tabs
+                  isFitted
+                  variant="solid-rounded"
+                  colorScheme="purple"
+                  mt="6"
+                >
                   <TabList>
                     <Tab>
-                      <HiOutlineViewList /> &nbsp; All
+                      {matches ? (
+                        <HiOutlineViewList />
+                      ) : (
+                        <>
+                          <HiOutlineViewList /> &nbsp; All
+                        </>
+                      )}
                     </Tab>
                     <Tab>
-                      <HiOutlineEye /> &nbsp; Public
+                      {matches ? (
+                        <HiOutlineEye />
+                      ) : (
+                        <>
+                          <HiOutlineEye /> &nbsp; Public
+                        </>
+                      )}
                     </Tab>
                     <Tab>
-                      <HiOutlineLockClosed /> &nbsp; Private
+                      {matches ? (
+                        <HiOutlineLockClosed />
+                      ) : (
+                        <>
+                          <HiOutlineLockClosed /> &nbsp; Private
+                        </>
+                      )}
                     </Tab>
                     <Tab>
-                      <HiOutlineLink /> &nbsp; Unlisted
+                      {matches ? (
+                        <HiOutlineLink />
+                      ) : (
+                        <>
+                          <HiOutlineLink /> &nbsp; Unlisted
+                        </>
+                      )}
                     </Tab>
                   </TabList>
                   <TabPanels>
