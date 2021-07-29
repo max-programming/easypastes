@@ -11,7 +11,7 @@ An intuitive, amazing and easy to use Code paste service using `Next.JS`
 
 A sneak peak to the app
 
-<img src="./public/easypastes.gif">
+<img src="https://cdn.hashnode.com/res/hashnode/image/upload/v1627541342146/cy9dYiWan.gif">
 
 ## Tech Stack
 
@@ -63,11 +63,11 @@ To run this project, you will need to add the following environment variables to
 `NEXT_PUBLIC_SUPABASE_URL`
 
 `NEXT_PUBLIC_SUPABASE_SECRET_KEY`
-  
+
 ## Demo
 
 You can find the working production demo [here](https://easypastes.tk)
-  
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
