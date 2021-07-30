@@ -9,9 +9,8 @@
 
 An intuitive, amazing and easy to use Code paste service using `Next.JS`
 
-A sneak peak to the app
+A sneak peak to the app - [Link to the GIF](https://cdn.hashnode.com/res/hashnode/image/upload/v1627542797932/0TNW01u9N.gif)
 
-<img src="https://cdn.hashnode.com/res/hashnode/image/upload/v1627541342146/cy9dYiWan.gif">
 
 ## Tech Stack
 
