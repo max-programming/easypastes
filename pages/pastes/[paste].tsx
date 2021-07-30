@@ -106,8 +106,9 @@ const PrivatePaste = ({ paste, currentUser }: Props) => {
         <Heading
           textAlign="center"
           _selection={{ backgroundColor: 'purple.700' }}
+          fontFamily="Poppins"
         >
-          {paste.title}
+          {paste.title ? paste.title : 'Untitled Paste'}
         </Heading>
       )}
       {typeof currentUser !== 'string' && (
@@ -116,6 +117,7 @@ const PrivatePaste = ({ paste, currentUser }: Props) => {
           size="md"
           mt="2"
           _selection={{ backgroundColor: 'purple.700' }}
+          fontFamily="Poppins"
         >
           By&nbsp;
           <Link href={`/user/pastes/${currentUser.id}`}>
@@ -151,6 +153,7 @@ const Paste = ({ paste, currentUser }: Props) => {
             <Heading
               textAlign="center"
               _selection={{ backgroundColor: 'purple.700' }}
+              fontFamily="Poppins"
             >
               {paste.title ? paste.title : 'Untitled Paste'}
             </Heading>
@@ -159,6 +162,7 @@ const Paste = ({ paste, currentUser }: Props) => {
               size="md"
               mt="2"
               _selection={{ backgroundColor: 'purple.700' }}
+              fontFamily="Poppins"
             >
               By&nbsp;
               {typeof currentUser !== 'string' ? (
@@ -173,7 +177,7 @@ const Paste = ({ paste, currentUser }: Props) => {
           </>
         ) : (
           <>
-            <Heading size="md" textAlign="center" mb="5">
+            <Heading size="md" textAlign="center" mb="5" fontFamily="Poppins">
               This paste is password protected. Enter the password to view it
             </Heading>
             <EnterPassword
