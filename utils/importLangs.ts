@@ -18,4 +18,6 @@ export default function importLangs() {
   import('prismjs/components/prism-aspnet');
   // @ts-ignore
   import('prismjs/components/prism-rust');
+  // @ts-ignore
+  import('prismjs/components/prism-java');
 }

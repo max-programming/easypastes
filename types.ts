@@ -39,4 +39,5 @@ export type ILanguage =
   | 'php'
   | 'aspnet'
   | 'rust'
+  | 'java'
   | 'none';

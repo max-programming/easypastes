@@ -38,5 +38,6 @@ export const languages = [
   'wasm',
   'yaml',
   'rust',
+  'java',
   'none'
 ];
