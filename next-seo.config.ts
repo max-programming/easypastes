@@ -13,6 +13,10 @@ const config = {
     {
       name: 'theme-color',
       content: '#1A202C'
+    },
+    {
+      name: 'color-scheme',
+      content: 'dark'
     }
   ],
   additionalLinkTags: [
