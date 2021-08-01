@@ -178,7 +178,7 @@ const Paste = ({ paste, currentUser }: Props) => {
         ) : (
           <>
             <Heading size="md" textAlign="center" mb="5" fontFamily="Poppins">
-              This paste is password protected. Enter the password to view it
+              This paste is password protected, Enter the password to view it.
             </Heading>
             <EnterPassword
               pastePwd={paste.pastePassword}

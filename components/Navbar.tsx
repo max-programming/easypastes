@@ -52,6 +52,7 @@ export default function WithSubnavigation() {
             aria-label={'Toggle Navigation'}
           />
         </Flex>
+
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
           <NextLink href="/" passHref>
             <Text
@@ -84,15 +85,18 @@ export default function WithSubnavigation() {
           >
             <FaGithub />
           </SocialButton>
+
           <SocialButton
             label="About - Blog Post"
             href="https://blog.usman-s.me/introducing-easy-pastes-easiest-way-to-create-and-share-code-pastes"
           >
             <FaReadme />
           </SocialButton>
+
           <SignedIn>
             <UserButton />
           </SignedIn>
+
           <SignedOut>
             <NextLink href="/sign-in" passHref>
               <Button
@@ -104,6 +108,7 @@ export default function WithSubnavigation() {
                 Sign In
               </Button>
             </NextLink>
+
             <NextLink href="/sign-up" passHref>
               <Button
                 as="a"
@@ -146,9 +151,6 @@ const DesktopNav = () => {
                   as={NextLink}
                   p={2}
                   href={'/my-pastes'}
-                  // href={`/user/pastes/${
-                  //   !user.username ? user.id : user.username
-                  // }`}
                   fontSize={'sm'}
                   fontWeight={500}
                   color={linkColor}
