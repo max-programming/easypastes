@@ -11,9 +11,6 @@ export default async function pasteId(
     .select('*')
     .eq('pasteId', req.query.paste);
 
-  // Debug logging
-  // console.log(pastes);
-
   // Handle error or no pastes
   if (error || !pastes) {
     return res.status(400).json({ error });

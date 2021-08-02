@@ -14,9 +14,6 @@ export default async function pasteId(
     .order('createdAt', { ascending: false })
     .limit(8);
 
-  // Debug logging
-  // console.log(pastes);
-
   // Handle error or no pastes
   if (error || !pastes) {
     return res.status(400).json({ error });
