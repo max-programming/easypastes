@@ -27,7 +27,8 @@ import {
   FiEdit2,
   FiLink2,
   FiMoreHorizontal,
-  FiTrash2
+  FiTrash2,
+  FiFileText
 } from 'react-icons/fi';
 import { PasteType } from 'types';
 
@@ -112,6 +113,9 @@ const ActionsButton = ({ paste }: Props) => {
   const editCode = () => {
     router.push(`/pastes/edit/${paste.pasteId}`);
   };
+  const showRaw = () => {
+    router.push(`/api/pastes/raw/${paste.pasteId}`);
+  };
   return (
     <Box position="absolute" right="1" top="1" zIndex="20">
       <DeleteModal isOpen={isOpen} onClose={onClose} paste={paste} />
@@ -131,6 +135,9 @@ const ActionsButton = ({ paste }: Props) => {
             </MenuItem>
             <MenuItem icon={<FiCopy />} onClick={copyCode}>
               Copy code
+            </MenuItem>
+            <MenuItem icon={<FiFileText />} onClick={showRaw}>
+              Raw
             </MenuItem>
             <WithUser>
               {user => (
