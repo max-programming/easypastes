@@ -57,11 +57,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   // Assign the public and private values to keep the paste unlisted by default, unless explicitly specified
-  if(!_public){
+  if (!_public) {
     _public = false;
   }
 
-  if(!_private){
+  if (!_private) {
     _private = false;
   }
 
