@@ -16,8 +16,7 @@ import {
   InputRightElement,
   Button,
   useToast,
-  Box,
-  Flex
+  Flex,
 } from '@chakra-ui/react';
 import { HiOutlineKey } from 'react-icons/hi';
 import { GetServerSideProps } from 'next';

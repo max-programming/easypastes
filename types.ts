@@ -4,6 +4,7 @@ export interface PasteType {
   id: number;
   code: string;
   title: string;
+  description: string;
   language: ILanguage;
   public: boolean;
   private: boolean;

@@ -3,8 +3,8 @@ import Filter from 'bad-words';
 // Make a global filter object instead of instantiating a new one everytime
 const filter = new Filter();
 
-export default function filterBadWords(text: string): string {
-  if (text === '') return;
+export default function filterBadWords(text: string | undefined): string {
+  if (text === '' || !text) return;
 
   text = text
     .split('')
