@@ -53,7 +53,6 @@ interface ButtonProps {
 }
 
 // Sign in buttons
-
 const SignedInButton = ({
   code,
   language,
@@ -237,10 +236,8 @@ const Pastes = () => {
           </Alert>
         </SignedOut>
         <Container maxW="container.xl" my="6">
-          {/* Selecting the paste lang */}
           <SelectLanguage language={language} setLanguage={setLanguage} />
 
-          {/* Setting the title */}
           <Input
             placeholder="Title (optional)"
             value={title}

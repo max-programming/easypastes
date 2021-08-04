@@ -1,5 +1,8 @@
 import Filter from 'bad-words';
 
+// Make a global filter object instead of instantiating a new one everytime
+const filter = new Filter();
+
 export default function filterBadWords(text: string): string {
   if (text === '') return;
 
@@ -8,6 +11,5 @@ export default function filterBadWords(text: string): string {
     .filter(c => c.charCodeAt(0) !== 8203)
     .join('');
 
-  const filter = new Filter();
   return filter.clean(text);
 }
