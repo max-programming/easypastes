@@ -62,10 +62,6 @@ the environmental variables by renaming the `.env.example` file to `.env.local` 
 
 Check out [this article](https://medium.com/geekculture/mastering-clerk-authentication-with-the-next-js-standard-setup-c66b97bac724) to configure Clerk
 
-## License
-
-[MIT](https://choosealicense.com/licenses/mit/)
-
 ## 🤝 Contributing
 
 Contributions, issues and feature requests are welcome. After cloning & setting up project locally, 
@@ -83,6 +79,10 @@ If you have various suggestions, questions or want to discuss things with our co
 ## 🙌 Show your support
 
 We love and appreciate people's support in growing and improving. Be sure to leave a ⭐️ if you like the project and also be sure to contribute, if you're interested!
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
 
 ## Authors
 
