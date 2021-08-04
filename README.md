@@ -2,16 +2,20 @@
   <a href="https://easypastes.tk">
     <img src="https://easypastes.tk/logo.png" height="128">
     <h1 align="center">Easy Pastes</h1>
-    <br />
-    <h3 aligh="center">An intuitive, amazing, feature rich and easy to use Code paste service!</h3>
   </a>
 </p>
 
-[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSEs)
+<h3 align="center">An intuitive, amazing, feature rich and easy to use Code paste service!</h3>
+
+<p align="center">
+  <a href="https://choosealicense.com/licenses/mit/">
+    <img src="https://img.shields.io/apm/l/atomic-design-ui.svg?" alt="License" />
+  </a>
+</p>
 
 ### ✨ The live [Instance](https://easypastes.tk)
 
-Here's A sneak peak to the app - [Link to the GIF](https://cdn.hashnode.com/res/hashnode/image/upload/v1627542797932/0TNW01u9N.gif)
+### Here's a sneak peak to the app - [Link to the GIF](https://cdn.hashnode.com/res/hashnode/image/upload/v1627542797932/0TNW01u9N.gif)
 
 
 ## Tech Stack
@@ -85,4 +89,4 @@ We love and appreciate people's support in growing and improving. Be sure to lea
 - [Sunrit Jana](https://github.com/janaSunrise)
 - [Usman](https://github.com/max-programming)
 
-<div align="center">Made by the easypastes team with ♥</div>
+<div align="center">Made by the EasyPastes team with ♥</div>
