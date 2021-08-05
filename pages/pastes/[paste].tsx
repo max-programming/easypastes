@@ -20,7 +20,8 @@ import {
   Flex,
   Tag,
   TagLeftIcon,
-  TagLabel
+  TagLabel,
+  Center
 } from '@chakra-ui/react';
 import { HiOutlineKey, HiOutlineUser } from 'react-icons/hi';
 import { GetServerSideProps } from 'next';
@@ -108,22 +109,25 @@ const RenderPasteInfo = ({ paste, currentUser }: Props) => {
       >
         {paste.title ? paste.title : 'Untitled Paste'}
       </Heading>
-
-      {typeof currentUser !== 'string' ? (
-        <Link href={`/user/pastes/${currentUser.id}`} passHref>
-          <Tag size="md" variant="subtle" colorScheme="cyan">
+      <Center mt="3">
+        {typeof currentUser !== 'string' ? (
+          <Link href={`/user/pastes/${currentUser.id}`}>
+            <a>
+              <Tag size="lg" variant="subtle" colorScheme="purple">
+                <TagLeftIcon boxSize="16px" as={HiOutlineUser} />
+                <TagLabel>
+                  {`${currentUser.first_name} ${currentUser.last_name}`}
+                </TagLabel>
+              </Tag>
+            </a>
+          </Link>
+        ) : (
+          <Tag size="lg" variant="subtle" colorScheme="gray">
             <TagLeftIcon boxSize="16px" as={HiOutlineUser} />
-            <TagLabel>
-              <a>{`${currentUser.first_name} ${currentUser.last_name}`}</a>
-            </TagLabel>
+            <TagLabel>{currentUser}</TagLabel>
           </Tag>
-        </Link>
-      ) : (
-        <Tag size="md" variant="subtle" colorScheme="cyan">
-          <TagLeftIcon boxSize="16px" as={HiOutlineUser} />
-          <TagLabel>{currentUser}</TagLabel>
-        </Tag>
-      )}
+        )}
+      </Center>
 
       <Heading textAlign="center" size="sm" mt="4" fontFamily="Poppins">
         {paste.description}
