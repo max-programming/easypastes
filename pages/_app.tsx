@@ -36,7 +36,10 @@ function MyApp({ Component, pageProps, router }: AppProps) {
             animate={{ opacity: 1 }}
           >
             <CSSReset />
-            <NextNProgress color={theme.colors.purple[500]} />
+            <NextNProgress
+              color={theme.colors.purple[500]}
+              options={{ showSpinner: false }}
+            />
             <Component {...pageProps} />
           </MotionBox>
         </ChakraProvider>
