@@ -61,6 +61,9 @@ export const getServerSideProps: GetServerSideProps = async context => {
       return user.username === usernameOrId;
     }
   });
+  console.log({ users });
+  console.log({ param: context.params?.username });
+  console.log({ currentUser });
   if (!currentUser) {
     return {
       notFound: true
