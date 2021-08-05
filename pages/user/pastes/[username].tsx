@@ -214,7 +214,11 @@ export default function MyPastes({ pastes, fullName, id, username }: Props) {
           {pastes
             .filter(p => p.public)
             .map(paste => (
-              <Paste paste={paste} key={paste.id} />
+              <Paste
+                paste={paste}
+                isPassword={!!paste.pastePassword}
+                key={paste.id}
+              />
             ))}
         </SignedOut>
       </Container>

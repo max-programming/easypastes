@@ -3,7 +3,12 @@ import { PasteType } from 'types';
 import DisplayCode from './DisplayCode';
 import Link from 'next/link';
 
-const Paste = ({ paste }: { paste: PasteType }) => {
+interface Props {
+  paste: PasteType;
+  isPassword?: boolean;
+}
+
+const Paste = ({ paste, isPassword }: Props) => {
   return (
     <Box mt="6">
       <Heading size="md">
@@ -13,7 +18,9 @@ const Paste = ({ paste }: { paste: PasteType }) => {
           </Text>
         </Link>
       </Heading>
-      <DisplayCode paste={paste} language={paste.language} />
+      <Box hidden={isPassword}>
+        <DisplayCode paste={paste} language={paste.language} />
+      </Box>
     </Box>
   );
 };
