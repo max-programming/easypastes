@@ -108,7 +108,7 @@ export default function MyPastes({ pastes, fullName, id, username }: Props) {
           title="Remove alert"
         />
       </Alert>
-      <Container maxW="container.xl" mt="6">
+      <Container maxW="3xl" mt="6">
         <Heading
           textAlign="center"
           size="lg"
