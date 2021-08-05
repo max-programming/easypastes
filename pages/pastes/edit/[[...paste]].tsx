@@ -43,7 +43,7 @@ const MotionAlert = motion<AlertProps>(Alert);
 export const getServerSideProps: GetServerSideProps = async context => {
   let currentUser: string | User;
   // @ts-ignore
-  const { paste } = context.params;
+  const paste = context.params.paste.join('/');
   const { data: pastes, error } = await supabaseClient
     .from<PasteType>('Pastes')
     .select('*')
