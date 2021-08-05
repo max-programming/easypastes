@@ -97,7 +97,7 @@ const InfoAlert = () => (
 const RenderPasteInfo = ({ paste, currentUser }: Props) => {
   return (
     <>
-    {/* TODO: Rewrite all the code here, to make it better. */}
+      {/* TODO: Rewrite all the code here, to make it better. */}
       <Heading
         textAlign="center"
         _selection={{ backgroundColor: 'purple.700' }}
