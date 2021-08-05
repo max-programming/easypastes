@@ -41,6 +41,7 @@ const MotionAlert = motion<AlertProps>(Alert);
 
 // Server side props override
 export const getServerSideProps: GetServerSideProps = async context => {
+  let currentUser: string | User;
   // @ts-ignore
   const { paste } = context.params;
   const { data: pastes, error } = await supabaseClient
@@ -54,10 +55,26 @@ export const getServerSideProps: GetServerSideProps = async context => {
     };
   }
 
-  console.error(error);
+  const currentPaste = pastes[0];
+
+  const { data: users } = await axios.get<Array<User>>(
+    'https://api.clerk.dev/v1/users?limit=100',
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.CLERK_API_KEY}`
+      }
+    }
+  );
+  currentUser = users.find(user => user.id === currentPaste.userId);
+
+  if (!currentUser) {
+    return {
+      notFound: true
+    };
+  }
 
   return {
-    props: { paste: pastes[0] }
+    props: { paste: currentPaste }
   };
 };
 
