@@ -101,7 +101,6 @@ const InfoAlert = () => (
 const RenderPasteInfo = ({ paste, currentUser }: Props) => {
   return (
     <>
-      {/* TODO: Rewrite all the code here, to make it better. */}
       <Heading
         textAlign="center"
         _selection={{ backgroundColor: 'purple.700' }}
@@ -127,23 +126,6 @@ const RenderPasteInfo = ({ paste, currentUser }: Props) => {
           </>
         )}
       </Tag>
-
-      <Heading
-        textAlign="center"
-        size="md"
-        mt="2"
-        _selection={{ backgroundColor: 'purple.700' }}
-        fontFamily="Poppins"
-      >
-        By{' '}
-        {typeof currentUser !== 'string' ? (
-          <Link href={`/user/pastes/${currentUser.id}`}>
-            <a>{`${currentUser.first_name} ${currentUser.last_name}`}</a>
-          </Link>
-        ) : (
-          currentUser
-        )}
-      </Heading>
 
       <Heading textAlign="center" size="sm" mt="4" fontFamily="Poppins">
         {paste.description}

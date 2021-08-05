@@ -7,7 +7,7 @@ import {
   Text,
   VisuallyHidden
 } from '@chakra-ui/react';
-import { FaGithub, FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
+import { FaGithub, FaTwitter, FaYoutube } from 'react-icons/fa';
 import { ReactNode } from 'react';
 
 export const SocialButton = ({
