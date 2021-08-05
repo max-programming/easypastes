@@ -8,6 +8,7 @@ import supabaseClient from 'utils/supabase';
 import {
   Alert,
   AlertProps,
+  Avatar,
   Box,
   Container,
   Heading,
@@ -114,7 +115,17 @@ const RenderPasteInfo = ({ paste, currentUser }: Props) => {
           <Link href={`/user/pastes/${currentUser.id}`}>
             <a>
               <Tag size="lg" variant="subtle" colorScheme="purple">
-                <TagLeftIcon boxSize="16px" as={HiOutlineUser} />
+                {currentUser.profile_image_url ? (
+                  <Avatar
+                    src={currentUser.profile_image_url}
+                    size="xs"
+                    name={`${currentUser.first_name} ${currentUser.last_name}`}
+                    ml={-1}
+                    mr={2}
+                  />
+                ) : (
+                  <TagLeftIcon boxSize="16px" as={HiOutlineUser} />
+                )}
                 <TagLabel>
                   {`${currentUser.first_name} ${currentUser.last_name}`}
                 </TagLabel>

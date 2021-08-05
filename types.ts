@@ -28,6 +28,7 @@ export interface User {
   updated_at: number;
   created_at_ms: number;
   updated_at_ms: number;
+  profile_image_url: string;
 }
 
 export type ILanguage =
