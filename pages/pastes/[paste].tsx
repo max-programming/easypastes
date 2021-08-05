@@ -16,9 +16,12 @@ import {
   InputRightElement,
   Button,
   useToast,
-  Flex
+  Flex,
+  Tag,
+  TagLeftIcon,
+  TagLabel
 } from '@chakra-ui/react';
-import { HiOutlineKey } from 'react-icons/hi';
+import { HiOutlineKey, HiOutlineUser } from 'react-icons/hi';
 import { GetServerSideProps } from 'next';
 import { PasteType, User } from 'types';
 import { SignedIn, SignedOut, useUser } from '@clerk/clerk-react';
@@ -105,6 +108,23 @@ const RenderPasteInfo = ({ paste, currentUser }: Props) => {
       >
         {paste.title ? paste.title : 'Untitled Paste'}
       </Heading>
+
+      <Tag size="md" variant="subtle" colorScheme="cyan">
+        {typeof currentUser !== 'string' ? (
+          <Link href={`/user/pastes/${currentUser.id}`}>
+            <TagLeftIcon boxSize="16px" as={HiOutlineUser} />
+            <TagLabel>
+              <a>{`${currentUser.first_name} ${currentUser.last_name}`}</a>
+            </TagLabel>
+          </Link>
+        ) : (
+          <>
+            <TagLeftIcon boxSize="16px" as={HiOutlineUser} />
+            <TagLabel>{currentUser}</TagLabel>
+          </>
+        )}
+      </Tag>
+
       <Heading
         textAlign="center"
         size="md"
@@ -121,6 +141,7 @@ const RenderPasteInfo = ({ paste, currentUser }: Props) => {
           currentUser
         )}
       </Heading>
+
       <Heading textAlign="center" size="sm" mt="4" fontFamily="Poppins">
         {paste.description}
       </Heading>
