@@ -109,23 +109,21 @@ const RenderPasteInfo = ({ paste, currentUser }: Props) => {
         {paste.title ? paste.title : 'Untitled Paste'}
       </Heading>
 
-      <Tag size="md" variant="subtle" colorScheme="cyan">
-        {typeof currentUser !== 'string' ? (
-          <Link href={`/user/pastes/${currentUser.id}`} passHref>
-            <Box>
-              <TagLeftIcon boxSize="16px" as={HiOutlineUser} />
-              <TagLabel>
-                <a>{`${currentUser.first_name} ${currentUser.last_name}`}</a>
-              </TagLabel>
-            </Box>
-          </Link>
-        ) : (
-          <>
+      {typeof currentUser !== 'string' ? (
+        <Link href={`/user/pastes/${currentUser.id}`} passHref>
+          <Tag size="md" variant="subtle" colorScheme="cyan">
             <TagLeftIcon boxSize="16px" as={HiOutlineUser} />
-            <TagLabel>{currentUser}</TagLabel>
-          </>
-        )}
-      </Tag>
+            <TagLabel>
+              <a>{`${currentUser.first_name} ${currentUser.last_name}`}</a>
+            </TagLabel>
+          </Tag>
+        </Link>
+      ) : (
+        <Tag size="md" variant="subtle" colorScheme="cyan">
+          <TagLeftIcon boxSize="16px" as={HiOutlineUser} />
+          <TagLabel>{currentUser}</TagLabel>
+        </Tag>
+      )}
 
       <Heading textAlign="center" size="sm" mt="4" fontFamily="Poppins">
         {paste.description}
