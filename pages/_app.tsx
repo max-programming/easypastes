@@ -14,8 +14,6 @@ import 'styles/globals.css';
 import NextNProgress from 'nextjs-progressbar';
 import importLangs from 'utils/importLangs';
 import { motion } from 'framer-motion';
-import SEO from 'next-seo.config';
-import { DefaultSeo } from 'next-seo';
 
 const clerkFrontendApi = process.env.NEXT_PUBLIC_CLERK_FRONTEND_API;
 
