@@ -94,6 +94,39 @@ const InfoAlert = () => (
   </MotionAlert>
 );
 
+const RenderPasteInfo = ({ paste, currentUser }: Props) => {
+  return (
+    <>
+      <Heading
+        textAlign="center"
+        _selection={{ backgroundColor: 'purple.700' }}
+        fontFamily="Poppins"
+      >
+        {paste.title ? paste.title : 'Untitled Paste'}
+      </Heading>
+      <Heading
+        textAlign="center"
+        size="md"
+        mt="2"
+        _selection={{ backgroundColor: 'purple.700' }}
+        fontFamily="Poppins"
+      >
+        By{' '}
+        {typeof currentUser !== 'string' ? (
+          <Link href={`/user/pastes/${currentUser.id}`}>
+            <a>{`${currentUser.first_name} ${currentUser.last_name}`}</a>
+          </Link>
+        ) : (
+          currentUser
+        )}
+      </Heading>
+      <Heading textAlign="center" size="sm" mt="4" fontFamily="Poppins">
+        {paste.description}
+      </Heading>
+    </>
+  );
+};
+
 const PrivatePaste = ({ paste, currentUser }: Props) => {
   const user = useUser();
 
@@ -101,29 +134,7 @@ const PrivatePaste = ({ paste, currentUser }: Props) => {
     <InfoAlert />
   ) : (
     <>
-      {paste.title !== '' && (
-        <Heading
-          textAlign="center"
-          _selection={{ backgroundColor: 'purple.700' }}
-          fontFamily="Poppins"
-        >
-          {paste.title ? paste.title : 'Untitled Paste'}
-        </Heading>
-      )}
-      {typeof currentUser !== 'string' && (
-        <Heading
-          textAlign="center"
-          size="md"
-          mt="2"
-          _selection={{ backgroundColor: 'purple.700' }}
-          fontFamily="Poppins"
-        >
-          By&nbsp;
-          <Link href={`/user/pastes/${currentUser.id}`}>
-            <a>{`${currentUser.first_name} ${currentUser.last_name}`}</a>
-          </Link>
-        </Heading>
-      )}
+      <RenderPasteInfo paste={paste} currentUser={currentUser} />
       <DisplayCode paste={paste} language={paste.language} />
     </>
   );
@@ -149,29 +160,7 @@ const Paste = ({ paste, currentUser }: Props) => {
           </>
         ) : isCorrectPassword ? (
           <>
-            <Heading
-              textAlign="center"
-              _selection={{ backgroundColor: 'purple.700' }}
-              fontFamily="Poppins"
-            >
-              {paste.title ? paste.title : 'Untitled Paste'}
-            </Heading>
-            <Heading
-              textAlign="center"
-              size="md"
-              mt="2"
-              _selection={{ backgroundColor: 'purple.700' }}
-              fontFamily="Poppins"
-            >
-              By&nbsp;
-              {typeof currentUser !== 'string' ? (
-                <Link href={`/user/pastes/${currentUser.id}`}>
-                  <a>{`${currentUser.first_name} ${currentUser.last_name}`}</a>
-                </Link>
-              ) : (
-                currentUser
-              )}
-            </Heading>
+            <RenderPasteInfo paste={paste} currentUser={currentUser} />
             <DisplayCode paste={paste} language={paste.language} />
           </>
         ) : (
