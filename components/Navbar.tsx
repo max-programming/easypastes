@@ -150,7 +150,7 @@ const DesktopNav = () => {
                 <Link
                   as={NextLink}
                   p={2}
-                  href={'/pastes/my-pastes'}
+                  href={'/my-pastes'}
                   fontSize={'sm'}
                   fontWeight={500}
                   color={linkColor}
@@ -181,7 +181,7 @@ const MobileNav = () => {
         {user => (
           <MobileNavItem
             label="My Pastes"
-            href={`/pastes/my-pastes`}
+            href={`/my-pastes`}
             // href={`/user/pastes/${!user.username ? user.id : user.username}`}
           />
         )}

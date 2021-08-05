@@ -23,7 +23,7 @@
     {
       "name": "Open My Pastes",
       "short_name": "My Pastes",
-      "url": "/pastes/my-pastes",
+      "url": "/my-pastes",
       "icons": [
         {
           "src": "/logo-192.png",
