@@ -111,7 +111,7 @@ const RenderPasteInfo = ({ paste, currentUser }: Props) => {
 
       <Tag size="md" variant="subtle" colorScheme="cyan">
         {typeof currentUser !== 'string' ? (
-          <Link href={`/user/pastes/${currentUser.id}`}>
+          <Link href={`/user/pastes/${currentUser.id}`} passHref>
             <Box>
               <TagLeftIcon boxSize="16px" as={HiOutlineUser} />
               <TagLabel>
