@@ -47,31 +47,38 @@ interface Props {
 }
 
 export const getServerSideProps: GetServerSideProps = async context => {
-  const { data: user } = await axios.get<User>(
-    `https://api.clerk.dev/v1/users/${context.params?.userId}`,
-    {
-      headers: { Authorization: `Bearer ${process.env.CLERK_API_KEY}` }
+  try {
+    const { data: user } = await axios.get<User>(
+      `https://api.clerk.dev/v1/users/${context.params?.userId}`,
+      {
+        headers: { Authorization: `Bearer ${process.env.CLERK_API_KEY}` }
+      }
+    );
+    if (!user) {
+      return {
+        notFound: true
+      };
     }
-  );
-  if (!user) {
+    const { data: pastes, error } = await supabaseClient
+      .from<PasteType>('Pastes')
+      .select('*')
+      // @ts-ignore
+      .eq('userId', user.id)
+      .order('createdAt', { ascending: false });
+    return {
+      props: {
+        pastes,
+        fullName: `${user.first_name} ${user.last_name}`,
+        id: user.id,
+        username: user.username
+      }
+    };
+  } catch (error) {
+    console.error(error);
     return {
       notFound: true
     };
   }
-  const { data: pastes, error } = await supabaseClient
-    .from<PasteType>('Pastes')
-    .select('*')
-    // @ts-ignore
-    .eq('userId', user.id)
-    .order('createdAt', { ascending: false });
-  return {
-    props: {
-      pastes,
-      fullName: `${user.first_name} ${user.last_name}`,
-      id: user.id,
-      username: user.username
-    }
-  };
 };
 
 export default function MyPastes({ pastes, fullName, id, username }: Props) {
