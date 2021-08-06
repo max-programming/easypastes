@@ -206,21 +206,31 @@ export default function MyPastes({ pastes, fullName, id, username }: Props) {
               ) : (
                 pastes
                   .filter(p => p.public)
-                  .map(paste => <Paste paste={paste} key={paste.id} />)
+                  .map(paste => (
+                    <Paste
+                      paste={paste}
+                      key={paste.id}
+                      isPassword={!!paste.pastePassword}
+                    />
+                  ))
               )
             }
           </WithUser>
         )}
         <SignedOut>
-          {pastes
-            .filter(p => p.public)
-            .map(paste => (
-              <Paste
-                paste={paste}
-                isPassword={!!paste.pastePassword}
-                key={paste.id}
-              />
-            ))}
+          {pastes.filter(p => p.public).length === 0 ? (
+            <NoPastes />
+          ) : (
+            pastes
+              .filter(p => p.public)
+              .map(paste => (
+                <Paste
+                  paste={paste}
+                  key={paste.id}
+                  isPassword={!!paste.pastePassword}
+                />
+              ))
+          )}
         </SignedOut>
       </Container>
     </Layout>
