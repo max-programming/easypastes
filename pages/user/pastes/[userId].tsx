@@ -201,6 +201,8 @@ export default function MyPastes({ pastes, fullName, id, username }: Props) {
                     </TabPanel>
                   </TabPanels>
                 </Tabs>
+              ) : pastes.filter(p => p.public).length === 0 ? (
+                <NoPastes />
               ) : (
                 pastes
                   .filter(p => p.public)
