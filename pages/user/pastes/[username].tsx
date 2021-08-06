@@ -48,7 +48,7 @@ interface Props {
 
 export const getServerSideProps: GetServerSideProps = async context => {
   const { data: users } = await axios.get<Array<User>>(
-    'https://api.clerk.dev/v1/users?limit=100',
+    'https://api.clerk.dev/v1/users?limit=500',
     {
       headers: { Authorization: `Bearer ${process.env.CLERK_API_KEY}` }
     }
@@ -56,8 +56,18 @@ export const getServerSideProps: GetServerSideProps = async context => {
   const currentUser = users.find(user => {
     const usernameOrId = context.params?.username;
     if (typeof usernameOrId === 'string') {
-      if (usernameOrId.startsWith('user_')) return user.id === usernameOrId;
-      if (!user.username) return user.id === usernameOrId;
+      if (usernameOrId.startsWith('user_')) {
+        console.log("it's an id");
+        console.log({ usernameOrId });
+        return user.id === usernameOrId;
+      }
+      if (!user.username) {
+        console.log('no username');
+        console.log({ usernameOrId });
+        return user.id === usernameOrId;
+      }
+      console.log("it's username");
+      console.log({ usernameOrId });
       return user.username === usernameOrId;
     }
   });
