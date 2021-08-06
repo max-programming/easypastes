@@ -47,34 +47,13 @@ interface Props {
 }
 
 export const getServerSideProps: GetServerSideProps = async context => {
-  const { data: users } = await axios.get<Array<User>>(
-    'https://api.clerk.dev/v1/users?limit=500',
+  const { data: user } = await axios.get<User>(
+    `https://api.clerk.dev/v1/users/${context.params?.userId}`,
     {
       headers: { Authorization: `Bearer ${process.env.CLERK_API_KEY}` }
     }
   );
-  const currentUser = users.find(user => {
-    const usernameOrId = context.params?.username;
-    if (typeof usernameOrId === 'string') {
-      if (usernameOrId.startsWith('user_')) {
-        console.log("it's an id");
-        console.log({ usernameOrId });
-        return user.id === usernameOrId;
-      }
-      if (!user.username) {
-        console.log('no username');
-        console.log({ usernameOrId });
-        return user.id === usernameOrId;
-      }
-      console.log("it's username");
-      console.log({ usernameOrId });
-      return user.username === usernameOrId;
-    }
-  });
-  // console.log({ users });
-  // console.log({ param: context.params?.username });
-  // console.log({ currentUser });
-  if (!currentUser) {
+  if (!user) {
     return {
       notFound: true
     };
@@ -83,14 +62,14 @@ export const getServerSideProps: GetServerSideProps = async context => {
     .from<PasteType>('Pastes')
     .select('*')
     // @ts-ignore
-    .eq('userId', currentUser.id)
+    .eq('userId', user.id)
     .order('createdAt', { ascending: false });
   return {
     props: {
       pastes,
-      fullName: `${currentUser.first_name} ${currentUser.last_name}`,
-      id: currentUser.id,
-      username: currentUser.username
+      fullName: `${user.first_name} ${user.last_name}`,
+      id: user.id,
+      username: user.username
     }
   };
 };
