@@ -9,7 +9,6 @@ import {
   Alert,
   AlertProps,
   Avatar,
-  Box,
   Container,
   Heading,
   Input,
@@ -46,14 +45,13 @@ const links = [
 // Custom types
 interface Props {
   paste: PasteType;
-  currentUser: string | User;
+  currentUser: 'Anonymous' | User;
 }
 
 const MotionAlert = motion<AlertProps>(Alert);
 
 // Server side props override
 export const getServerSideProps: GetServerSideProps = async context => {
-  let currentUser: string | User = null;
   // @ts-ignore
   const paste = context.params.paste.join('/');
   const { data: pastes, error } = await supabaseClient
@@ -70,22 +68,17 @@ export const getServerSideProps: GetServerSideProps = async context => {
 
   const currentPaste = pastes[0];
 
-  if (currentPaste.userId) {
-    const { data: users } = await axios.get<Array<User>>(
-      'https://api.clerk.dev/v1/users?limit=100',
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.CLERK_API_KEY}`
-        }
+  const { data: user } = await axios.get<User>(
+    `https://api.clerk.dev/v1/users/${currentPaste.userId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.CLERK_API_KEY}`
       }
-    );
-    currentUser = users.find(user => user.id === currentPaste.userId);
-  } else {
-    currentUser = 'Anonymous';
-  }
+    }
+  );
 
   return {
-    props: { paste: currentPaste, currentUser: currentUser || 'Anonymous' }
+    props: { paste: currentPaste, currentUser: user || 'Anonymous' }
   };
 };
 

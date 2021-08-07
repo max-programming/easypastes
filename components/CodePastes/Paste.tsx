@@ -9,6 +9,7 @@ interface Props {
 }
 
 const Paste = ({ paste, isPassword }: Props) => {
+  console.log({ isPassword });
   return (
     <Box mt="6">
       <Heading size="md">
