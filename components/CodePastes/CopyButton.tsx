@@ -7,9 +7,9 @@ interface Props {
 
 const CopyButton = ({ code }: Props) => {
   const handleClick = () => {
-    // Rewrite this for cross-browser support
     navigator.clipboard.writeText(code);
   };
+
   return (
     <Box position="absolute" right="1" top="1" zIndex="20">
       <Tooltip hasArrow label="Copy">
