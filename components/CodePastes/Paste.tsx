@@ -12,7 +12,7 @@ const Paste = ({ paste, isPassword }: Props) => {
   console.log({ isPassword });
   return (
     <Box mt="6">
-      <Heading size="md">
+      <Heading size="md" fontFamily="Poppins">
         <Link href={`/pastes/${paste.pasteId}`} passHref>
           <Text as="a" _selection={{ backgroundColor: 'purple.700' }}>
             {paste.title || 'Untitled'}
