@@ -67,11 +67,13 @@ export const getServerSideProps: GetServerSideProps = async context => {
   }
 
   const currentPaste = pastes[0];
+
   if (!currentPaste.userId) {
     return {
       props: { paste: currentPaste, currentUser: 'Anonymous' }
     };
   }
+
   const { data: user, status } = await axios.get<User>(
     `https://api.clerk.dev/v1/users/${currentPaste.userId}`,
     {
@@ -80,6 +82,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
       }
     }
   );
+
   return {
     props: { paste: currentPaste, currentUser: user || 'Anonymous' }
   };

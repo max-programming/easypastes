@@ -44,6 +44,6 @@ const MyApp = ({ Component, pageProps, router }: AppProps) => {
       </ClerkProvider>
     </>
   );
-}
+};
 
 export default MyApp;
