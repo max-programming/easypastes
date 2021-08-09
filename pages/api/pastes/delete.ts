@@ -13,7 +13,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { pasteId, userId } = req.body;
 
   if (!userId) {
-    return res.status(400).json({ message: "Can't delete anyonymous paste" });
+    return res.status(400).json({ message: "Cannot delete anyonymous paste" });
   }
 
   // Add them to supabase

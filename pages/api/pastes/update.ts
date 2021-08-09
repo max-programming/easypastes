@@ -23,7 +23,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   } = req.body;
 
   if (!userId) {
-    return res.status(400).json({ message: "Can't delete anonymous paste" });
+    return res.status(400).json({ message: "Cannot delete anonymous paste" });
   }
 
   if (code.trim() === '') {

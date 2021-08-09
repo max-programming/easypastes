@@ -19,7 +19,7 @@ const clerkFrontendApi = process.env.NEXT_PUBLIC_CLERK_FRONTEND_API;
 
 const MotionBox = motion<BoxProps>(Box);
 
-function MyApp({ Component, pageProps, router }: AppProps) {
+const MyApp = ({ Component, pageProps, router }: AppProps) => {
   useEffect(importLangs, []);
   return (
     <>
