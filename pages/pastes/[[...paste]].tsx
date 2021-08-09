@@ -82,7 +82,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
       }
     }
   );
-  
+
   return {
     props: { paste: currentPaste, currentUser: user || 'Anonymous' }
   };
