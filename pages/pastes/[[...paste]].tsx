@@ -23,7 +23,7 @@ import {
   TagLabel,
   Center
 } from '@chakra-ui/react';
-import { HiOutlineKey, HiOutlineUser } from 'react-icons/hi';
+import { HiOutlineKey, HiOutlineUser, HiOutlineCode } from 'react-icons/hi';
 import { GetServerSideProps } from 'next';
 import { PasteType, User } from 'types';
 import { SignedIn, SignedOut, useUser } from '@clerk/clerk-react';
@@ -111,31 +111,43 @@ const RenderPasteInfo = ({ paste, currentUser }: Props) => {
       </Heading>
       <Center mt="3">
         {typeof currentUser !== 'string' ? (
-          <Link href={`/user/pastes/${currentUser.id}`}>
-            <a>
-              <Tag size="lg" variant="subtle" colorScheme="purple">
-                {currentUser.profile_image_url ? (
-                  <Avatar
-                    src={currentUser.profile_image_url}
-                    size="xs"
-                    name={`${currentUser.first_name} ${currentUser.last_name}`}
-                    ml={-1}
-                    mr={2}
-                  />
-                ) : (
-                  <TagLeftIcon boxSize="16px" as={HiOutlineUser} />
-                )}
-                <TagLabel>
-                  {`${currentUser.first_name} ${currentUser.last_name}`}
-                </TagLabel>
-              </Tag>
-            </a>
-          </Link>
+          <>
+            <Link href={`/user/pastes/${currentUser.id}`}>
+              <a>
+                <Tag size="lg" variant="subtle" colorScheme="purple">
+                  {currentUser.profile_image_url ? (
+                    <Avatar
+                      src={currentUser.profile_image_url}
+                      size="xs"
+                      name={`${currentUser.first_name} ${currentUser.last_name}`}
+                      ml={-1}
+                      mr={2}
+                    />
+                  ) : (
+                    <TagLeftIcon boxSize="16px" as={HiOutlineUser} />
+                  )}
+                  <TagLabel>
+                    {`${currentUser.first_name} ${currentUser.last_name}`}
+                  </TagLabel>
+                </Tag>
+              </a>
+            </Link>
+            <Tag size="lg" variant="subtle" colorScheme="purple" ml="2">
+              <TagLeftIcon boxSize="16px" as={HiOutlineCode} />
+              <TagLabel>{paste.language}</TagLabel>
+            </Tag>
+          </>
         ) : (
-          <Tag size="lg" variant="subtle" colorScheme="gray">
-            <TagLeftIcon boxSize="16px" as={HiOutlineUser} />
-            <TagLabel>{currentUser}</TagLabel>
-          </Tag>
+          <>
+            <Tag size="lg" variant="subtle" colorScheme="gray">
+              <TagLeftIcon boxSize="16px" as={HiOutlineUser} />
+              <TagLabel>{currentUser}</TagLabel>
+            </Tag>
+            <Tag size="lg" variant="subtle" colorScheme="purple" ml="2">
+              <TagLeftIcon boxSize="16px" as={HiOutlineCode} />
+              <TagLabel>{paste.language}</TagLabel>
+            </Tag>
+          </>
         )}
       </Center>
 
