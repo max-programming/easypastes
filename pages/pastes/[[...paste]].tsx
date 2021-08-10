@@ -229,42 +229,39 @@ const Paste = ({ paste, currentUser }: Props) => {
   );
 
   return (
-    <>
+    <Layout title={paste.title || 'Paste'} links={links}>
       <NextSeo
         title={paste.title || 'Untitled Paste'}
         description={paste.description || ''}
       />
-
-      <Layout title={paste.title || 'Paste'} links={links}>
-        <Container maxW="4xl" my="6">
-          {paste.private ? (
-            <>
-              <SignedIn>
-                <PrivatePaste paste={paste} currentUser={currentUser} />
-              </SignedIn>
-              <SignedOut>
-                <InfoAlert />
-              </SignedOut>
-            </>
-          ) : isCorrectPassword ? (
-            <>
-              <RenderPasteInfo paste={paste} currentUser={currentUser} />
-              <DisplayCode paste={paste} language={paste.language} />
-            </>
-          ) : (
-            <>
-              <Heading size="md" textAlign="center" mb="5" fontFamily="Poppins">
-                This paste is password protected, Enter the password to view it.
-              </Heading>
-              <EnterPassword
-                pastePwd={paste.pastePassword}
-                setIsCorrectPassword={val => setIsCorrectPassword(val)}
-              />
-            </>
-          )}
-        </Container>
-      </Layout>
-    </>
+      <Container maxW="4xl" my="6">
+        {paste.private ? (
+          <>
+            <SignedIn>
+              <PrivatePaste paste={paste} currentUser={currentUser} />
+            </SignedIn>
+            <SignedOut>
+              <InfoAlert />
+            </SignedOut>
+          </>
+        ) : isCorrectPassword ? (
+          <>
+            <RenderPasteInfo paste={paste} currentUser={currentUser} />
+            <DisplayCode paste={paste} language={paste.language} />
+          </>
+        ) : (
+          <>
+            <Heading size="md" textAlign="center" mb="5" fontFamily="Poppins">
+              This paste is password protected, Enter the password to view it.
+            </Heading>
+            <EnterPassword
+              pastePwd={paste.pastePassword}
+              setIsCorrectPassword={val => setIsCorrectPassword(val)}
+            />
+          </>
+        )}
+      </Container>
+    </Layout>
   );
 };
 
