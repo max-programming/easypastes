@@ -25,42 +25,75 @@
 - [Supabase](http://supabase.io/)
 - [Clerk](https://clerk.dev)
 
-## Run Locally
+### Development or Contributing
 
-Clone the project
+If you're interested in growing this project further,
+Add a `.env.local` file based on `.env.example` file. And add the following things:
 
-```bash
-git clone https://github.com/max-programming/easypastes
-```
+- Get your supabase instance info from [here](https://supabase.io).
+- Make a new Clerk App and get the info for it from [here](https://clerk.dev).
 
-Go to the project directory
+## Installation and Running
 
-```bash
-cd easypastes
-```
+Here is a quick and easy guide for you to run EasyPastes for development, or self hosting it 
+for yourself.
 
-Install dependencies
+### With Docker
 
-```bash
+Docker is an easy way of containerizing and delivering your applications quickly and easily, 
+in a convenient way. It's really simple to get started with this, with docker handling all the 
+installation and other tasks.
+
+Configure the environmental variables by renaming the `.env.example` file to `.env.local` with 
+the respective values. Once you have your environmental variables and config, follow the guide below.
+
+Docker mini guide:
+
+- To start development environment: `docker-compose -f docker-compose.yml -f docker-compose.dev.yml up`
+- To start production deployment: `docker-compose -f docker-compose.yml -f docker-compose.prod.yml up`
+- To stop the container: `docker-compose down`
+- To rebuild the container: `docker-compose --build`
+
+Both development and production almost run same thing, With some different tweaks and changes. 
+Both of run on `127.0.0.1:3000`. For displaying it in production, Use Nginx or Apache to proxy it.
+
+
+### Without Docker
+
+This is another way to host, but without docker. You can follow this if docker doesn't work
+well on your system, or it doesn't support it. Containers are resource intensive, and your PC might not
+be able to do it, this is the perfect method to get started with the self-hosting.
+
+Here are the steps to run the app,
+- Configure Supabase for Database.
+  - Check the [official docs](https://supabase.io/docs/guides/with-nextjs) for help with setup.
+- Configure Clerk for Authentication services.
+  - Check this [article](https://medium.com/geekculture/mastering-clerk-authentication-with-the-next-js-standard-setup-c66b97bac724) out for configuration of clerk.
+- Configuring Environmental variables based on Supabase and Clerk setup.
+- Finally run the app!
+
+#### Environment Variables
+
+To run this project, you will need to properly configure environmental variables. Configure the 
+environmental variables by renaming the `.env.example` file to `.env.local` with the respective values.
+
+#### Run the app!
+
+Install the dependencies first.
+
+```sh
 yarn
-# or npm install
+# OR
+npm install
 ```
 
-Start the server
+Then, Finally, Start the server!
 
-```bash
+```sh
 yarn dev
-# or npm run dev
+# OR
+npm run dev
 ```
-
-### Environment Variables
-
-To run this project, you will need to properly configure environmental variables. Configure 
-the environmental variables by renaming the `.env.example` file to `.env.local` with the respective values.
-
-### Configure Clerk
-
-Check out [this article](https://medium.com/geekculture/mastering-clerk-authentication-with-the-next-js-standard-setup-c66b97bac724) to configure Clerk
 
 ## 🤝 Contributing
 
