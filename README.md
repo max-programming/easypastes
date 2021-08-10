@@ -25,7 +25,7 @@
 - [Supabase](http://supabase.io/)
 - [Clerk](https://clerk.dev)
 
-### Development or Contributing
+### 🛠️ Development or Contributing
 
 If you're interested in growing this project further,
 Add a `.env.local` file based on `.env.example` file. And add the following things:
