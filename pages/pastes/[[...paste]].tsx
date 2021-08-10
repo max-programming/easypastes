@@ -34,14 +34,6 @@ import { useState, FormEventHandler } from 'react';
 import { NextSeo } from 'next-seo';
 import bcrypt from 'bcryptjs';
 
-// Define the links
-const links = [
-  {
-    url: '/pastes',
-    text: 'Pastes'
-  }
-];
-
 // Custom types
 interface Props {
   paste: PasteType;
@@ -229,7 +221,7 @@ const Paste = ({ paste, currentUser }: Props) => {
   );
 
   return (
-    <Layout title={paste.title || 'Paste'} links={links}>
+    <Layout>
       <NextSeo
         title={paste.title || 'Untitled Paste'}
         description={paste.description || ''}

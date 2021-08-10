@@ -2,10 +2,12 @@ import { Center, Heading, Text } from '@chakra-ui/react';
 import Layout from 'components/Layout';
 import { FcNook } from 'react-icons/fc';
 import Link from 'next/link';
+import { NextSeo } from 'next-seo';
 
 export default function Offline() {
   return (
-    <Layout title="404: Page not found">
+    <Layout>
+      <NextSeo title="404: Page not found" />
       <Center my="52" flexDir="column">
         <FcNook size="5rem" />
         <Heading fontFamily="Poppins" mt="4">
