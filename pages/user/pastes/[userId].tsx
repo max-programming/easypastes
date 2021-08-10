@@ -47,39 +47,38 @@ interface Props {
 }
 
 export const getServerSideProps: GetServerSideProps = async context => {
-  const { data: users } = await axios.get<Array<User>>(
-    'https://api.clerk.dev/v1/users?limit=100',
-    {
-      headers: { Authorization: `Bearer ${process.env.CLERK_API_KEY}` }
+  try {
+    const { data: user } = await axios.get<User>(
+      `https://api.clerk.dev/v1/users/${context.params?.userId}`,
+      {
+        headers: { Authorization: `Bearer ${process.env.CLERK_API_KEY}` }
+      }
+    );
+    if (!user) {
+      return {
+        notFound: true
+      };
     }
-  );
-  const currentUser = users.find(user => {
-    const usernameOrId = context.params?.username;
-    if (typeof usernameOrId === 'string') {
-      if (usernameOrId.startsWith('user_')) return user.id === usernameOrId;
-      if (!user.username) return user.id === usernameOrId;
-      return user.username === usernameOrId;
-    }
-  });
-  if (!currentUser) {
+    const { data: pastes, error } = await supabaseClient
+      .from<PasteType>('Pastes')
+      .select('*')
+      // @ts-ignore
+      .eq('userId', user.id)
+      .order('createdAt', { ascending: false });
+    return {
+      props: {
+        pastes,
+        fullName: `${user.first_name} ${user.last_name}`,
+        id: user.id,
+        username: user.username
+      }
+    };
+  } catch (error) {
+    console.error(error);
     return {
       notFound: true
     };
   }
-  const { data: pastes, error } = await supabaseClient
-    .from<PasteType>('Pastes')
-    .select('*')
-    // @ts-ignore
-    .eq('userId', currentUser.id)
-    .order('createdAt', { ascending: false });
-  return {
-    props: {
-      pastes,
-      fullName: `${currentUser.first_name} ${currentUser.last_name}`,
-      id: currentUser.id,
-      username: currentUser.username
-    }
-  };
 };
 
 export default function MyPastes({ pastes, fullName, id, username }: Props) {
@@ -108,7 +107,7 @@ export default function MyPastes({ pastes, fullName, id, username }: Props) {
           title="Remove alert"
         />
       </Alert>
-      <Container maxW="container.xl" mt="6">
+      <Container maxW="3xl" mt="6">
         <Heading
           textAlign="center"
           size="lg"
@@ -202,24 +201,36 @@ export default function MyPastes({ pastes, fullName, id, username }: Props) {
                     </TabPanel>
                   </TabPanels>
                 </Tabs>
+              ) : pastes.filter(p => p.public).length === 0 ? (
+                <NoPastes />
               ) : (
                 pastes
                   .filter(p => p.public)
-                  .map(paste => <Paste paste={paste} key={paste.id} />)
+                  .map(paste => (
+                    <Paste
+                      paste={paste}
+                      key={paste.id}
+                      isPassword={!!paste.pastePassword}
+                    />
+                  ))
               )
             }
           </WithUser>
         )}
         <SignedOut>
-          {pastes
-            .filter(p => p.public)
-            .map(paste => (
-              <Paste
-                paste={paste}
-                isPassword={!!paste.pastePassword}
-                key={paste.id}
-              />
-            ))}
+          {pastes.filter(p => p.public).length === 0 ? (
+            <NoPastes />
+          ) : (
+            pastes
+              .filter(p => p.public)
+              .map(paste => (
+                <Paste
+                  paste={paste}
+                  key={paste.id}
+                  isPassword={!!paste.pastePassword}
+                />
+              ))
+          )}
         </SignedOut>
       </Container>
     </Layout>

@@ -7,7 +7,7 @@ import {
   Text,
   VisuallyHidden
 } from '@chakra-ui/react';
-import { FaGithub, FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
+import { FaGithub, FaTwitter, FaYoutube } from 'react-icons/fa';
 import { ReactNode } from 'react';
 
 export const SocialButton = ({
@@ -75,6 +75,12 @@ export default function Footer() {
         </Text>
         <Stack direction={'row'} spacing={6}>
           <SocialButton
+            label={'GitHub'}
+            href="https://github.com/max-programming"
+          >
+            <FaGithub />
+          </SocialButton>
+          <SocialButton
             label={'Twitter'}
             href="https://twitter.com/MaxProgramming1"
           >
@@ -85,12 +91,6 @@ export default function Footer() {
             href="https://youtube.com/MaxProgramming"
           >
             <FaYoutube />
-          </SocialButton>
-          <SocialButton
-            label={'GitHub'}
-            href="https://github.com/max-programming"
-          >
-            <FaGithub />
           </SocialButton>
         </Stack>
       </Container>

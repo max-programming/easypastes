@@ -8,6 +8,7 @@ import supabaseClient from 'utils/supabase';
 import {
   Alert,
   AlertProps,
+  Avatar,
   Container,
   Heading,
   Input,
@@ -16,9 +17,13 @@ import {
   InputRightElement,
   Button,
   useToast,
-  Flex
+  Flex,
+  Tag,
+  TagLeftIcon,
+  TagLabel,
+  Center
 } from '@chakra-ui/react';
-import { HiOutlineKey } from 'react-icons/hi';
+import { HiOutlineKey, HiOutlineUser, HiOutlineCode } from 'react-icons/hi';
 import { GetServerSideProps } from 'next';
 import { PasteType, User } from 'types';
 import { SignedIn, SignedOut, useUser } from '@clerk/clerk-react';
@@ -40,16 +45,15 @@ const links = [
 // Custom types
 interface Props {
   paste: PasteType;
-  currentUser: string | User;
+  currentUser: 'Anonymous' | User;
 }
 
 const MotionAlert = motion<AlertProps>(Alert);
 
 // Server side props override
 export const getServerSideProps: GetServerSideProps = async context => {
-  let currentUser: string | User = null;
   // @ts-ignore
-  const { paste } = context.params;
+  const paste = context.params.paste.join('/');
   const { data: pastes, error } = await supabaseClient
     .from<PasteType>('Pastes')
     .select('*')
@@ -64,22 +68,23 @@ export const getServerSideProps: GetServerSideProps = async context => {
 
   const currentPaste = pastes[0];
 
-  if (currentPaste.userId) {
-    const { data: users } = await axios.get<Array<User>>(
-      'https://api.clerk.dev/v1/users?limit=100',
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.CLERK_API_KEY}`
-        }
-      }
-    );
-    currentUser = users.find(user => user.id === currentPaste.userId);
-  } else {
-    currentUser = 'Anonymous';
+  if (!currentPaste.userId) {
+    return {
+      props: { paste: currentPaste, currentUser: 'Anonymous' }
+    };
   }
 
+  const { data: user, status } = await axios.get<User>(
+    `https://api.clerk.dev/v1/users/${currentPaste.userId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.CLERK_API_KEY}`
+      }
+    }
+  );
+
   return {
-    props: { paste: currentPaste, currentUser: currentUser || 'Anonymous' }
+    props: { paste: currentPaste, currentUser: user || 'Anonymous' }
   };
 };
 
@@ -104,22 +109,46 @@ const RenderPasteInfo = ({ paste, currentUser }: Props) => {
       >
         {paste.title ? paste.title : 'Untitled Paste'}
       </Heading>
-      <Heading
-        textAlign="center"
-        size="md"
-        mt="2"
-        _selection={{ backgroundColor: 'purple.700' }}
-        fontFamily="Poppins"
-      >
-        By{' '}
+      <Center mt="3">
         {typeof currentUser !== 'string' ? (
-          <Link href={`/user/pastes/${currentUser.id}`}>
-            <a>{`${currentUser.first_name} ${currentUser.last_name}`}</a>
-          </Link>
+          <>
+            <Link href={`/user/pastes/${currentUser.id}`}>
+              <a>
+                <Tag size="lg" variant="subtle" colorScheme="purple">
+                  {currentUser.profile_image_url ? (
+                    <Avatar
+                      src={currentUser.profile_image_url}
+                      size="xs"
+                      name={`${currentUser.first_name} ${currentUser.last_name}`}
+                      ml={-1}
+                      mr={2}
+                    />
+                  ) : (
+                    <TagLeftIcon boxSize="16px" as={HiOutlineUser} />
+                  )}
+
+                  <TagLabel>
+                    {`${currentUser.first_name} ${currentUser.last_name}`}
+                  </TagLabel>
+                </Tag>
+              </a>
+            </Link>
+          </>
         ) : (
-          currentUser
+          <>
+            <Tag size="lg" variant="subtle" colorScheme="gray">
+              <TagLeftIcon boxSize="16px" as={HiOutlineUser} />
+              <TagLabel>{currentUser}</TagLabel>
+            </Tag>
+          </>
         )}
-      </Heading>
+
+        <Tag size="lg" variant="subtle" colorScheme="cyan" ml="2">
+          <TagLeftIcon boxSize="16px" as={HiOutlineCode} />
+          <TagLabel>{paste.language}</TagLabel>
+        </Tag>
+      </Center>
+
       <Heading textAlign="center" size="sm" mt="4" fontFamily="Poppins">
         {paste.description}
       </Heading>

@@ -14,14 +14,12 @@ import 'styles/globals.css';
 import NextNProgress from 'nextjs-progressbar';
 import importLangs from 'utils/importLangs';
 import { motion } from 'framer-motion';
-import SEO from 'next-seo.config';
-import { DefaultSeo } from 'next-seo';
 
 const clerkFrontendApi = process.env.NEXT_PUBLIC_CLERK_FRONTEND_API;
 
 const MotionBox = motion<BoxProps>(Box);
 
-function MyApp({ Component, pageProps, router }: AppProps) {
+const MyApp = ({ Component, pageProps, router }: AppProps) => {
   useEffect(importLangs, []);
   return (
     <>
@@ -46,6 +44,6 @@ function MyApp({ Component, pageProps, router }: AppProps) {
       </ClerkProvider>
     </>
   );
-}
+};
 
 export default MyApp;

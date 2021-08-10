@@ -96,6 +96,7 @@ function MyPastes({ allPastes, user }: Props) {
               textAlign="center"
               size="lg"
               _selection={{ backgroundColor: 'purple.700' }}
+              fontFamily="Poppins"
             >
               Pastes by {`${user.firstName} ${user.lastName}`}
             </Heading>
