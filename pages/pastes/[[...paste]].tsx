@@ -126,16 +126,13 @@ const RenderPasteInfo = ({ paste, currentUser }: Props) => {
                   ) : (
                     <TagLeftIcon boxSize="16px" as={HiOutlineUser} />
                   )}
+
                   <TagLabel>
                     {`${currentUser.first_name} ${currentUser.last_name}`}
                   </TagLabel>
                 </Tag>
               </a>
             </Link>
-            <Tag size="lg" variant="subtle" colorScheme="purple" ml="2">
-              <TagLeftIcon boxSize="16px" as={HiOutlineCode} />
-              <TagLabel>{paste.language}</TagLabel>
-            </Tag>
           </>
         ) : (
           <>
@@ -143,12 +140,13 @@ const RenderPasteInfo = ({ paste, currentUser }: Props) => {
               <TagLeftIcon boxSize="16px" as={HiOutlineUser} />
               <TagLabel>{currentUser}</TagLabel>
             </Tag>
-            <Tag size="lg" variant="subtle" colorScheme="purple" ml="2">
-              <TagLeftIcon boxSize="16px" as={HiOutlineCode} />
-              <TagLabel>{paste.language}</TagLabel>
-            </Tag>
           </>
         )}
+
+        <Tag size="lg" variant="subtle" colorScheme="cyan" ml="2">
+          <TagLeftIcon boxSize="16px" as={HiOutlineCode} />
+          <TagLabel>{paste.language}</TagLabel>
+        </Tag>
       </Center>
 
       <Heading textAlign="center" size="sm" mt="4" fontFamily="Poppins">

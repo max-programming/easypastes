@@ -2,8 +2,6 @@ import {
   Button,
   Container,
   Input,
-  useColorModeValue,
-  theme,
   Flex,
   InputGroup,
   InputLeftAddon,
