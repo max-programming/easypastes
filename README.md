@@ -38,7 +38,7 @@ Add a `.env.local` file based on `.env.example` file. And add the following thin
 Here is a quick and easy guide for you to run EasyPastes for development, or self hosting it 
 for yourself.
 
-### With Docker
+### 🐳 With Docker
 
 Docker is an easy way of containerizing and delivering your applications quickly and easily, 
 in a convenient way. It's really simple to get started with this, with docker handling all the 
@@ -64,7 +64,8 @@ This is another way to host, but without docker. You can follow this if docker d
 well on your system, or it doesn't support it. Containers are resource intensive, and your PC might not
 be able to do it, this is the perfect method to get started with the self-hosting.
 
-Here are the steps to run the app,
+Here are the steps to configure and run the app:
+
 - Configure Supabase for Database.
   - Check the [official docs](https://supabase.io/docs/guides/with-nextjs) for help with setup.
 - Configure Clerk for Authentication services.
