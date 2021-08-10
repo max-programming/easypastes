@@ -10,9 +10,13 @@ RUN apt-get -y update \
 # Define the working directory
 WORKDIR /app
 
-# Copy all the files, and get dependencies ready
+# Copy all the package files and Next config
 COPY package.json next.config.js ./
+
+# Copy the environmental file
 COPY .env.local ./
+
+# Install the dependencies
 RUN yarn install
 
 # Copy the source files
