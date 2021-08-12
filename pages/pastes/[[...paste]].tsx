@@ -220,11 +220,16 @@ const Paste = ({ paste, currentUser }: Props) => {
     !paste.pastePassword
   );
 
+  let title = paste.title || 'Untitled Paste';
   return (
     <Layout>
       <NextSeo
-        title={paste.title || 'Untitled Paste'}
+        title={title}
         description={paste.description || ''}
+        openGraph={{
+          title,
+          description: paste.description || ''
+        }}
       />
       <Container maxW="4xl" my="6">
         {paste.private ? (
