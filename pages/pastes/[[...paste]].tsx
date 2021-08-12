@@ -222,7 +222,9 @@ const Paste = ({ paste, currentUser }: Props) => {
 
   let metaTags = {
     title: paste.title || 'Untitled Paste',
-    url: `https://${process.env.VERCEL_URL!}/pastes/${paste.id}`,
+    url: `https://${process.env.VERCEL_URL || 'easypastes.tk'}/pastes/${
+      paste.pasteId
+    }`,
     description: paste.description || ''
   };
   return (
