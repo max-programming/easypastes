@@ -220,13 +220,22 @@ const Paste = ({ paste, currentUser }: Props) => {
     !paste.pastePassword
   );
 
+  let authorName;
+
+  if(typeof currentUser === 'string') {
+    authorName = currentUser;
+  } else {
+    authorName = `${currentUser.first_name} ${currentUser.last_name}`;
+  }
+
   let metaTags = {
     title: paste.title || 'Untitled Paste',
     url: `https://${process.env.VERCEL_URL || 'easypastes.tk'}/pastes/${
       paste.pasteId
     }`,
-    description: paste.description || ''
+    description: `${paste.description}\nBy ${authorName}` || ''
   };
+
   return (
     <Layout>
       <NextSeo
