@@ -220,15 +220,22 @@ const Paste = ({ paste, currentUser }: Props) => {
     !paste.pastePassword
   );
 
-  let title = paste.title || 'Untitled Paste';
+  let metaTags = {
+    title: paste.title || 'Untitled Paste',
+    url: `https://${process.env.VERCEL_URL || 'easypastes.tk'}/pastes/${
+      paste.pasteId
+    }`,
+    description: paste.description || ''
+  };
   return (
     <Layout>
       <NextSeo
-        title={title}
-        description={paste.description || ''}
+        title={metaTags.title}
+        description={metaTags.description}
         openGraph={{
-          title,
-          description: paste.description || ''
+          title: metaTags.title,
+          description: metaTags.description,
+          url: metaTags.url
         }}
       />
       <Container maxW="4xl" my="6">
