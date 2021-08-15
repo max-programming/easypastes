@@ -27,6 +27,7 @@ import axios from 'axios';
 import useLocalStorage from 'use-local-storage';
 import Link from 'next/link';
 import NoPastes from 'components/CodePastes/NoPastes';
+import { NextSeo } from 'next-seo';
 
 const links = [
   {
@@ -85,7 +86,8 @@ export default function MyPastes({ pastes, fullName, id, username }: Props) {
   const [showAlert, setShowAlert] = useLocalStorage('username-alert', false);
   const [matches] = useMediaQuery('(max-width: 768px)');
   return (
-    <Layout title={`${fullName} - Pastes`} links={links}>
+    <Layout>
+      <NextSeo title={`${fullName} - Pastes`} />
       <Alert
         status="info"
         variant="left-accent"

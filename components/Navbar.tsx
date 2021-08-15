@@ -10,7 +10,6 @@ import {
   Collapse,
   Popover,
   PopoverTrigger,
-  PopoverContent,
   useColorModeValue,
   useBreakpointValue,
   useDisclosure
@@ -68,7 +67,7 @@ export default function WithSubnavigation() {
             </Text>
           </NextLink>
 
-          <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
+          <Flex display={{ base: 'none', md: 'flex' }} ml={10} mt={1}>
             <DesktopNav />
           </Flex>
         </Flex>
@@ -78,6 +77,7 @@ export default function WithSubnavigation() {
           justify={'flex-end'}
           direction={'row'}
           spacing={6}
+          fontFamily="Poppins"
         >
           <SocialButton
             label="GitHub repository"
@@ -116,9 +116,9 @@ export default function WithSubnavigation() {
                 fontSize={'sm'}
                 fontWeight={600}
                 color={'white'}
-                bg={'purple.400'}
+                bg={'purple.600'}
                 _hover={{
-                  bg: 'purple.300'
+                  bg: 'purple.400'
                 }}
               >
                 Sign Up
@@ -144,7 +144,7 @@ const DesktopNav = () => {
     <Stack direction={'row'} spacing={4}>
       <WithUser>
         {user => (
-          <Box>
+          <Box fontFamily="Poppins">
             <Popover trigger={'hover'} placement={'bottom-start'}>
               <PopoverTrigger>
                 <Link
@@ -176,6 +176,7 @@ const MobileNav = () => {
       bg={useColorModeValue('white', 'gray.800')}
       p={4}
       display={{ md: 'none' }}
+      fontFamily="Poppins"
     >
       <WithUser>
         {user => (

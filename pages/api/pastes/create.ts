@@ -117,9 +117,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     pastePassword = bcrypt.hashSync(pastePassword, salt);
   }
 
-  // DEBUG
-  console.log({ title });
-
   // Add them to supabase
   const { data, error } = await supabaseClient
     .from<PasteType>('Pastes')

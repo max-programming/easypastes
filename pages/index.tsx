@@ -38,13 +38,6 @@ import Link from 'next/link';
 import { HiOutlineLockClosed } from 'react-icons/hi';
 import PasswordModal from 'components/CodePastes/PasswordModal';
 
-const links = [
-  {
-    url: '/',
-    text: 'Home'
-  }
-];
-
 interface ButtonProps {
   code: string;
   language: string;
@@ -224,7 +217,7 @@ const Pastes = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-      <Layout links={links}>
+      <Layout>
         <SignedOut>
           <Alert
             status="info"

@@ -24,14 +24,6 @@ import { useRouter } from 'next/router';
 import Visibility from 'components/CodePastes/Visibility';
 import axios from 'axios';
 
-// Define the links
-const links = [
-  {
-    url: '/pastes',
-    text: 'Pastes'
-  }
-];
-
 // Custom types
 interface Props {
   paste: PasteType;
@@ -151,7 +143,7 @@ const EditPaste = ({ paste }: { paste: PasteType }) => {
 // Paste component
 const Paste = ({ paste }: Props) => {
   return (
-    <Layout title={paste.title || 'Paste'} links={links}>
+    <Layout>
       <Container maxW="full" my="6">
         <>
           <WithUser>

@@ -30,17 +30,9 @@ import { SignedIn, SignedOut, useUser } from '@clerk/clerk-react';
 import { motion } from 'framer-motion';
 import axios from 'axios';
 import Link from 'next/link';
-import { useState } from 'react';
-import { FormEventHandler } from 'react';
+import { useState, FormEventHandler } from 'react';
+import { NextSeo } from 'next-seo';
 import bcrypt from 'bcryptjs';
-
-// Define the links
-const links = [
-  {
-    url: '/pastes',
-    text: 'Pastes'
-  }
-];
 
 // Custom types
 interface Props {
@@ -169,45 +161,6 @@ const PrivatePaste = ({ paste, currentUser }: Props) => {
   );
 };
 
-// Paste component
-const Paste = ({ paste, currentUser }: Props) => {
-  const [isCorrectPassword, setIsCorrectPassword] = useState<boolean>(
-    !paste.pastePassword
-  );
-
-  return (
-    <Layout title={paste.title || 'Paste'} links={links}>
-      <Container maxW="4xl" my="6">
-        {paste.private ? (
-          <>
-            <SignedIn>
-              <PrivatePaste paste={paste} currentUser={currentUser} />
-            </SignedIn>
-            <SignedOut>
-              <InfoAlert />
-            </SignedOut>
-          </>
-        ) : isCorrectPassword ? (
-          <>
-            <RenderPasteInfo paste={paste} currentUser={currentUser} />
-            <DisplayCode paste={paste} language={paste.language} />
-          </>
-        ) : (
-          <>
-            <Heading size="md" textAlign="center" mb="5" fontFamily="Poppins">
-              This paste is password protected, Enter the password to view it.
-            </Heading>
-            <EnterPassword
-              pastePwd={paste.pastePassword}
-              setIsCorrectPassword={val => setIsCorrectPassword(val)}
-            />
-          </>
-        )}
-      </Container>
-    </Layout>
-  );
-};
-
 const EnterPassword = ({
   pastePwd,
   setIsCorrectPassword
@@ -258,6 +211,62 @@ const EnterPassword = ({
         Check
       </Button>
     </Flex>
+  );
+};
+
+// Paste component
+const Paste = ({ paste, currentUser }: Props) => {
+  const [isCorrectPassword, setIsCorrectPassword] = useState<boolean>(
+    !paste.pastePassword
+  );
+
+  let metaTags = {
+    title: paste.title || 'Untitled Paste',
+    url: `https://${process.env.VERCEL_URL || 'easypastes.tk'}/pastes/${
+      paste.pasteId
+    }`,
+    description: paste.description || ''
+  };
+
+  return (
+    <Layout>
+      <NextSeo
+        title={metaTags.title}
+        description={metaTags.description}
+        openGraph={{
+          title: metaTags.title,
+          description: metaTags.description,
+          url: metaTags.url
+        }}
+      />
+      <Container maxW="4xl" my="6">
+        {paste.private ? (
+          <>
+            <SignedIn>
+              <PrivatePaste paste={paste} currentUser={currentUser} />
+            </SignedIn>
+            <SignedOut>
+              <InfoAlert />
+            </SignedOut>
+          </>
+        ) : isCorrectPassword ? (
+          <>
+            <RenderPasteInfo paste={paste} currentUser={currentUser} />
+            <DisplayCode paste={paste} language={paste.language} />
+          </>
+        ) : (
+          <>
+            <Heading size="md" textAlign="center" mb="5" fontFamily="Poppins">
+              This paste is password protected, Enter the password to view it.
+            </Heading>
+            <EnterPassword
+              pastePwd={paste.pastePassword}
+              setIsCorrectPassword={val => setIsCorrectPassword(val)}
+            />
+          </>
+        )}
+      </Container>
+    </Layout>
   );
 };
 
