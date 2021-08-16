@@ -22,7 +22,7 @@ import {
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { FiAlertCircle, FiArrowRight } from 'react-icons/fi';
-import { ILanguage } from 'types';
+import { Emoji, ILanguage } from 'types';
 import axios from 'axios';
 
 // Components imports
@@ -37,6 +37,7 @@ import { SignedIn, SignedOut, useUser } from '@clerk/clerk-react';
 import Link from 'next/link';
 import { HiOutlineLockClosed } from 'react-icons/hi';
 import PasswordModal from 'components/CodePastes/PasswordModal';
+import { GetStaticProps } from 'next';
 
 interface ButtonProps {
   code: string;
@@ -198,7 +199,7 @@ const SignedOutButton = ({
 };
 
 // Main pastes component
-const Pastes = () => {
+const Pastes = ({ emojis }: { emojis: Array<Emoji> }) => {
   const toast = useToast();
   const [matches] = useMediaQuery('(max-width:768px)');
   const { data, error } = useSWR('/api/pastes');
@@ -355,6 +356,18 @@ const Pastes = () => {
       </Layout>
     </>
   );
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+  const { data: emojis } = await axios.get(
+    `https://emoji-api.com/emojis?access_key=${process.env.OPENEMOJI_API}`
+  );
+
+  return {
+    props: {
+      emojis
+    }
+  };
 };
 
 export default Pastes;
