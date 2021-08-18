@@ -37,7 +37,7 @@ const PasswordModal = ({
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent fontFamily="Poppins">
         <ModalHeader>Set paste password</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
