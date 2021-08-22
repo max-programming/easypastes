@@ -23,6 +23,7 @@ const MotionBox = motion<BoxProps>(Box);
 
 const MyApp = ({ Component, pageProps, router }: AppProps) => {
   useEffect(importLangs, []);
+
   return (
     <>
       <ClerkProvider
