@@ -97,7 +97,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       .select('*', { count: 'exact' });
 
     pasteId = base62Encode(count!);
-    pasteId = pasteId.length <= 2 ? pasteId += generateRandomString(3): pasteId;
+    pasteId =
+      pasteId.length <= 2 ? (pasteId += generateRandomString(3)) : pasteId;
   }
 
   if (hasPassword) {

@@ -74,8 +74,8 @@ function MyPastes({ allPastes, user }: Props) {
               <Text as="a" _hover={{ color: 'purple.200' }}>
                 the settings
               </Text>
-            </Link>
-            {' '}for your custom profile URL
+            </Link>{' '}
+            for your custom profile URL
             <CloseButton
               onClick={() => setShowAlert(false)}
               position="absolute"
@@ -108,7 +108,7 @@ function MyPastes({ allPastes, user }: Props) {
                       <HiOutlineViewList />
                     ) : (
                       <>
-                        <HiOutlineViewList /> {' '} All
+                        <HiOutlineViewList /> All
                       </>
                     )}
                   </Tab>
@@ -117,7 +117,7 @@ function MyPastes({ allPastes, user }: Props) {
                       <HiOutlineEye />
                     ) : (
                       <>
-                        <HiOutlineEye /> {' '} Public
+                        <HiOutlineEye /> Public
                       </>
                     )}
                   </Tab>
@@ -126,7 +126,7 @@ function MyPastes({ allPastes, user }: Props) {
                       <HiOutlineLockClosed />
                     ) : (
                       <>
-                        <HiOutlineLockClosed /> {' '} Private
+                        <HiOutlineLockClosed /> Private
                       </>
                     )}
                   </Tab>
@@ -135,7 +135,7 @@ function MyPastes({ allPastes, user }: Props) {
                       <HiOutlineLink />
                     ) : (
                       <>
-                        <HiOutlineLink /> {' '} Unlisted
+                        <HiOutlineLink /> Unlisted
                       </>
                     )}
                   </Tab>
