@@ -1,3 +1,8 @@
+// Packages
+import axios from 'axios';
+import Link from 'next/link';
+import useSWR from 'swr';
+import useLocalStorage from 'use-local-storage';
 import {
   Button,
   Container,
@@ -19,23 +24,21 @@ import {
   AccordionIcon,
   Textarea
 } from '@chakra-ui/react';
+import { SignedIn, SignedOut, useUser } from '@clerk/clerk-react';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { FiAlertCircle, FiArrowRight } from 'react-icons/fi';
-import { ILanguage } from 'types';
-import axios from 'axios';
+import { HiOutlineLockClosed } from 'react-icons/hi';
 
-// Components imports
+// Types
+import { ILanguage } from 'types';
+
+// Custom files
+import Layout from 'components/Layout';
 import InputCode from 'components/CodePastes/InputCode';
 import SelectLanguage from 'components/CodePastes/SelectLanguage';
 import PublicPastes from 'components/CodePastes/PublicPastes';
 import Visibility from 'components/CodePastes/Visibility';
-import Layout from 'components/Layout';
-import useSWR from 'swr';
-import useLocalStorage from 'use-local-storage';
-import { SignedIn, SignedOut, useUser } from '@clerk/clerk-react';
-import Link from 'next/link';
-import { HiOutlineLockClosed } from 'react-icons/hi';
 import PasswordModal from 'components/CodePastes/PasswordModal';
 
 interface ButtonProps {
@@ -295,7 +298,6 @@ const Pastes = () => {
               flex="1"
               w={matches ? 'full' : 'initial'}
             >
-              {/* Visibility */}
               <label style={{ marginRight: 8 }}>Visibility: </label>
               <Visibility
                 visibility={visibility}
@@ -303,11 +305,7 @@ const Pastes = () => {
               />
             </Flex>
           </Flex>
-
-          {/* Code for the paste */}
           <InputCode code={code} setCode={setCode} language={language} />
-
-          {/* Creating button */}
           <SignedIn>
             <SignedInButton
               code={code}

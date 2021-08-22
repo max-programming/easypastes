@@ -1,7 +1,10 @@
+// Types
 import { NextApiRequest, NextApiResponse } from 'next';
 import { PasteType } from 'types';
-import supabaseClient from 'utils/supabase';
+
+// Custom files
 import filterBadWords from 'utils/filterBadWords';
+import supabaseClient from 'utils/supabase';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   // Allow only POST requests

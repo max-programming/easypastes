@@ -1,3 +1,7 @@
+// Packages
+import axios from 'axios';
+import Link from 'next/link';
+import useLocalStorage from 'use-local-storage';
 import {
   Container,
   Heading,
@@ -11,34 +15,24 @@ import {
   Text,
   useMediaQuery
 } from '@chakra-ui/react';
+import { SignedOut, WithUser } from '@clerk/clerk-react';
 import {
   HiOutlineViewList,
   HiOutlineEye,
   HiOutlineLockClosed,
   HiOutlineLink
 } from 'react-icons/hi';
-import Layout from 'components/Layout';
 import { GetServerSideProps } from 'next';
-import { PasteType, User } from 'types';
-import Paste from 'components/CodePastes/Paste';
-import supabaseClient from 'utils/supabase';
-import { SignedOut, WithUser } from '@clerk/clerk-react';
-import axios from 'axios';
-import useLocalStorage from 'use-local-storage';
-import Link from 'next/link';
-import NoPastes from 'components/CodePastes/NoPastes';
 import { NextSeo } from 'next-seo';
 
-const links = [
-  {
-    url: '/',
-    text: 'Home'
-  },
-  {
-    url: '/pastes',
-    text: 'Pastes'
-  }
-];
+// Types
+import { PasteType, User } from 'types';
+
+// Custom files
+import Layout from 'components/Layout';
+import NoPastes from 'components/CodePastes/NoPastes';
+import Paste from 'components/CodePastes/Paste';
+import supabaseClient from 'utils/supabase';
 
 interface Props {
   pastes: PasteType[];

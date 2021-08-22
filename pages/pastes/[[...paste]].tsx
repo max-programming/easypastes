@@ -1,10 +1,8 @@
 /* eslint-disable react/no-children-prop */
-// Own imports
-import Layout from 'components/Layout';
-import DisplayCode from 'components/CodePastes/DisplayCode';
-import supabaseClient from 'utils/supabase';
-
-// Other imports
+// Packages
+import axios from 'axios';
+import bcrypt from 'bcryptjs';
+import Link from 'next/link';
 import {
   Alert,
   AlertProps,
@@ -23,16 +21,20 @@ import {
   TagLabel,
   Center
 } from '@chakra-ui/react';
-import { HiOutlineKey, HiOutlineUser, HiOutlineCode } from 'react-icons/hi';
-import { GetServerSideProps } from 'next';
-import { PasteType, User } from 'types';
 import { SignedIn, SignedOut, useUser } from '@clerk/clerk-react';
 import { motion } from 'framer-motion';
-import axios from 'axios';
-import Link from 'next/link';
-import { useState, FormEventHandler } from 'react';
+import { GetServerSideProps } from 'next';
 import { NextSeo } from 'next-seo';
-import bcrypt from 'bcryptjs';
+import { useState, FormEventHandler } from 'react';
+import { HiOutlineKey, HiOutlineUser, HiOutlineCode } from 'react-icons/hi';
+
+// Types
+import { PasteType, User } from 'types';
+
+// Custom files
+import Layout from 'components/Layout';
+import DisplayCode from 'components/CodePastes/DisplayCode';
+import supabaseClient from 'utils/supabase';
 
 // Custom types
 interface Props {
@@ -227,6 +229,7 @@ const Paste = ({ paste, currentUser }: Props) => {
     }`,
     description: paste.description || ''
   };
+
   return (
     <Layout>
       <NextSeo
