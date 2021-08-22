@@ -1,7 +1,7 @@
-const base62Encode = (n: number) => {
-  let digits = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  let result = '';
+let digits = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+let result = '';
 
+const base62Encode = (n: number) => {
   if (n === 0) {
     return '0';
   }

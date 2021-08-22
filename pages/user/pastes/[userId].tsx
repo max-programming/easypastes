@@ -32,6 +32,7 @@ import { PasteType, User } from 'types';
 import Layout from 'components/Layout';
 import NoPastes from 'components/CodePastes/NoPastes';
 import Paste from 'components/CodePastes/Paste';
+import getClerkUser from 'utils/clerkUtils';
 import supabaseClient from 'utils/supabase';
 
 interface Props {
@@ -43,23 +44,21 @@ interface Props {
 
 export const getServerSideProps: GetServerSideProps = async context => {
   try {
-    const { data: user } = await axios.get<User>(
-      `https://api.clerk.dev/v1/users/${context.params?.userId}`,
-      {
-        headers: { Authorization: `Bearer ${process.env.CLERK_API_KEY}` }
-      }
-    );
+    const { user, status } = await getClerkUser(context.params?.userId);
+
     if (!user) {
       return {
         notFound: true
       };
     }
+
     const { data: pastes, error } = await supabaseClient
       .from<PasteType>('Pastes')
       .select('*')
       // @ts-ignore
       .eq('userId', user.id)
       .order('createdAt', { ascending: false });
+
     return {
       props: {
         pastes,
@@ -94,7 +93,7 @@ export default function MyPastes({ pastes, fullName, id, username }: Props) {
             the settings
           </Text>
         </Link>
-        &nbsp;for your custom profile URL
+        &nbsp; for your custom profile URL
         <CloseButton
           onClick={() => setShowAlert(false)}
           position="absolute"
@@ -108,6 +107,7 @@ export default function MyPastes({ pastes, fullName, id, username }: Props) {
           textAlign="center"
           size="lg"
           _selection={{ backgroundColor: 'purple.700' }}
+          fontFamily="Poppins"
         >
           Pastes by {fullName}
         </Heading>
@@ -129,7 +129,7 @@ export default function MyPastes({ pastes, fullName, id, username }: Props) {
                         <HiOutlineViewList />
                       ) : (
                         <>
-                          <HiOutlineViewList /> &nbsp; All
+                          <HiOutlineViewList /> &nbsp;All
                         </>
                       )}
                     </Tab>
@@ -138,7 +138,7 @@ export default function MyPastes({ pastes, fullName, id, username }: Props) {
                         <HiOutlineEye />
                       ) : (
                         <>
-                          <HiOutlineEye /> &nbsp; Public
+                          <HiOutlineEye /> &nbsp;Public
                         </>
                       )}
                     </Tab>
@@ -147,7 +147,7 @@ export default function MyPastes({ pastes, fullName, id, username }: Props) {
                         <HiOutlineLockClosed />
                       ) : (
                         <>
-                          <HiOutlineLockClosed /> &nbsp; Private
+                          <HiOutlineLockClosed /> &nbsp;Private
                         </>
                       )}
                     </Tab>
@@ -156,7 +156,7 @@ export default function MyPastes({ pastes, fullName, id, username }: Props) {
                         <HiOutlineLink />
                       ) : (
                         <>
-                          <HiOutlineLink /> &nbsp; Unlisted
+                          <HiOutlineLink /> &nbsp;Unlisted
                         </>
                       )}
                     </Tab>

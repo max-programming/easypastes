@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { PasteType } from 'types';
 
 // Custom files
-import filterBadWords from 'utils/filterBadWords';
+import swearFilter from 'utils/swearFilter';
 import supabaseClient from 'utils/supabase';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -55,8 +55,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     .update({
       code,
       language,
-      title: filterBadWords(title),
-      description: filterBadWords(description),
+      title: swearFilter(title),
+      description: swearFilter(description),
       public: _public,
       private: _private
     })

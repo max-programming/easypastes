@@ -6,24 +6,13 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { PasteType } from 'types';
 
 // Custom files
-import base62Encode from 'utils/encode';
-import filterBadWords from 'utils/filterBadWords';
+import base62Encode from 'utils/base62Encode';
+import generateRandomString from 'utils/genRandomString';
+import swearFilter from 'utils/swearFilter';
 import supabaseClient from 'utils/supabase';
 
 // Variables
-const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const salt = bcrypt.genSaltSync(10);
-
-const generateRandomString = (numLetters: number) => {
-  let id = '';
-  let charsLen = chars.length;
-
-  for (let i = 0; i <= numLetters; i++) {
-    id += chars.charAt(Math.floor(Math.random() * charsLen));
-  }
-
-  return id;
-};
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   // Allow only POST requests
@@ -101,21 +90,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         .status(400)
         .json({ message: 'Custom URL taken. Please try something else.' });
 
-    pasteId = filterBadWords(pasteId);
+    pasteId = swearFilter(pasteId);
   } else {
     const { data, error, count } = await supabaseClient
       .from<PasteType>('Pastes')
       .select('*', { count: 'exact' });
 
     pasteId = base62Encode(count!);
-
-    let id = '';
-
-    if (pasteId.length <= 2) {
-      id = generateRandomString(3);
-    }
-
-    pasteId += id;
+    pasteId = pasteId.length <= 2 ? pasteId += generateRandomString(3): pasteId;
   }
 
   if (hasPassword) {
@@ -127,8 +109,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     .from<PasteType>('Pastes')
     .insert([
       {
-        title: filterBadWords(title),
-        description: filterBadWords(description),
+        title: swearFilter(title),
+        description: swearFilter(description),
         code,
         language,
         userId,

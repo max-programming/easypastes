@@ -34,6 +34,7 @@ import { PasteType, User } from 'types';
 // Custom files
 import Layout from 'components/Layout';
 import DisplayCode from 'components/CodePastes/DisplayCode';
+import getClerkUser from 'utils/clerkUtils';
 import supabaseClient from 'utils/supabase';
 
 // Custom types
@@ -68,14 +69,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
     };
   }
 
-  const { data: user, status } = await axios.get<User>(
-    `https://api.clerk.dev/v1/users/${currentPaste.userId}`,
-    {
-      headers: {
-        Authorization: `Bearer ${process.env.CLERK_API_KEY}`
-      }
-    }
-  );
+  const { user, status } = await getClerkUser(currentPaste.userId);
 
   return {
     props: { paste: currentPaste, currentUser: user || 'Anonymous' }
