@@ -1,3 +1,6 @@
+// Packages
+import Link from 'next/link';
+import useLocalStorage from 'use-local-storage';
 import {
   Container,
   Heading,
@@ -11,35 +14,25 @@ import {
   Text,
   useMediaQuery
 } from '@chakra-ui/react';
+import { SignedOut, withUser, WithUser } from '@clerk/clerk-react';
 import {
   HiOutlineViewList,
   HiOutlineEye,
   HiOutlineLockClosed,
   HiOutlineLink
 } from 'react-icons/hi';
-import Layout from 'components/Layout';
 import { GetServerSideProps } from 'next';
-import { PasteType, User } from 'types';
-import Paste from 'components/CodePastes/Paste';
-import supabaseClient from 'utils/supabase';
-import { SignedOut, useUser, withUser, WithUser } from '@clerk/clerk-react';
-import type { UserResource } from '@clerk/types';
-import axios from 'axios';
-import useLocalStorage from 'use-local-storage';
-import Link from 'next/link';
-import NoPastes from 'components/CodePastes/NoPastes';
 import { NextSeo } from 'next-seo';
 
-const links = [
-  {
-    url: '/',
-    text: 'Home'
-  },
-  {
-    url: '/pastes',
-    text: 'Pastes'
-  }
-];
+// Types
+import type { UserResource } from '@clerk/types';
+import { PasteType } from 'types';
+
+// Custom files
+import Layout from 'components/Layout';
+import NoPastes from 'components/CodePastes/NoPastes';
+import Paste from 'components/CodePastes/Paste';
+import supabaseClient from 'utils/supabase';
 
 interface Props {
   allPastes: PasteType[];
@@ -62,8 +55,9 @@ export const getServerSideProps: GetServerSideProps = async context => {
 function MyPastes({ allPastes, user }: Props) {
   const [showAlert, setShowAlert] = useLocalStorage('username-alert', false);
   const [matches] = useMediaQuery('(max-width: 768px)');
-  // const user = useUser();
+
   const pastes = allPastes.filter(paste => paste.userId === user.id);
+
   return (
     <WithUser>
       {user => (
@@ -75,13 +69,13 @@ function MyPastes({ allPastes, user }: Props) {
             hidden={!showAlert || !!user.username}
             colorScheme="purple"
           >
-            Add username in&nbsp;
+            Add username in{' '}
             <Link href="/user" passHref>
               <Text as="a" _hover={{ color: 'purple.200' }}>
                 the settings
               </Text>
             </Link>
-            &nbsp;for your custom profile URL
+            {' '}for your custom profile URL
             <CloseButton
               onClick={() => setShowAlert(false)}
               position="absolute"
@@ -114,7 +108,7 @@ function MyPastes({ allPastes, user }: Props) {
                       <HiOutlineViewList />
                     ) : (
                       <>
-                        <HiOutlineViewList /> &nbsp; All
+                        <HiOutlineViewList /> {' '} All
                       </>
                     )}
                   </Tab>
@@ -123,7 +117,7 @@ function MyPastes({ allPastes, user }: Props) {
                       <HiOutlineEye />
                     ) : (
                       <>
-                        <HiOutlineEye /> &nbsp; Public
+                        <HiOutlineEye /> {' '} Public
                       </>
                     )}
                   </Tab>
@@ -132,7 +126,7 @@ function MyPastes({ allPastes, user }: Props) {
                       <HiOutlineLockClosed />
                     ) : (
                       <>
-                        <HiOutlineLockClosed /> &nbsp; Private
+                        <HiOutlineLockClosed /> {' '} Private
                       </>
                     )}
                   </Tab>
@@ -141,7 +135,7 @@ function MyPastes({ allPastes, user }: Props) {
                       <HiOutlineLink />
                     ) : (
                       <>
-                        <HiOutlineLink /> &nbsp; Unlisted
+                        <HiOutlineLink /> {' '} Unlisted
                       </>
                     )}
                   </Tab>

@@ -1,5 +1,8 @@
+// Types
 import { NextApiRequest, NextApiResponse } from 'next';
 import { PasteType } from 'types';
+
+// Custom files
 import supabaseClient from 'utils/supabase';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {

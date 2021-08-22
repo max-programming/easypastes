@@ -1,28 +1,29 @@
-// Own imports
-import Layout from 'components/Layout';
-import supabaseClient from 'utils/supabase';
-
-// Other imports
+// Packages
+import axios from 'axios';
 import {
   Alert,
   AlertProps,
   Container,
-  Heading,
   Button,
   Center,
   Input
 } from '@chakra-ui/react';
-import { GetServerSideProps } from 'next';
-import { PasteType, User } from 'types';
-import { SignedIn, SignedOut, useUser, WithUser } from '@clerk/clerk-react';
+import { SignedOut, useUser, WithUser } from '@clerk/clerk-react';
 import { motion } from 'framer-motion';
-import InputCode from 'components/CodePastes/InputCode';
+import { GetServerSideProps } from 'next';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { FiArrowRight } from 'react-icons/fi';
+
+// Types
+import { PasteType, User } from 'types';
+
+// Custom files
+import Layout from 'components/Layout';
+import InputCode from 'components/CodePastes/InputCode';
 import SelectLanguage from 'components/CodePastes/SelectLanguage';
-import { useRouter } from 'next/router';
 import Visibility from 'components/CodePastes/Visibility';
-import axios from 'axios';
+import supabaseClient from 'utils/supabase';
 
 // Custom types
 interface Props {

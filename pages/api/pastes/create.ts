@@ -1,9 +1,14 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+// Packages
 import bcrypt from 'bcryptjs';
+
+// Types
+import { NextApiRequest, NextApiResponse } from 'next';
 import { PasteType } from 'types';
-import supabaseClient from 'utils/supabase';
+
+// Custom files
 import base62Encode from 'utils/encode';
 import filterBadWords from 'utils/filterBadWords';
+import supabaseClient from 'utils/supabase';
 
 // Variables
 const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

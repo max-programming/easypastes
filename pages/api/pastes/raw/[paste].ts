@@ -1,6 +1,11 @@
+// Packages
 import axios from 'axios';
+
+// Types
 import { NextApiRequest, NextApiResponse } from 'next';
 import { PasteType, User } from 'types';
+
+// Custom files
 import supabaseClient from 'utils/supabase';
 
 export default async function handler(

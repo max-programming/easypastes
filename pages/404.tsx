@@ -1,8 +1,11 @@
-import { Center, Heading, Text } from '@chakra-ui/react';
-import Layout from 'components/Layout';
-import { FcNook } from 'react-icons/fc';
+// Packages
 import Link from 'next/link';
+import { Center, Heading, Text } from '@chakra-ui/react';
 import { NextSeo } from 'next-seo';
+import { FcNook } from 'react-icons/fc';
+
+// Custom files
+import Layout from 'components/Layout';
 
 export default function Offline() {
   return (
