@@ -1,3 +1,4 @@
+// Components
 import {
   RadioGroup,
   Radio,
@@ -7,6 +8,8 @@ import {
   useMediaQuery
 } from '@chakra-ui/react';
 import { SignedIn } from '@clerk/clerk-react';
+
+// Types
 import type { ChangeEventHandler, Dispatch, SetStateAction } from 'react';
 
 interface Props {

@@ -1,8 +1,13 @@
-import Highlight, { defaultProps, Language } from 'prism-react-renderer';
+// Packages
 import nightOwl from 'prism-react-renderer/themes/nightOwl';
+
+// Components
+import ActionsButton from './ActionsButton';
 import { Box } from '@chakra-ui/react';
 import CopyButton from './CopyButton';
-import ActionsButton from './ActionsButton';
+import Highlight, { defaultProps, Language } from 'prism-react-renderer';
+
+// Types
 import { ILanguage, PasteType } from 'types';
 
 interface Props {

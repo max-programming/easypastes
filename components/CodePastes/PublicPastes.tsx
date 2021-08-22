@@ -1,3 +1,10 @@
+// Packages
+import { zonedTimeToUtc } from 'date-fns-tz';
+import TimeAgo from 'javascript-time-ago';
+import en from 'javascript-time-ago/locale/en';
+import NextLink from 'next/link';
+
+// Components
 import {
   Box,
   Heading,
@@ -10,11 +17,9 @@ import {
   Stack,
   Text
 } from '@chakra-ui/react';
+
+// Types
 import { PasteType } from 'types';
-import NextLink from 'next/link';
-import TimeAgo from 'javascript-time-ago';
-import en from 'javascript-time-ago/locale/en';
-import { zonedTimeToUtc } from 'date-fns-tz';
 
 TimeAgo.addDefaultLocale(en);
 

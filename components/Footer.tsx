@@ -1,4 +1,9 @@
 // Thanks to https://chakra-templates.dev/ for this 💗
+
+// Types
+import { ReactNode } from 'react';
+
+// Components
 import {
   Box,
   chakra,
@@ -7,8 +12,9 @@ import {
   Text,
   VisuallyHidden
 } from '@chakra-ui/react';
+
+// Icons
 import { FaGithub, FaTwitter, FaYoutube } from 'react-icons/fa';
-import { ReactNode } from 'react';
 
 export const SocialButton = ({
   children,

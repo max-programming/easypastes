@@ -1,7 +1,12 @@
-import { Box, Heading, Text } from '@chakra-ui/react';
-import { PasteType } from 'types';
-import DisplayCode from './DisplayCode';
+// Packages
 import Link from 'next/link';
+
+// Components
+import { Box, Heading, Text } from '@chakra-ui/react';
+import DisplayCode from './DisplayCode';
+
+// Types
+import { PasteType } from 'types';
 
 interface Props {
   paste: PasteType;

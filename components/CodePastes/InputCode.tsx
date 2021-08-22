@@ -1,8 +1,13 @@
+// Packages
+import nightOwl from 'prism-react-renderer/themes/nightOwl';
+import { Dispatch, SetStateAction } from 'react';
+
+// Components
 import { Box } from '@chakra-ui/react';
 import Highlight, { defaultProps, Language } from 'prism-react-renderer';
-import nightOwl from 'prism-react-renderer/themes/nightOwl';
 import Editor from 'react-simple-code-editor';
-import { Dispatch, SetStateAction } from 'react';
+
+// Types
 import { ILanguage } from 'types';
 
 interface Props {

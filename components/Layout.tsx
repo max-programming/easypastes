@@ -1,8 +1,13 @@
+// Packages
+import { useRouter } from 'next/router';
+
+// Types
 import type { ReactNode } from 'react';
+
+// Components
 import { Box } from '@chakra-ui/react';
 import Navbar from './Navbar';
 import Footer from './Footer';
-import { useRouter } from 'next/router';
 
 // Types definition
 interface Props {

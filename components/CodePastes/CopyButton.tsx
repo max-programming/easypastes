@@ -1,4 +1,7 @@
+// Components
 import { Box, IconButton, Tooltip } from '@chakra-ui/react';
+
+// Icons
 import { FiCopy } from 'react-icons/fi';
 
 interface Props {

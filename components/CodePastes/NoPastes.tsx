@@ -1,4 +1,7 @@
+// Components
 import { Center, Heading } from '@chakra-ui/react';
+
+// Icons
 import { FcReadingEbook } from 'react-icons/fc';
 
 export default function NoPastes() {

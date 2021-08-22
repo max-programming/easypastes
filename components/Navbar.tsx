@@ -1,4 +1,15 @@
 // Thanks to https://chakra-templates.dev/ for this 💗
+
+// Packages
+import NextLink from 'next/link';
+import { useRouter } from 'next/router';
+import Image from 'next/image';
+
+// Icons
+import { FaGithub, FaReadme } from 'react-icons/fa';
+import { HiMenu, HiX } from 'react-icons/hi';
+
+// Components
 import {
   Box,
   Flex,
@@ -15,12 +26,7 @@ import {
   useDisclosure
 } from '@chakra-ui/react';
 import { SignedIn, SignedOut, UserButton, WithUser } from '@clerk/clerk-react';
-import NextLink from 'next/link';
-import { useRouter } from 'next/router';
-import { HiMenu, HiX } from 'react-icons/hi';
-import Image from 'next/image';
 import { SocialButton } from './Footer';
-import { FaGithub, FaReadme } from 'react-icons/fa';
 
 export default function WithSubnavigation() {
   const router = useRouter();

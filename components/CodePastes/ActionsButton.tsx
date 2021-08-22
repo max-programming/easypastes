@@ -1,3 +1,13 @@
+// Packages
+import axios from 'axios';
+import { WithUser } from '@clerk/clerk-react';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+
+// Types
+import { PasteType } from 'types';
+
+// Components
 import {
   Box,
   IconButton,
@@ -18,10 +28,8 @@ import {
   useDisclosure,
   UseDisclosureProps
 } from '@chakra-ui/react';
-import { WithUser } from '@clerk/clerk-react';
-import axios from 'axios';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
+
+// Icons
 import {
   FiCopy,
   FiEdit2,
@@ -30,7 +38,6 @@ import {
   FiTrash2,
   FiFileText
 } from 'react-icons/fi';
-import { PasteType } from 'types';
 
 interface Props {
   paste: PasteType;

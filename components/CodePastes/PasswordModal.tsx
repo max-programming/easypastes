@@ -1,4 +1,12 @@
 /* eslint-disable react/no-children-prop */
+
+// Packages
+import { useState } from 'react';
+
+// Types
+import { Dispatch, SetStateAction } from 'react';
+
+// Components
 import {
   Modal,
   ModalOverlay,
@@ -14,9 +22,9 @@ import {
   InputLeftElement,
   InputRightElement
 } from '@chakra-ui/react';
-import { Dispatch, SetStateAction } from 'react';
+
+// Icons
 import { HiOutlineKey, HiOutlineLockClosed } from 'react-icons/hi';
-import { useState } from 'react';
 
 interface Props {
   password: string;

@@ -1,5 +1,8 @@
-import { Box, Input } from '@chakra-ui/react';
+// Packages
 import { Dispatch, SetStateAction } from 'react';
+
+// Components
+import { Box, Input } from '@chakra-ui/react';
 
 interface Props {
   url: string;
