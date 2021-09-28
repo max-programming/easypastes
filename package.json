@@ -18,7 +18,7 @@
     "@fontsource/fira-code": "^4.5.0",
     "@fontsource/poppins": "^4.5.0",
     "@supabase/supabase-js": "^1.20.0",
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "bad-words": "^3.0.4",
     "bcryptjs": "^2.4.3",
     "date-fns": "^2.22.1",
