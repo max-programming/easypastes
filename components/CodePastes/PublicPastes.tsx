@@ -16,14 +16,12 @@ import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
 import { zonedTimeToUtc } from 'date-fns-tz';
 
-TimeAgo.addDefaultLocale(en);
-
 interface Props {
   publicPastes: PasteType[];
 }
 
 const PublicPastes = ({ publicPastes }: Props) => {
-  const timeAgo = new TimeAgo();
+  const timeAgo = new TimeAgo('en');
   return (
     <Box mt="20">
       <Heading
