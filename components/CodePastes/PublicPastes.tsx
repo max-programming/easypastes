@@ -13,15 +13,17 @@ import {
 import { PasteType } from 'types';
 import NextLink from 'next/link';
 import TimeAgo from 'javascript-time-ago';
-import en from 'javascript-time-ago/locale/en';
+import en from 'javascript-time-ago/locale/en.json';
 import { zonedTimeToUtc } from 'date-fns-tz';
+
+TimeAgo.addDefaultLocale(en);
 
 interface Props {
   publicPastes: PasteType[];
 }
 
 const PublicPastes = ({ publicPastes }: Props) => {
-  const timeAgo = new TimeAgo('en-us');
+  const timeAgo = new TimeAgo('en-US');
   return (
     <Box mt="20">
       <Heading
