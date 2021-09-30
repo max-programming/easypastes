@@ -55,7 +55,7 @@ const DeleteModal = ({
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent fontFamily="Poppins">
         <ModalHeader>Delete Paste</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
