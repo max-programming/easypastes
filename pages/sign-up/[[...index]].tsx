@@ -1,10 +1,12 @@
 import { SignUp } from '@clerk/clerk-react';
 import { Container } from '@chakra-ui/layout';
 import Layout from 'components/Layout';
+import { NextSeo } from 'next-seo';
 
 export default function SignUpPage() {
   return (
-    <Layout title="Sign up">
+    <Layout>
+      <NextSeo title="Sign up" />
       <Container mt="10">
         <SignUp path="/sign-up" routing="path" />
       </Container>

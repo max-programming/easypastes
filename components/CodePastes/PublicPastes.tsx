@@ -26,7 +26,12 @@ const PublicPastes = ({ publicPastes }: Props) => {
   const timeAgo = new TimeAgo('en-US');
   return (
     <Box mt="20">
-      <Heading as="h2" size="lg" _selection={{ backgroundColor: 'purple.700' }}>
+      <Heading
+        as="h2"
+        size="lg"
+        _selection={{ backgroundColor: 'purple.700' }}
+        fontFamily="Poppins"
+      >
         🌐 Latest public pastes
       </Heading>
       <UnorderedList spacing="4" mt="4">

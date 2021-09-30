@@ -24,14 +24,6 @@ import { useRouter } from 'next/router';
 import Visibility from 'components/CodePastes/Visibility';
 import axios from 'axios';
 
-// Define the links
-const links = [
-  {
-    url: '/pastes',
-    text: 'Pastes'
-  }
-];
-
 // Custom types
 interface Props {
   paste: PasteType;
@@ -41,8 +33,9 @@ const MotionAlert = motion<AlertProps>(Alert);
 
 // Server side props override
 export const getServerSideProps: GetServerSideProps = async context => {
+  let currentUser: string | User;
   // @ts-ignore
-  const { paste } = context.params;
+  const paste = context.params.paste.join('/');
   const { data: pastes, error } = await supabaseClient
     .from<PasteType>('Pastes')
     .select('*')
@@ -54,10 +47,26 @@ export const getServerSideProps: GetServerSideProps = async context => {
     };
   }
 
-  console.error(error);
+  const currentPaste = pastes[0];
+
+  const { data: users } = await axios.get<Array<User>>(
+    'https://api.clerk.dev/v1/users?limit=100',
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.CLERK_API_KEY}`
+      }
+    }
+  );
+  currentUser = users.find(user => user.id === currentPaste.userId);
+
+  if (!currentUser) {
+    return {
+      notFound: true
+    };
+  }
 
   return {
-    props: { paste: pastes[0] }
+    props: { paste: currentPaste }
   };
 };
 
@@ -134,7 +143,7 @@ const EditPaste = ({ paste }: { paste: PasteType }) => {
 // Paste component
 const Paste = ({ paste }: Props) => {
   return (
-    <Layout title={paste.title || 'Paste'} links={links}>
+    <Layout>
       <Container maxW="full" my="6">
         <>
           <WithUser>

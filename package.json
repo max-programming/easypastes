@@ -41,6 +41,7 @@
   "devDependencies": {
     "@types/bad-words": "^3.0.1",
     "@types/bcryptjs": "^2.4.2",
+    "@types/diff": "^5.0.1",
     "@types/javascript-time-ago": "^2.0.3",
     "@types/prismjs": "^1.16.6",
     "@types/react": "^17.0.24",

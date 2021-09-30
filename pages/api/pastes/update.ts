@@ -11,10 +11,19 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   // Get the records from body
-  let { code, language, title, pasteId, userId, _public, _private } = req.body;
+  let {
+    code,
+    language,
+    title,
+    description,
+    pasteId,
+    userId,
+    _public,
+    _private
+  } = req.body;
 
   if (!userId) {
-    return res.status(400).json({ message: "Can't delete anonymous paste" });
+    return res.status(400).json({ message: 'Cannot delete anonymous paste' });
   }
 
   if (code.trim() === '') {
@@ -44,6 +53,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       code,
       language,
       title: filterBadWords(title),
+      description: filterBadWords(description),
       public: _public,
       private: _private
     })

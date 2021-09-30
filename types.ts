@@ -4,6 +4,7 @@ export interface PasteType {
   id: number;
   code: string;
   title: string;
+  description: string;
   language: ILanguage;
   public: boolean;
   private: boolean;
@@ -27,6 +28,7 @@ export interface User {
   updated_at: number;
   created_at_ms: number;
   updated_at_ms: number;
+  profile_image_url: string;
 }
 
 export type ILanguage =

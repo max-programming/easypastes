@@ -30,6 +30,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   /// Get the records from body
   let {
     title,
+    description,
     code,
     language,
     userId,
@@ -53,6 +54,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res
       .status(400)
       .json({ message: 'Sign in to create a private paste.' });
+  }
+
+  // Assign the public and private values to keep the paste unlisted by default, unless explicitly specified
+  if (!_public) {
+    _public = false;
+  }
+
+  if (!_private) {
+    _private = false;
   }
 
   if (language.trim() === '') {
@@ -106,13 +116,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (hasPassword) {
     pastePassword = bcrypt.hashSync(pastePassword, salt);
   }
+
   // Add them to supabase
-  console.log({ title });
   const { data, error } = await supabaseClient
     .from<PasteType>('Pastes')
     .insert([
       {
         title: filterBadWords(title),
+        description: filterBadWords(description),
         code,
         language,
         userId,

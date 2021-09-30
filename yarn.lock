@@ -1551,7 +1551,7 @@
     "@babel/runtime" "^7.13.10"
     "@emotion/cache" "^11.4.0"
     "@emotion/serialize" "^1.0.2"
-    "@emotion/sheet" "^1.0.1"
+    "@emotion/sheet" "^1.0.2"
     "@emotion/utils" "^1.0.0"
     "@emotion/weak-memoize" "^0.2.5"
     "hoist-non-react-statics" "^3.3.1"
@@ -1917,6 +1917,11 @@
     "@types/keygrip" "*"
     "@types/node" "*"
 
+"@types/diff@^5.0.1":
+  version "5.0.1"
+  resolved "https://registry.npmjs.org/@types/diff/-/diff-5.0.1.tgz"
+  integrity sha512-XIpxU6Qdvp1ZE6Kr3yrkv1qgUab0fyf4mHYvW8N3Bx3PCsbN6or1q9/q72cv5jIFWolaGH08U9XyYoLLIykyKQ==
+
 "@types/estree@0.0.39":
   "integrity" "sha512-EYNwp3bU+98cpU4lAWYYL7Zz+2gryWH1qbdDTidVd6hkiR6weksdbMadyXKXNPEkQFhXM+hVO9ZygomHXp+AIw=="
   "resolved" "https://registry.npmjs.org/@types/estree/-/estree-0.0.39.tgz"
@@ -2101,6 +2106,11 @@
   "resolved" "https://registry.npmjs.org/@types/trusted-types/-/trusted-types-2.0.2.tgz"
   "version" "2.0.2"
 
+"@types/trusted-types@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.npmjs.org/@types/trusted-types/-/trusted-types-2.0.2.tgz"
+  integrity sha512-F5DIZ36YVLE+PN+Zwws4kJogq47hNgX3Nx6WyDJ3kcplxyke3XIzB8uK5n/Lpm1HBsbGzd6nmGehL8cPekP+Tg==
+
 "@types/uglify-js@*":
   "integrity" "sha512-O3MmRAk6ZuAKa9CHgg0Pr0+lUOqoMLpc9AS4R8ano2auvsg7IE8syF3Xh/NPr26TWklxYcqoEEFdzLLs1fV9PQ=="
   "resolved" "https://registry.npmjs.org/@types/uglify-js/-/uglify-js-3.13.1.tgz"
@@ -2156,8 +2166,8 @@
   "resolved" "https://registry.npmjs.org/@typescript-eslint/scope-manager/-/scope-manager-4.28.4.tgz"
   "version" "4.28.4"
   dependencies:
-    "@typescript-eslint/types" "4.28.4"
-    "@typescript-eslint/visitor-keys" "4.28.4"
+    "@typescript-eslint/types" "4.29.1"
+    "@typescript-eslint/visitor-keys" "4.29.1"
 
 "@typescript-eslint/types@4.28.4":
   "integrity" "sha512-3eap4QWxGqkYuEmVebUGULMskR6Cuoc/Wii0oSOddleP4EGx1tjLnZQ0ZP33YRoMDCs5O3j56RBV4g14T4jvww=="

@@ -28,6 +28,7 @@ import axios from 'axios';
 import useLocalStorage from 'use-local-storage';
 import Link from 'next/link';
 import NoPastes from 'components/CodePastes/NoPastes';
+import { NextSeo } from 'next-seo';
 
 const links = [
   {
@@ -66,10 +67,8 @@ function MyPastes({ allPastes, user }: Props) {
   return (
     <WithUser>
       {user => (
-        <Layout
-          title={`${user.firstName} ${user.lastName} - Pastes`}
-          links={links}
-        >
+        <Layout>
+          <NextSeo title={`${user.firstName} ${user.lastName} - Pastes`} />
           <Alert
             status="info"
             variant="left-accent"
@@ -96,6 +95,7 @@ function MyPastes({ allPastes, user }: Props) {
               textAlign="center"
               size="lg"
               _selection={{ backgroundColor: 'purple.700' }}
+              fontFamily="Poppins"
             >
               Pastes by {`${user.firstName} ${user.lastName}`}
             </Heading>

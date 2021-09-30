@@ -2,8 +2,6 @@ import {
   Button,
   Container,
   Input,
-  useColorModeValue,
-  theme,
   Flex,
   InputGroup,
   InputLeftAddon,
@@ -13,12 +11,18 @@ import {
   CloseButton,
   useMediaQuery,
   UseToastOptions,
-  useDisclosure
+  useDisclosure,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
+  Textarea
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { FiAlertCircle, FiArrowRight } from 'react-icons/fi';
-import { ILanguage, PasteType } from 'types';
+import { ILanguage } from 'types';
 import axios from 'axios';
 
 // Components imports
@@ -29,22 +33,16 @@ import Visibility from 'components/CodePastes/Visibility';
 import Layout from 'components/Layout';
 import useSWR from 'swr';
 import useLocalStorage from 'use-local-storage';
-import { SignedIn, SignedOut, useSession, useUser } from '@clerk/clerk-react';
+import { SignedIn, SignedOut, useUser } from '@clerk/clerk-react';
 import Link from 'next/link';
-import { HiLockClosed, HiOutlineLockClosed } from 'react-icons/hi';
+import { HiOutlineLockClosed } from 'react-icons/hi';
 import PasswordModal from 'components/CodePastes/PasswordModal';
-
-const links = [
-  {
-    url: '/',
-    text: 'Home'
-  }
-];
 
 interface ButtonProps {
   code: string;
   language: string;
   title: string;
+  description: string;
   visibility: string;
   url: string;
   password?: string;
@@ -53,11 +51,11 @@ interface ButtonProps {
 }
 
 // Sign in buttons
-
 const SignedInButton = ({
   code,
   language,
   title,
+  description,
   visibility,
   url,
   password,
@@ -85,6 +83,7 @@ const SignedInButton = ({
         code,
         language,
         title,
+        description,
         _public: visibility === 'public',
         _private: visibility === 'private',
         userId: user.id,
@@ -132,6 +131,7 @@ const SignedOutButton = ({
   code,
   language,
   title,
+  description,
   visibility,
   url,
   toast,
@@ -155,6 +155,7 @@ const SignedOutButton = ({
         code,
         language,
         title,
+        description,
         _public: visibility === 'public',
         _private: visibility === 'private',
         pasteId: url
@@ -203,6 +204,7 @@ const Pastes = () => {
   const { data, error } = useSWR('/api/pastes');
   const [code, setCode] = useState('');
   const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
   const [url, setUrl] = useState<string>(null);
   const [showAlert, setShowAlert] = useState(true);
   const [isUrlTaken, setIsUrlTaken] = useState(false);
@@ -215,7 +217,7 @@ const Pastes = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-      <Layout links={links}>
+      <Layout>
         <SignedOut>
           <Alert
             status="info"
@@ -237,19 +239,36 @@ const Pastes = () => {
           </Alert>
         </SignedOut>
         <Container maxW="container.xl" my="6">
-          {/* Selecting the paste lang */}
           <SelectLanguage language={language} setLanguage={setLanguage} />
 
-          {/* Setting the title */}
           <Input
             placeholder="Title (optional)"
             value={title}
             onChange={e => setTitle(e.target.value)}
-            focusBorderColor={useColorModeValue(
-              theme.colors.purple[600],
-              theme.colors.purple[200]
-            )}
+            focusBorderColor="purple.200"
           />
+
+          <Accordion allowToggle mt="3">
+            <AccordionItem>
+              <h2>
+                <AccordionButton>
+                  <Box flex="1" textAlign="left">
+                    Add Description (Optional)
+                  </Box>
+                  <AccordionIcon />
+                </AccordionButton>
+              </h2>
+              <AccordionPanel pb={4}>
+                <Textarea
+                  value={description}
+                  onChange={e => setDescription(e.target.value)}
+                  placeholder="Enter Description here"
+                  size="md"
+                  focusBorderColor="purple.200"
+                />
+              </AccordionPanel>
+            </AccordionItem>
+          </Accordion>
 
           <Flex
             align="center"
@@ -294,6 +313,7 @@ const Pastes = () => {
               code={code}
               language={language}
               title={title}
+              description={description}
               visibility={visibility}
               password={password}
               url={url}
@@ -323,6 +343,7 @@ const Pastes = () => {
               code={code}
               language={language}
               title={title}
+              description={description}
               visibility={visibility}
               url={url}
               toast={toast}
