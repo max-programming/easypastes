@@ -21,7 +21,7 @@ interface Props {
 }
 
 const PublicPastes = ({ publicPastes }: Props) => {
-  const timeAgo = new TimeAgo('en');
+  const timeAgo = new TimeAgo('en-us');
   return (
     <Box mt="20">
       <Heading
