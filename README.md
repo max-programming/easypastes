@@ -44,6 +44,8 @@ Docker is an easy way of containerizing and delivering your applications quickly
 in a convenient way. It's really simple to get started with this, with docker handling all the 
 installation and other tasks.
 
+About Docker:-Docker is a software platform that allows you to build, test, and deploy applications quickly. Docker packages software into standardized units called containers that have everything the software needs to run including libraries, system tools, code, and runtime. Using Docker, you can quickly deploy and scale applications into any environment and know your code will run. 
+
 Configure the environmental variables by renaming the `.env.example` file to `.env.local` with 
 the respective values. Once you have your environmental variables and config, follow the guide below.
 
