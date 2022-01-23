@@ -37,12 +37,13 @@ import { SignedIn, SignedOut, useUser } from '@clerk/clerk-react';
 import Link from 'next/link';
 import { HiOutlineLockClosed } from 'react-icons/hi';
 import PasswordModal from 'components/CodePastes/PasswordModal';
+import fetcher from 'utils/fetcher';
 
 // Main pastes component
 const Pastes = () => {
   const toast = useToast();
   const [matches] = useMediaQuery('(max-width:768px)');
-  const { data, error } = useSWR('/api/pastes');
+  const { data, error } = useSWR('/api/pastes', fetcher);
   const [code, setCode] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -191,7 +192,11 @@ const Pastes = () => {
               setIsUrlTaken={setIsUrlTaken}
             />
           </SignedOut>
-          <PublicPastes publicPastes={data && data.pastes} />
+          {error ? (
+            <h2>{error}</h2>
+          ) : (
+            <PublicPastes publicPastes={data && data.pastes} />
+          )}
         </Container>
       </Layout>
     </>
