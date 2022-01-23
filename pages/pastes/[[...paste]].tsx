@@ -42,17 +42,72 @@ interface Props {
 
 const MotionAlert = motion<AlertProps>(Alert);
 
+// Paste component
+const Paste = ({ paste, currentUser }: Props) => {
+  const [isCorrectPassword, setIsCorrectPassword] = useState<boolean>(
+    !paste.pastePassword
+  );
+
+  let metaTags = {
+    title: paste.title || 'Untitled Paste',
+    url: `https://${process.env.VERCEL_URL || 'easypastes.tk'}/pastes/${
+      paste.pasteId
+    }`,
+    description: paste.description || ''
+  };
+
+  return (
+    <Layout>
+      <NextSeo
+        title={metaTags.title}
+        description={metaTags.description}
+        openGraph={{
+          title: metaTags.title,
+          description: metaTags.description,
+          url: metaTags.url
+        }}
+      />
+      <Container maxW="4xl" my="6">
+        {paste.private ? (
+          <>
+            <SignedIn>
+              <PrivatePaste paste={paste} currentUser={currentUser} />
+            </SignedIn>
+            <SignedOut>
+              <InfoAlert />
+            </SignedOut>
+          </>
+        ) : isCorrectPassword ? (
+          <>
+            <RenderPasteInfo paste={paste} currentUser={currentUser} />
+            <DisplayCode paste={paste} language={paste.language} />
+          </>
+        ) : (
+          <>
+            <Heading size="md" textAlign="center" mb="5" fontFamily="Poppins">
+              This paste is password protected, Enter the password to view it.
+            </Heading>
+            <EnterPassword
+              pastePwd={paste.pastePassword}
+              setIsCorrectPassword={val => setIsCorrectPassword(val)}
+            />
+          </>
+        )}
+      </Container>
+    </Layout>
+  );
+};
+
 // Server side props override
 export const getServerSideProps: GetServerSideProps = async context => {
-  // @ts-ignore
-  const paste = context.params.paste.join('/');
+  const paste = (context.params.paste as string[]).join('/');
   const { data: pastes, error } = await supabaseClient
     .from<PasteType>('Pastes')
     .select('*')
-    // @ts-ignore
     .eq('pasteId', paste);
 
-  if (error || pastes.length === 0) {
+  if (error || pastes.length < 1) {
+    console.log('NOT FOUND');
     return {
       notFound: true
     };
@@ -211,62 +266,6 @@ const EnterPassword = ({
         Check
       </Button>
     </Flex>
-  );
-};
-
-// Paste component
-const Paste = ({ paste, currentUser }: Props) => {
-  const [isCorrectPassword, setIsCorrectPassword] = useState<boolean>(
-    !paste.pastePassword
-  );
-
-  let metaTags = {
-    title: paste.title || 'Untitled Paste',
-    url: `https://${process.env.VERCEL_URL || 'easypastes.tk'}/pastes/${
-      paste.pasteId
-    }`,
-    description: paste.description || ''
-  };
-
-  return (
-    <Layout>
-      <NextSeo
-        title={metaTags.title}
-        description={metaTags.description}
-        openGraph={{
-          title: metaTags.title,
-          description: metaTags.description,
-          url: metaTags.url
-        }}
-      />
-      <Container maxW="4xl" my="6">
-        {paste.private ? (
-          <>
-            <SignedIn>
-              <PrivatePaste paste={paste} currentUser={currentUser} />
-            </SignedIn>
-            <SignedOut>
-              <InfoAlert />
-            </SignedOut>
-          </>
-        ) : isCorrectPassword ? (
-          <>
-            <RenderPasteInfo paste={paste} currentUser={currentUser} />
-            <DisplayCode paste={paste} language={paste.language} />
-          </>
-        ) : (
-          <>
-            <Heading size="md" textAlign="center" mb="5" fontFamily="Poppins">
-              This paste is password protected, Enter the password to view it.
-            </Heading>
-            <EnterPassword
-              pastePwd={paste.pastePassword}
-              setIsCorrectPassword={val => setIsCorrectPassword(val)}
-            />
-          </>
-        )}
-      </Container>
-    </Layout>
   );
 };
 
