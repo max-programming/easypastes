@@ -38,165 +38,6 @@ import Link from 'next/link';
 import { HiOutlineLockClosed } from 'react-icons/hi';
 import PasswordModal from 'components/CodePastes/PasswordModal';
 
-interface ButtonProps {
-  code: string;
-  language: string;
-  title: string;
-  description: string;
-  visibility: string;
-  url: string;
-  password?: string;
-  toast: (options?: UseToastOptions) => string | number;
-  setIsUrlTaken: Dispatch<SetStateAction<boolean>>;
-}
-
-// Sign in buttons
-const SignedInButton = ({
-  code,
-  language,
-  title,
-  description,
-  visibility,
-  url,
-  password,
-  toast,
-  setIsUrlTaken
-}: ButtonProps) => {
-  // const session = useSession();
-  const user = useUser();
-  const router = useRouter();
-  const [loading, setLoading] = useState(false);
-  // const sessionId = session?.id;
-  const handleClick = async () => {
-    if (code.trim() === '') {
-      return toast({
-        title: "Code can't be blank.",
-        status: 'error',
-        isClosable: true,
-        position: 'top-right'
-      });
-    }
-    try {
-      setLoading(true);
-
-      const res = await axios.post(`/api/pastes/create`, {
-        code,
-        language,
-        title,
-        description,
-        _public: visibility === 'public',
-        _private: visibility === 'private',
-        userId: user.id,
-        pasteId: url,
-        pastePassword: password
-      });
-
-      const { data, error } = res.data;
-
-      if (data) {
-        await router.push(`/pastes/${data[0].pasteId}`);
-        setLoading(false);
-      }
-    } catch (error) {
-      setLoading(false);
-      if (error.response.status === 400) {
-        setIsUrlTaken(true);
-        toast({
-          title: error.response.data.message,
-          status: 'error',
-          isClosable: true,
-          position: 'top-right'
-        });
-      }
-    }
-  };
-  return (
-    <Button
-      fontWeight="normal"
-      my="4"
-      colorScheme="purple"
-      float="right"
-      rightIcon={<FiArrowRight />}
-      onClick={handleClick}
-      isLoading={loading}
-      spinnerPlacement="end"
-      loadingText="Creating"
-    >
-      Create
-    </Button>
-  );
-};
-
-const SignedOutButton = ({
-  code,
-  language,
-  title,
-  description,
-  visibility,
-  url,
-  toast,
-  setIsUrlTaken
-}: ButtonProps) => {
-  const router = useRouter();
-  const [loading, setLoading] = useState(false);
-  const handleClick = async () => {
-    if (code.trim() === '') {
-      return toast({
-        title: "Code can't be blank.",
-        status: 'error',
-        isClosable: true,
-        position: 'top-right'
-      });
-    }
-    try {
-      setLoading(true);
-
-      const res = await axios.post(`/api/pastes/create`, {
-        code,
-        language,
-        title,
-        description,
-        _public: visibility === 'public',
-        _private: visibility === 'private',
-        pasteId: url
-      });
-
-      const { data, error } = res.data;
-
-      if (data) {
-        await router.push(`/pastes/${data[0].pasteId}`);
-        setLoading(false);
-      }
-    } catch (error) {
-      setLoading(false);
-      if (error.response.status === 400) {
-        setIsUrlTaken(true);
-        toast({
-          title: error.response.data.message,
-          status: 'error',
-          isClosable: true,
-          position: 'top-right'
-        });
-      }
-    }
-  };
-  return (
-    <Button
-      fontWeight="normal"
-      my="4"
-      colorScheme="purple"
-      float="right"
-      rightIcon={<FiArrowRight />}
-      onClick={handleClick}
-      isLoading={loading}
-      spinnerPlacement="end"
-      loadingText="Creating"
-    >
-      Create
-    </Button>
-  );
-};
-
 // Main pastes component
 const Pastes = () => {
   const toast = useToast();
@@ -354,6 +195,165 @@ const Pastes = () => {
         </Container>
       </Layout>
     </>
+  );
+};
+
+interface ButtonProps {
+  code: string;
+  language: string;
+  title: string;
+  description: string;
+  visibility: string;
+  url: string;
+  password?: string;
+  toast: (options?: UseToastOptions) => string | number;
+  setIsUrlTaken: Dispatch<SetStateAction<boolean>>;
+}
+
+// Sign in buttons
+const SignedInButton = ({
+  code,
+  language,
+  title,
+  description,
+  visibility,
+  url,
+  password,
+  toast,
+  setIsUrlTaken
+}: ButtonProps) => {
+  // const session = useSession();
+  const user = useUser();
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  // const sessionId = session?.id;
+  const handleClick = async () => {
+    if (code.trim() === '') {
+      return toast({
+        title: "Code can't be blank.",
+        status: 'error',
+        isClosable: true,
+        position: 'top-right'
+      });
+    }
+    try {
+      setLoading(true);
+
+      const res = await axios.post(`/api/pastes/create`, {
+        code,
+        language,
+        title,
+        description,
+        _public: visibility === 'public',
+        _private: visibility === 'private',
+        userId: user.id,
+        pasteId: url,
+        pastePassword: password
+      });
+
+      const { data, error } = res.data;
+
+      if (data) {
+        await router.push(`/pastes/${data[0].pasteId}`);
+        setLoading(false);
+      }
+    } catch (error) {
+      setLoading(false);
+      if (error.response.status === 400) {
+        setIsUrlTaken(true);
+        toast({
+          title: error.response.data.message,
+          status: 'error',
+          isClosable: true,
+          position: 'top-right'
+        });
+      }
+    }
+  };
+  return (
+    <Button
+      fontWeight="normal"
+      my="4"
+      colorScheme="purple"
+      float="right"
+      rightIcon={<FiArrowRight />}
+      onClick={handleClick}
+      isLoading={loading}
+      spinnerPlacement="end"
+      loadingText="Creating"
+    >
+      Create
+    </Button>
+  );
+};
+
+const SignedOutButton = ({
+  code,
+  language,
+  title,
+  description,
+  visibility,
+  url,
+  toast,
+  setIsUrlTaken
+}: ButtonProps) => {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const handleClick = async () => {
+    if (code.trim() === '') {
+      return toast({
+        title: "Code can't be blank.",
+        status: 'error',
+        isClosable: true,
+        position: 'top-right'
+      });
+    }
+    try {
+      setLoading(true);
+
+      const res = await axios.post(`/api/pastes/create`, {
+        code,
+        language,
+        title,
+        description,
+        _public: visibility === 'public',
+        _private: visibility === 'private',
+        pasteId: url
+      });
+
+      const { data, error } = res.data;
+
+      if (data) {
+        await router.push(`/pastes/${data[0].pasteId}`);
+        setLoading(false);
+      }
+    } catch (error) {
+      setLoading(false);
+      if (error.response.status === 400) {
+        setIsUrlTaken(true);
+        toast({
+          title: error.response.data.message,
+          status: 'error',
+          isClosable: true,
+          position: 'top-right'
+        });
+      }
+    }
+  };
+  return (
+    <Button
+      fontWeight="normal"
+      my="4"
+      colorScheme="purple"
+      float="right"
+      rightIcon={<FiArrowRight />}
+      onClick={handleClick}
+      isLoading={loading}
+      spinnerPlacement="end"
+      loadingText="Creating"
+    >
+      Create
+    </Button>
   );
 };
 
