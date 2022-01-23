@@ -1,7 +1,6 @@
-import { Box, Heading, Text } from '@chakra-ui/react';
+import { Box, Text, useDisclosure } from '@chakra-ui/react';
 import { PasteType } from 'types';
-import DisplayCode from './DisplayCode';
-import Link from 'next/link';
+import PasteModel from './PasteModal';
 
 interface Props {
   paste: PasteType;
@@ -9,19 +8,19 @@ interface Props {
 }
 
 const Paste = ({ paste, isPassword }: Props) => {
-  console.log({ isPassword });
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <Box mt="6">
-      <Heading size="md" fontFamily="Poppins">
-        <Link href={`/pastes/${paste.pasteId}`} passHref>
-          <Text as="a" _selection={{ backgroundColor: 'purple.700' }}>
-            {paste.title || 'Untitled'}
-          </Text>
-        </Link>
-      </Heading>
-      <Box hidden={isPassword}>
-        <DisplayCode paste={paste} language={paste.language} />
-      </Box>
+      <Text
+        as="a"
+        cursor="pointer"
+        onClick={onOpen}
+        _selection={{ backgroundColor: 'purple.700' }}
+      >
+        {paste.title || 'Untitled'}
+      </Text>
+      <PasteModel pasteId={paste.pasteId} isOpen={isOpen} onClose={onClose} />
     </Box>
   );
 };
