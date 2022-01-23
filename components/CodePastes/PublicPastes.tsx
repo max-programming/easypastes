@@ -11,19 +11,14 @@ import {
   Text
 } from '@chakra-ui/react';
 import { PasteType } from 'types';
-import NextLink from 'next/link';
-import TimeAgo from 'javascript-time-ago';
-import en from 'javascript-time-ago/locale/en.json';
-import { zonedTimeToUtc } from 'date-fns-tz';
-
-TimeAgo.addDefaultLocale(en);
+import NextLink from 'next/link'
+import formatTimeAgo from 'utils/formatTimeAgo';
 
 interface Props {
   publicPastes: PasteType[];
 }
 
 const PublicPastes = ({ publicPastes }: Props) => {
-  const timeAgo = new TimeAgo('en-US');
   return (
     <Box mt="20">
       <Heading
@@ -52,7 +47,7 @@ const PublicPastes = ({ publicPastes }: Props) => {
                     {paste.title} -{' '}
                     <Tag variant="solid" colorScheme="purple">
                       {paste.language} |{' '}
-                      {timeAgo.format(zonedTimeToUtc(paste.createdAt, 'gmt'))}
+                      {formatTimeAgo(paste.createdAt)}
                     </Tag>
                   </Text>
                 </Link>
@@ -62,7 +57,7 @@ const PublicPastes = ({ publicPastes }: Props) => {
                     Untitled -{' '}
                     <Tag variant="solid" colorScheme="purple">
                       {paste.language} |{' '}
-                      {timeAgo.format(zonedTimeToUtc(paste.createdAt, 'gmt'))}
+                      {formatTimeAgo(paste.createdAt)}
                     </Tag>
                   </a>
                 </Link>
