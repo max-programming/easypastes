@@ -41,6 +41,7 @@ import Link from 'next/link';
 import { HiOutlineEmojiHappy, HiOutlineLockClosed } from 'react-icons/hi';
 import PasswordModal from 'components/CodePastes/PasswordModal';
 import fetcher from 'utils/fetcher';
+import EmojiInput from 'components/CodePastes/EmojiInput';
 
 // Main pastes component
 const Pastes = () => {
@@ -93,10 +94,10 @@ const Pastes = () => {
           <SelectLanguage language={language} setLanguage={setLanguage} />
 
           <InputGroup position="relative">
-            <Input
+            <EmojiInput
               placeholder="Title (optional)"
               value={title}
-              onChange={e => setTitle(e.target.value)}
+              setValue={setTitle}
               focusBorderColor="purple.200"
             />
             <InputRightElement>
