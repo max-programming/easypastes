@@ -62,7 +62,9 @@ export const getServerSideProps: GetServerSideProps = async context => {
     }
     const { data: pastes, error } = await supabaseClient
       .from<PasteType>('Pastes')
-      .select('*')
+      .select(
+        'id, title, language, userId, pasteId, description, public, private, createdAt'
+      )
       // @ts-ignore
       .eq('userId', user.id)
       .order('createdAt', { ascending: false });
