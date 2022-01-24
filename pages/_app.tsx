@@ -16,6 +16,7 @@ import importLangs from 'utils/importLangs';
 import { motion } from 'framer-motion';
 import { DefaultSeo } from 'next-seo';
 import SEO from 'next-seo.config';
+import { Toaster } from 'react-hot-toast';
 
 const clerkFrontendApi = process.env.NEXT_PUBLIC_CLERK_FRONTEND_API;
 
@@ -41,6 +42,7 @@ const MyApp = ({ Component, pageProps, router }: AppProps) => {
               color={theme.colors.purple[500]}
               options={{ showSpinner: false }}
             />
+            <Toaster position="top-right" reverseOrder={false} />
             <Component {...pageProps} />
           </MotionBox>
         </ChakraProvider>
