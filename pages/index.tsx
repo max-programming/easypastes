@@ -110,7 +110,7 @@ const Pastes = () => {
             </InputRightElement>
             {showEmojiPicker && (
               <Box position="absolute" right={0} top="120%" zIndex={4}>
-                <Picker theme="dark" onSelect={addEmoji} />
+                <Picker theme="dark" onSelect={addEmoji} native />
               </Box>
             )}
           </InputGroup>
