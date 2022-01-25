@@ -6,11 +6,9 @@ import {
   InputGroup,
   InputLeftAddon,
   Box,
-  useToast,
   Alert,
   CloseButton,
   useMediaQuery,
-  UseToastOptions,
   useDisclosure,
   Accordion,
   AccordionItem,
@@ -42,10 +40,10 @@ import { HiOutlineEmojiHappy, HiOutlineLockClosed } from 'react-icons/hi';
 import PasswordModal from 'components/CodePastes/PasswordModal';
 import fetcher from 'utils/fetcher';
 import EmojiInput from 'components/CodePastes/EmojiInput';
+import toast from 'react-hot-toast';
 
 // Main pastes component
 const Pastes = () => {
-  const toast = useToast();
   const [matches] = useMediaQuery('(max-width:768px)');
   const { data, error } = useSWR('/api/pastes', fetcher);
   const [code, setCode] = useState('');
@@ -184,7 +182,6 @@ const Pastes = () => {
               visibility={visibility}
               password={password}
               url={url}
-              toast={toast}
               setIsUrlTaken={setIsUrlTaken}
             />
             <Button
@@ -213,7 +210,6 @@ const Pastes = () => {
               description={description}
               visibility={visibility}
               url={url}
-              toast={toast}
               setIsUrlTaken={setIsUrlTaken}
             />
           </SignedOut>
@@ -236,7 +232,6 @@ interface ButtonProps {
   visibility: string;
   url: string;
   password?: string;
-  toast: (options?: UseToastOptions) => string | number;
   setIsUrlTaken: Dispatch<SetStateAction<boolean>>;
 }
 
@@ -249,7 +244,6 @@ const SignedInButton = ({
   visibility,
   url,
   password,
-  toast,
   setIsUrlTaken
 }: ButtonProps) => {
   // const session = useSession();
@@ -257,15 +251,16 @@ const SignedInButton = ({
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   // const sessionId = session?.id;
+
   const handleClick = async () => {
     if (code.trim() === '') {
-      return toast({
-        title: "Code can't be blank.",
-        status: 'error',
-        isClosable: true,
-        position: 'top-right'
+      return toast.error('Code cannot be blank.', {
+        style: {
+          fontFamily: 'Poppins'
+        }
       });
     }
+
     try {
       setLoading(true);
 
@@ -291,11 +286,10 @@ const SignedInButton = ({
       setLoading(false);
       if (error.response.status === 400) {
         setIsUrlTaken(true);
-        toast({
-          title: error.response.data.message,
-          status: 'error',
-          isClosable: true,
-          position: 'top-right'
+        toast.error(error.response.data.message, {
+          style: {
+            fontFamily: 'Poppins'
+          }
         });
       }
     }
@@ -324,18 +318,16 @@ const SignedOutButton = ({
   description,
   visibility,
   url,
-  toast,
   setIsUrlTaken
 }: ButtonProps) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const handleClick = async () => {
     if (code.trim() === '') {
-      return toast({
-        title: "Code can't be blank.",
-        status: 'error',
-        isClosable: true,
-        position: 'top-right'
+      return toast.error('Code cannot be blank.', {
+        style: {
+          fontFamily: 'Poppins'
+        }
       });
     }
     try {
@@ -361,11 +353,10 @@ const SignedOutButton = ({
       setLoading(false);
       if (error.response.status === 400) {
         setIsUrlTaken(true);
-        toast({
-          title: error.response.data.message,
-          status: 'error',
-          isClosable: true,
-          position: 'top-right'
+        toast.error(error.response.data.message, {
+          style: {
+            fontFamily: 'Poppins'
+          }
         });
       }
     }
