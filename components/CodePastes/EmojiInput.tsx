@@ -72,6 +72,7 @@ export default function EmojiInput({
     } else if (e.key === 'ArrowDown') {
       e.preventDefault();
       if (activeSuggestion - 1 === filteredSuggestions.length) return;
+      if (activeSuggestion === 9) return;
       setActiveSuggestion(activeSuggestion + 1);
     } else if (e.key === 'Escape') {
       e.preventDefault();
