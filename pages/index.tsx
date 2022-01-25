@@ -17,11 +17,14 @@ import {
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
-  Textarea
+  Textarea,
+  InputRightElement,
+  IconButton
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { FiAlertCircle, FiArrowRight } from 'react-icons/fi';
+import { BaseEmoji, Picker } from 'emoji-mart';
 import { ILanguage } from 'types';
 import axios from 'axios';
 
@@ -35,9 +38,10 @@ import useSWR from 'swr';
 import useLocalStorage from 'use-local-storage';
 import { SignedIn, SignedOut, useUser } from '@clerk/clerk-react';
 import Link from 'next/link';
-import { HiOutlineLockClosed } from 'react-icons/hi';
+import { HiOutlineEmojiHappy, HiOutlineLockClosed } from 'react-icons/hi';
 import PasswordModal from 'components/CodePastes/PasswordModal';
 import fetcher from 'utils/fetcher';
+import EmojiInput from 'components/CodePastes/EmojiInput';
 
 // Main pastes component
 const Pastes = () => {
@@ -49,6 +53,7 @@ const Pastes = () => {
   const [description, setDescription] = useState('');
   const [url, setUrl] = useState<string>(null);
   const [showAlert, setShowAlert] = useState(true);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [isUrlTaken, setIsUrlTaken] = useState(false);
   const [visibility, setVisibility] = useState('public');
   const [password, setPassword] = useState('');
@@ -57,6 +62,11 @@ const Pastes = () => {
     'none'
   );
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const addEmoji = (emoji: BaseEmoji) => {
+    setTitle(prevTitle => `${prevTitle}${emoji.native}`);
+  };
+
   return (
     <>
       <Layout>
@@ -83,12 +93,27 @@ const Pastes = () => {
         <Container maxW="container.xl" my="6">
           <SelectLanguage language={language} setLanguage={setLanguage} />
 
-          <Input
-            placeholder="Title (optional)"
-            value={title}
-            onChange={e => setTitle(e.target.value)}
-            focusBorderColor="purple.200"
-          />
+          <InputGroup position="relative">
+            <EmojiInput
+              placeholder="Title (optional)"
+              value={title}
+              setValue={setTitle}
+              focusBorderColor="purple.200"
+            />
+            <InputRightElement>
+              <IconButton
+                aria-label="Search emoji"
+                icon={<HiOutlineEmojiHappy />}
+                variant="ghost"
+                onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+              />
+            </InputRightElement>
+            {showEmojiPicker && (
+              <Box position="absolute" right={0} top="120%" zIndex={4}>
+                <Picker theme="dark" onSelect={addEmoji} native />
+              </Box>
+            )}
+          </InputGroup>
 
           <Accordion allowToggle mt="3">
             <AccordionItem>
