@@ -31,6 +31,11 @@ export default function EmojiInput({
     console.log(value);
     if (!e.target.value.split(':')[1]) return;
     const emojiInput = e.target.value.split(':')[1];
+    console.log({ emojiInput });
+    if (emojiInput.startsWith(' ') || emojiInput.endsWith(' ')) {
+      setShowSuggestions(false);
+      return;
+    }
     const results = emojiIndex.search(emojiInput) as BaseEmoji[];
     setFilteredSuggestions(results.slice(0, 10));
     setShowSuggestions(true);
