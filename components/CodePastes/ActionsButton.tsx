@@ -14,7 +14,6 @@ import {
   ModalFooter,
   ModalCloseButton,
   Button,
-  useToast,
   useDisclosure,
   UseDisclosureProps
 } from '@chakra-ui/react';
@@ -31,6 +30,7 @@ import {
   FiFileText
 } from 'react-icons/fi';
 import { PasteType } from 'types';
+import toast from 'react-hot-toast';
 
 interface Props {
   paste: PasteType;
@@ -42,7 +42,9 @@ const DeleteModal = ({
   paste
 }: UseDisclosureProps & { paste: PasteType }) => {
   const [isLoading, setIsLoading] = useState(false);
+
   const router = useRouter();
+
   const deletePaste = async () => {
     setIsLoading(true);
     await axios.post('/api/pastes/delete', {
@@ -52,6 +54,7 @@ const DeleteModal = ({
     await router.push('/');
     setIsLoading(false);
   };
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -85,37 +88,34 @@ const DeleteModal = ({
 const ActionsButton = ({ paste }: Props) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
 
-  const toast = useToast();
   const router = useRouter();
 
   const copyCode = () => {
     // Rewrite this for cross-browser support
     navigator.clipboard.writeText(paste.code);
-    toast({
-      title: 'Code copied',
-      status: 'success',
-      isClosable: true,
-      position: 'top-right'
+    toast.success('Code copied', {
+      style: { fontFamily: 'Poppins' }
     });
   };
+
   const copyLink = () => {
     // Rewrite this for cross-browser support
     navigator.clipboard.writeText(
       `https://easypastes.tk/pastes/${paste.pasteId}`
     );
-    toast({
-      title: 'Link copied',
-      status: 'success',
-      isClosable: true,
-      position: 'top-right'
+    toast.success('Link copied', {
+      style: { fontFamily: 'Poppins' }
     });
   };
+
   const editCode = () => {
     router.push(`/pastes/edit/${paste.pasteId}`);
   };
+
   const showRaw = () => {
     router.push(`/api/pastes/raw/${paste.pasteId}`);
   };
+
   return (
     <Box position="absolute" right="1" top="1" zIndex="20">
       <DeleteModal isOpen={isOpen} onClose={onClose} paste={paste} />

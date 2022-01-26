@@ -16,7 +16,6 @@ import {
   InputLeftElement,
   InputRightElement,
   Button,
-  useToast,
   Flex,
   Tag,
   TagLeftIcon,
@@ -33,6 +32,7 @@ import Link from 'next/link';
 import { useState, FormEventHandler } from 'react';
 import { NextSeo } from 'next-seo';
 import bcrypt from 'bcryptjs';
+import toast from 'react-hot-toast';
 
 // Custom types
 interface Props {
@@ -235,22 +235,25 @@ const EnterPassword = ({
 }) => {
   const [password, setPassword] = useState('');
   const [show, setShow] = useState(false);
-  const toast = useToast();
+
   const togglePassword = () => setShow(!show);
+
   const handleSubmit: FormEventHandler = e => {
     e.preventDefault();
+
     const matches = bcrypt.compareSync(password, pastePwd);
+
     if (matches) setIsCorrectPassword(true);
     else {
-      toast({
-        title: 'Incorrect password',
-        status: 'error',
-        isClosable: true,
-        position: 'top-right'
+      toast.error('Incorrect password', {
+        style: {
+          fontFamily: 'Poppins'
+        }
       });
       setIsCorrectPassword(false);
     }
   };
+
   return (
     <Flex as="form" align="center" justify="center" onSubmit={handleSubmit}>
       <InputGroup size="lg">

@@ -13,6 +13,8 @@ import importLangs from 'utils/importLangs';
 import { motion } from 'framer-motion';
 import { DefaultSeo } from 'next-seo';
 import SEO from 'next-seo.config';
+import { Toaster } from 'react-hot-toast';
+
 // CSS Imports
 import '@fontsource/poppins/400.css';
 import '@fontsource/fira-code/500.css';
@@ -43,6 +45,7 @@ const MyApp = ({ Component, pageProps, router }: AppProps) => {
               color={theme.colors.purple[500]}
               options={{ showSpinner: false }}
             />
+            <Toaster position="top-right" reverseOrder={false} />
             <Component {...pageProps} />
           </MotionBox>
         </ChakraProvider>

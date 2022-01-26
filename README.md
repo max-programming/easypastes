@@ -17,7 +17,6 @@
 
 #### Here's a sneak peak to the app - [Link to the GIF](https://cdn.hashnode.com/res/hashnode/image/upload/v1627542797932/0TNW01u9N.gif)
 
-
 ## Tech Stack
 
 - [Next.js](https://nextjs.org/)
@@ -35,16 +34,16 @@ Add a `.env.local` file based on `.env.example` file. And add the following thin
 
 ## Installation and Running
 
-Here is a quick and easy guide for you to run EasyPastes for development, or self hosting it 
+Here is a quick and easy guide for you to run EasyPastes for development, or self hosting it
 for yourself.
 
 ### 🐳 With Docker
 
-Docker is an easy way of containerizing and delivering your applications quickly and easily, 
-in a convenient way. It's really simple to get started with this, with docker handling all the 
+Docker is an easy way of containerizing and delivering your applications quickly and easily,
+in a convenient way. It's really simple to get started with this, with docker handling all the
 installation and other tasks.
 
-Configure the environmental variables by renaming the `.env.example` file to `.env.local` with 
+Configure the environmental variables by renaming the `.env.example` file to `.env.local` with
 the respective values. Once you have your environmental variables and config, follow the guide below.
 
 Docker mini guide:
@@ -54,9 +53,8 @@ Docker mini guide:
 - To stop the container: `docker-compose down`
 - To rebuild the container: `docker-compose --build`
 
-Both development and production almost run same thing, With some different tweaks and changes. 
+Both development and production almost run same thing, With some different tweaks and changes.
 Both of run on `127.0.0.1:3000`. For displaying it in production, Use Nginx or Apache to proxy it.
-
 
 ### Without Docker
 
@@ -75,7 +73,7 @@ Here are the steps to configure and run the app:
 
 #### Environment Variables
 
-To run this project, you will need to properly configure environmental variables. Configure the 
+To run this project, you will need to properly configure environmental variables. Configure the
 environmental variables by renaming the `.env.example` file to `.env.local` with the respective values.
 
 #### Run the app!
@@ -98,7 +96,7 @@ npm run dev
 
 ## 🤝 Contributing
 
-Contributions, issues and feature requests are welcome. After cloning & setting up project locally, 
+Contributions, issues and feature requests are welcome. After cloning & setting up project locally,
 you can just submit a PR to this repo and it will be deployed once it's accepted.
 
 ⚠️ It’s good to have descriptive commit messages, or PR titles so that other contributors can understand about your
