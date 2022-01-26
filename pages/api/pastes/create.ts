@@ -2,23 +2,11 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import bcrypt from 'bcryptjs';
 import { PasteType } from 'types';
 import supabaseClient from 'utils/supabase';
-import base62Encode from 'utils/encode';
+import { generateNanoid } from 'utils/generateId';
 import filterBadWords from 'utils/filterBadWords';
 
 // Variables
-const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const salt = bcrypt.genSaltSync(10);
-
-const generateRandomString = (numLetters: number) => {
-  let id = '';
-  let charsLen = chars.length;
-
-  for (let i = 0; i <= numLetters; i++) {
-    id += chars.charAt(Math.floor(Math.random() * charsLen));
-  }
-
-  return id;
-};
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   // Allow only POST requests
@@ -98,19 +86,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     pasteId = filterBadWords(pasteId);
   } else {
-    const { data, error, count } = await supabaseClient
-      .from<PasteType>('Pastes')
-      .select('*', { count: 'exact' });
-
-    pasteId = base62Encode(count!);
-
-    let id = '';
-
-    if (pasteId.length <= 2) {
-      id = generateRandomString(3);
-    }
-
-    pasteId += id;
+    pasteId = generateNanoid(12);
   }
 
   if (hasPassword) {
@@ -118,7 +94,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   // Add them to supabase
-  const { data, error } = await supabaseClient
+  let { data, error } = await supabaseClient
     .from<PasteType>('Pastes')
     .insert([
       {
