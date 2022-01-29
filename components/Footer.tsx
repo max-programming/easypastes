@@ -40,7 +40,7 @@ export const SocialButton = ({
     >
       <VisuallyHidden>{label}</VisuallyHidden>
       <Tooltip hasArrow label={label} fontSize="sm">
-        {children}
+        <span>{children}</span>
       </Tooltip>
     </chakra.button>
   );
