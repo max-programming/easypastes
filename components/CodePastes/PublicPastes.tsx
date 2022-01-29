@@ -11,7 +11,7 @@ import {
   Text
 } from '@chakra-ui/react';
 import { PasteType } from 'types';
-import NextLink from 'next/link'
+import NextLink from 'next/link';
 import formatTimeAgo from 'utils/formatTimeAgo';
 
 interface Props {
@@ -46,8 +46,7 @@ const PublicPastes = ({ publicPastes }: Props) => {
                   <Text as="a" _selection={{ backgroundColor: 'purple.700' }}>
                     {paste.title} -{' '}
                     <Tag variant="solid" colorScheme="purple">
-                      {paste.language} |{' '}
-                      {formatTimeAgo(paste.createdAt)}
+                      {paste.language} | {formatTimeAgo(paste.createdAt)}
                     </Tag>
                   </Text>
                 </Link>
@@ -56,8 +55,7 @@ const PublicPastes = ({ publicPastes }: Props) => {
                   <a>
                     Untitled -{' '}
                     <Tag variant="solid" colorScheme="purple">
-                      {paste.language} |{' '}
-                      {formatTimeAgo(paste.createdAt)}
+                      {paste.language} | {formatTimeAgo(paste.createdAt)}
                     </Tag>
                   </a>
                 </Link>

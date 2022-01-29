@@ -6,22 +6,23 @@ import {
   InputGroup,
   InputLeftAddon,
   Box,
-  useToast,
   Alert,
   CloseButton,
   useMediaQuery,
-  UseToastOptions,
   useDisclosure,
   Accordion,
   AccordionItem,
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
-  Textarea
+  Textarea,
+  InputRightElement,
+  IconButton
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { FiAlertCircle, FiArrowRight } from 'react-icons/fi';
+import { BaseEmoji, Picker } from 'emoji-mart';
 import { ILanguage } from 'types';
 import axios from 'axios';
 
@@ -35,13 +36,14 @@ import useSWR from 'swr';
 import useLocalStorage from 'use-local-storage';
 import { SignedIn, SignedOut, useUser } from '@clerk/clerk-react';
 import Link from 'next/link';
-import { HiOutlineLockClosed } from 'react-icons/hi';
+import { HiOutlineEmojiHappy, HiOutlineLockClosed } from 'react-icons/hi';
 import PasswordModal from 'components/CodePastes/PasswordModal';
 import fetcher from 'utils/fetcher';
+import EmojiInput from 'components/CodePastes/EmojiInput';
+import toast from 'react-hot-toast';
 
 // Main pastes component
 const Pastes = () => {
-  const toast = useToast();
   const [matches] = useMediaQuery('(max-width:768px)');
   const { data, error } = useSWR('/api/pastes', fetcher);
   const [code, setCode] = useState('');
@@ -49,6 +51,7 @@ const Pastes = () => {
   const [description, setDescription] = useState('');
   const [url, setUrl] = useState<string>(null);
   const [showAlert, setShowAlert] = useState(true);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [isUrlTaken, setIsUrlTaken] = useState(false);
   const [visibility, setVisibility] = useState('public');
   const [password, setPassword] = useState('');
@@ -57,6 +60,11 @@ const Pastes = () => {
     'none'
   );
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const addEmoji = (emoji: BaseEmoji) => {
+    setTitle(prevTitle => `${prevTitle}${emoji.native}`);
+  };
+
   return (
     <>
       <Layout>
@@ -83,12 +91,27 @@ const Pastes = () => {
         <Container maxW="container.xl" my="6">
           <SelectLanguage language={language} setLanguage={setLanguage} />
 
-          <Input
-            placeholder="Title (optional)"
-            value={title}
-            onChange={e => setTitle(e.target.value)}
-            focusBorderColor="purple.200"
-          />
+          <InputGroup position="relative">
+            <EmojiInput
+              placeholder="Title (optional)"
+              value={title}
+              setValue={setTitle}
+              focusBorderColor="purple.200"
+            />
+            <InputRightElement>
+              <IconButton
+                aria-label="Search emoji"
+                icon={<HiOutlineEmojiHappy />}
+                variant="ghost"
+                onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+              />
+            </InputRightElement>
+            {showEmojiPicker && (
+              <Box position="absolute" right={0} top="120%" zIndex={4}>
+                <Picker theme="dark" onSelect={addEmoji} native />
+              </Box>
+            )}
+          </InputGroup>
 
           <Accordion allowToggle mt="3">
             <AccordionItem>
@@ -159,7 +182,6 @@ const Pastes = () => {
               visibility={visibility}
               password={password}
               url={url}
-              toast={toast}
               setIsUrlTaken={setIsUrlTaken}
             />
             <Button
@@ -188,7 +210,6 @@ const Pastes = () => {
               description={description}
               visibility={visibility}
               url={url}
-              toast={toast}
               setIsUrlTaken={setIsUrlTaken}
             />
           </SignedOut>
@@ -211,7 +232,6 @@ interface ButtonProps {
   visibility: string;
   url: string;
   password?: string;
-  toast: (options?: UseToastOptions) => string | number;
   setIsUrlTaken: Dispatch<SetStateAction<boolean>>;
 }
 
@@ -224,7 +244,6 @@ const SignedInButton = ({
   visibility,
   url,
   password,
-  toast,
   setIsUrlTaken
 }: ButtonProps) => {
   // const session = useSession();
@@ -232,15 +251,16 @@ const SignedInButton = ({
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   // const sessionId = session?.id;
+
   const handleClick = async () => {
     if (code.trim() === '') {
-      return toast({
-        title: "Code can't be blank.",
-        status: 'error',
-        isClosable: true,
-        position: 'top-right'
+      return toast.error('Code cannot be blank.', {
+        style: {
+          fontFamily: 'Poppins'
+        }
       });
     }
+
     try {
       setLoading(true);
 
@@ -266,11 +286,10 @@ const SignedInButton = ({
       setLoading(false);
       if (error.response.status === 400) {
         setIsUrlTaken(true);
-        toast({
-          title: error.response.data.message,
-          status: 'error',
-          isClosable: true,
-          position: 'top-right'
+        toast.error(error.response.data.message, {
+          style: {
+            fontFamily: 'Poppins'
+          }
         });
       }
     }
@@ -299,18 +318,16 @@ const SignedOutButton = ({
   description,
   visibility,
   url,
-  toast,
   setIsUrlTaken
 }: ButtonProps) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const handleClick = async () => {
     if (code.trim() === '') {
-      return toast({
-        title: "Code can't be blank.",
-        status: 'error',
-        isClosable: true,
-        position: 'top-right'
+      return toast.error('Code cannot be blank.', {
+        style: {
+          fontFamily: 'Poppins'
+        }
       });
     }
     try {
@@ -336,11 +353,10 @@ const SignedOutButton = ({
       setLoading(false);
       if (error.response.status === 400) {
         setIsUrlTaken(true);
-        toast({
-          title: error.response.data.message,
-          status: 'error',
-          isClosable: true,
-          position: 'top-right'
+        toast.error(error.response.data.message, {
+          style: {
+            fontFamily: 'Poppins'
+          }
         });
       }
     }
