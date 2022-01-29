@@ -10,6 +10,7 @@ import {
   Center,
   Divider,
   Box,
+  IconButton,
   useMediaQuery,
   useColorModeValue
 } from '@chakra-ui/react';
@@ -20,6 +21,7 @@ import formatTimeAgo from 'utils/formatTimeAgo';
 import DisplayCode from './DisplayCode';
 import supabaseClient from 'utils/supabase';
 import Link from 'next/link';
+import { HiExternalLink } from 'react-icons/hi';
 
 const fetchPaste = async (key: string): Promise<PasteType> => {
   const { data, error } = await supabaseClient
@@ -32,7 +34,7 @@ const fetchPaste = async (key: string): Promise<PasteType> => {
   return paste;
 };
 
-const PasteModel = ({
+const PasteModal = ({
   isOpen,
   onClose,
   pasteId
@@ -59,7 +61,16 @@ const PasteModel = ({
             <>
               <ModalHeader fontSize={['lg', '2xl']}>
                 <Link href={`/pastes/${paste.pasteId}`}>
-                  <a>{paste.title}</a>
+                  <a target="_blank">
+                    {paste.title}
+                    <IconButton
+                      variant="ghost"
+                      aria-label="Open in new tab"
+                      fontSize="20px"
+                      ml={5}
+                      icon={<HiExternalLink />}
+                    />
+                  </a>
                 </Link>
               </ModalHeader>
               <ModalCloseButton />
@@ -82,4 +93,4 @@ const PasteModel = ({
   );
 };
 
-export default PasteModel;
+export default PasteModal;
