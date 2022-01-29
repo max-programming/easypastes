@@ -1,10 +1,4 @@
-import {
-  Box,
-  BoxProps,
-  ChakraProvider,
-  CSSReset,
-  theme
-} from '@chakra-ui/react';
+import { Box, BoxProps, ChakraProvider, CSSReset } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { ClerkProvider } from '@clerk/clerk-react';
 import type { AppProps } from 'next/app';
@@ -14,6 +8,7 @@ import { motion } from 'framer-motion';
 import { DefaultSeo } from 'next-seo';
 import SEO from 'next-seo.config';
 import { Toaster } from 'react-hot-toast';
+import theme from 'utils/theme';
 
 // CSS Imports
 import '@fontsource/poppins/400.css';
@@ -34,7 +29,7 @@ const MyApp = ({ Component, pageProps, router }: AppProps) => {
         navigate={to => router.push(to)}
       >
         <DefaultSeo {...SEO} />
-        <ChakraProvider>
+        <ChakraProvider theme={theme}>
           <MotionBox
             key={router.route}
             initial={{ opacity: 0 }}
