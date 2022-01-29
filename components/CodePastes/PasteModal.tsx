@@ -12,7 +12,8 @@ import {
   Box,
   IconButton,
   useMediaQuery,
-  useColorModeValue
+  useColorModeValue,
+  Tooltip
 } from '@chakra-ui/react';
 import ClipLoader from 'react-spinners/ClipLoader';
 import useSWR from 'swr';
@@ -63,13 +64,15 @@ const PasteModal = ({
                 <Link href={`/pastes/${paste.pasteId}`}>
                   <a target="_blank">
                     {paste.title}
-                    <IconButton
-                      variant="ghost"
-                      aria-label="Open in new tab"
-                      fontSize="20px"
-                      ml={5}
-                      icon={<HiExternalLink />}
-                    />
+                    <Tooltip hasArrow label="Open in new tab" fontSize="sm">
+                      <IconButton
+                        variant="ghost"
+                        aria-label="Open in new tab"
+                        fontSize="20px"
+                        ml={5}
+                        icon={<HiExternalLink />}
+                      />
+                    </Tooltip>
                   </a>
                 </Link>
               </ModalHeader>

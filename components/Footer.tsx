@@ -5,7 +5,8 @@ import {
   Container,
   Stack,
   Text,
-  VisuallyHidden
+  VisuallyHidden,
+  Tooltip
 } from '@chakra-ui/react';
 import { FaGithub, FaTwitter, FaYoutube } from 'react-icons/fa';
 import { ReactNode } from 'react';
@@ -37,8 +38,10 @@ export const SocialButton = ({
         bg: 'whiteAlpha.200'
       }}
     >
-      <VisuallyHidden>{label}</VisuallyHidden>
-      {children}
+      <Tooltip hasArrow label={label} fontSize="sm">
+        <VisuallyHidden>{label}</VisuallyHidden>
+        {children}
+      </Tooltip>
     </chakra.button>
   );
 };

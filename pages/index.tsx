@@ -17,7 +17,8 @@ import {
   AccordionIcon,
   Textarea,
   InputRightElement,
-  IconButton
+  IconButton,
+  Tooltip
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useState } from 'react';
@@ -99,12 +100,14 @@ const Pastes = () => {
               focusBorderColor="purple.200"
             />
             <InputRightElement>
-              <IconButton
-                aria-label="Search emoji"
-                icon={<HiOutlineEmojiHappy />}
-                variant="ghost"
-                onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-              />
+              <Tooltip label="Search emoji" hasArrow fontSize="sm">
+                <IconButton
+                  aria-label="Search emoji"
+                  icon={<HiOutlineEmojiHappy />}
+                  variant="ghost"
+                  onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+                />
+              </Tooltip>
             </InputRightElement>
             {showEmojiPicker && (
               <Box position="absolute" right={0} top="120%" zIndex={4}>
