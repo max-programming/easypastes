@@ -1,6 +1,15 @@
-import { Box, Text, useDisclosure } from '@chakra-ui/react';
+import {
+  Box,
+  Text,
+  Tag,
+  TagLabel,
+  TagLeftIcon,
+  useDisclosure,
+  Flex
+} from '@chakra-ui/react';
+import { HiOutlineCode } from 'react-icons/hi';
 import { PasteType } from 'types';
-import PasteModel from './PasteModal';
+import PasteModal from './PasteModal';
 
 interface Props {
   paste: PasteType;
@@ -12,15 +21,21 @@ const Paste = ({ paste, isPassword }: Props) => {
 
   return (
     <Box mt="6">
-      <Text
-        as="a"
-        cursor="pointer"
-        onClick={onOpen}
-        _selection={{ backgroundColor: 'purple.700' }}
-      >
-        {paste.title || 'Untitled'}
-      </Text>
-      <PasteModel pasteId={paste.pasteId} isOpen={isOpen} onClose={onClose} />
+      <Flex justify="space-between">
+        <Text
+          as="a"
+          cursor="pointer"
+          onClick={onOpen}
+          _selection={{ backgroundColor: 'purple.700' }}
+        >
+          {paste.title || 'Untitled'}
+        </Text>
+        <Tag size="md" variant="subtle" colorScheme="cyan" ml="2">
+          <TagLeftIcon boxSize="16px" as={HiOutlineCode} />
+          <TagLabel>{paste.language}</TagLabel>
+        </Tag>
+      </Flex>
+      <PasteModal pasteId={paste.pasteId} isOpen={isOpen} onClose={onClose} />
     </Box>
   );
 };
