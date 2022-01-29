@@ -29,6 +29,7 @@ import useLocalStorage from 'use-local-storage';
 import Link from 'next/link';
 import NoPastes from 'components/CodePastes/NoPastes';
 import { NextSeo } from 'next-seo';
+import reduceTitleLength from 'utils/reduceTitleLength';
 
 const links = [
   {
@@ -42,7 +43,9 @@ const links = [
 ];
 
 interface Props {
-  allPastes: PasteType[];
+  allPastes: (PasteType & {
+    longTitle: string;
+  })[];
   user: UserResource;
 }
 
@@ -54,9 +57,12 @@ export const getServerSideProps: GetServerSideProps = async context => {
     )
     // @ts-ignore
     .order('createdAt', { ascending: false });
+
+  const allPastes = pastes.map(p => reduceTitleLength(p));
+
   return {
     props: {
-      allPastes: pastes
+      allPastes
     }
   };
 };
@@ -92,7 +98,7 @@ function MyPastes({ allPastes, user }: Props) {
               title="Remove alert"
             />
           </Alert>
-          <Container maxW="3xl" mt="6">
+          <Container maxW="3xl" my="6">
             <Heading
               textAlign="center"
               size="lg"

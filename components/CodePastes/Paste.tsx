@@ -5,14 +5,15 @@ import {
   TagLabel,
   TagLeftIcon,
   useDisclosure,
-  Flex
+  Flex,
+  Tooltip
 } from '@chakra-ui/react';
 import { HiOutlineCode } from 'react-icons/hi';
 import { PasteType } from 'types';
 import PasteModal from './PasteModal';
 
 interface Props {
-  paste: PasteType;
+  paste: PasteType & { longTitle: string };
   isPassword?: boolean;
 }
 
@@ -22,14 +23,16 @@ const Paste = ({ paste, isPassword }: Props) => {
   return (
     <Box mt="6">
       <Flex justify="space-between">
-        <Text
-          as="a"
-          cursor="pointer"
-          onClick={onOpen}
-          _selection={{ backgroundColor: 'purple.700' }}
-        >
-          {paste.title || 'Untitled'}
-        </Text>
+        <Tooltip label={paste.longTitle} hasArrow fontSize="sm">
+          <Text
+            as="a"
+            cursor="pointer"
+            onClick={onOpen}
+            _selection={{ backgroundColor: 'purple.700' }}
+          >
+            {paste.title || 'Untitled'}
+          </Text>
+        </Tooltip>
         <Tag size="md" variant="subtle" colorScheme="cyan" ml="2">
           <TagLeftIcon boxSize="16px" as={HiOutlineCode} />
           <TagLabel>{paste.language}</TagLabel>

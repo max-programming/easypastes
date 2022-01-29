@@ -28,6 +28,7 @@ import useLocalStorage from 'use-local-storage';
 import Link from 'next/link';
 import NoPastes from 'components/CodePastes/NoPastes';
 import { NextSeo } from 'next-seo';
+import reduceTitleLength from 'utils/reduceTitleLength';
 
 const links = [
   {
@@ -41,13 +42,15 @@ const links = [
 ];
 
 interface Props {
-  pastes: PasteType[];
+  pastes: (PasteType & {
+    longTitle: string;
+  })[];
   fullName: string;
   id: string;
   username: string;
 }
 
-export const getServerSideProps: GetServerSideProps = async context => {
+export const getServerSideProps: GetServerSideProps<Props> = async context => {
   try {
     const { data: user } = await axios.get<User>(
       `https://api.clerk.dev/v1/users/${context.params?.userId}`,
@@ -68,9 +71,12 @@ export const getServerSideProps: GetServerSideProps = async context => {
       // @ts-ignore
       .eq('userId', user.id)
       .order('createdAt', { ascending: false });
+
+    const optimisedPastes = pastes.map(p => reduceTitleLength(p));
+
     return {
       props: {
-        pastes,
+        pastes: optimisedPastes,
         fullName: `${user.first_name} ${user.last_name}`,
         id: user.id,
         username: user.username
@@ -111,7 +117,7 @@ export default function MyPastes({ pastes, fullName, id, username }: Props) {
           title="Remove alert"
         />
       </Alert>
-      <Container maxW="3xl" mt="6">
+      <Container maxW="3xl" my="6">
         <Heading
           textAlign="center"
           size="lg"

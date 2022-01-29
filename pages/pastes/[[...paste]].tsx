@@ -20,7 +20,8 @@ import {
   Tag,
   TagLeftIcon,
   TagLabel,
-  Center
+  Center,
+  Tooltip
 } from '@chakra-ui/react';
 import { HiOutlineKey, HiOutlineUser, HiOutlineCode } from 'react-icons/hi';
 import { GetServerSideProps } from 'next';
@@ -33,10 +34,11 @@ import { useState, FormEventHandler } from 'react';
 import { NextSeo } from 'next-seo';
 import bcrypt from 'bcryptjs';
 import toast from 'react-hot-toast';
+import reduceTitleLength from 'utils/reduceTitleLength';
 
 // Custom types
 interface Props {
-  paste: PasteType;
+  paste: PasteType & { longTitle: string };
   currentUser: 'Anonymous' | User;
 }
 
@@ -99,7 +101,7 @@ const Paste = ({ paste, currentUser }: Props) => {
 };
 
 // Server side props override
-export const getServerSideProps: GetServerSideProps = async context => {
+export const getServerSideProps: GetServerSideProps<Props> = async context => {
   const paste = (context.params.paste as string[]).join('/');
   const { data: pastes, error } = await supabaseClient
     .from<PasteType>('Pastes')
@@ -113,7 +115,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
     };
   }
 
-  const currentPaste = pastes[0];
+  const currentPaste = reduceTitleLength(pastes[0]);
 
   if (!currentPaste.userId) {
     return {
@@ -159,13 +161,15 @@ const InfoAlert = () => (
 const RenderPasteInfo = ({ paste, currentUser }: Props) => {
   return (
     <>
-      <Heading
-        textAlign="center"
-        _selection={{ backgroundColor: 'purple.700' }}
-        fontFamily="Poppins"
-      >
-        {paste.title ? paste.title : 'Untitled Paste'}
-      </Heading>
+      <Tooltip hasArrow fontSize="sm" label={paste.longTitle}>
+        <Heading
+          textAlign="center"
+          _selection={{ backgroundColor: 'purple.700' }}
+          fontFamily="Poppins"
+        >
+          {paste.title ? paste.title : 'Untitled Paste'}
+        </Heading>
+      </Tooltip>
       <Center mt="3">
         {typeof currentUser !== 'string' ? (
           <>
