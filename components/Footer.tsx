@@ -38,8 +38,8 @@ export const SocialButton = ({
         bg: 'whiteAlpha.200'
       }}
     >
+      <VisuallyHidden>{label}</VisuallyHidden>
       <Tooltip hasArrow label={label} fontSize="sm">
-        <VisuallyHidden>{label}</VisuallyHidden>
         {children}
       </Tooltip>
     </chakra.button>
