@@ -1,22 +1,35 @@
+import { withSession, WithSessionProp } from '@clerk/nextjs/api';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { PasteType } from 'types';
 import supabaseClient from 'utils/supabase';
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (
+  req: WithSessionProp<NextApiRequest>,
+  res: NextApiResponse
+) => {
   // Allow only POST requests
   if (req.method !== 'POST') {
     res.status(400).json({ message: 'Only POST requests allowed.' });
     return;
   }
 
-  // Get the records from body
-  const { pasteId, userId } = req.body;
+  // Get the record from body
+  const { pasteId } = req.body;
 
-  if (!userId) {
-    return res.status(400).json({ message: 'Cannot delete anyonymous paste' });
-  }
+  if (!req.session)
+    return res.status(401).json({ message: 'User must be signed in.' });
 
-  // Add them to supabase
+  const {
+    data: [paste]
+  } = await supabaseClient
+    .from<PasteType>('Pastes')
+    .select('userId')
+    .eq('pasteId', pasteId);
+
+  if (paste.userId !== req.session.userId)
+    return res.status(401).json({ message: "You can't delete this paste." });
+
+  // Delete from supabase
   const { data, error } = await supabaseClient
     .from<PasteType>('Pastes')
     .delete()
@@ -30,4 +43,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   res.json({ data, error });
 };
 
-export default handler;
+export default withSession(handler);
