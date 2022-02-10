@@ -4,11 +4,15 @@ import { PasteType } from 'types';
 import supabaseClient from 'utils/supabase';
 import { generateNanoid } from 'utils/generateId';
 import filterBadWords from 'utils/filterBadWords';
+import { WithSessionProp, withSession } from '@clerk/nextjs/api';
 
 // Variables
 const salt = bcrypt.genSaltSync(10);
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (
+  req: WithSessionProp<NextApiRequest>,
+  res: NextApiResponse
+) => {
   // Allow only POST requests
   if (req.method !== 'POST') {
     res.status(400).json({ message: 'Only POST requests allowed.' });
@@ -21,12 +25,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     description,
     code,
     language,
-    userId,
+    // userId,
     pasteId,
     pastePassword,
     _public,
     _private
   } = req.body;
+
+  let userId: string;
+  if (req.session) userId = req.session.userId;
 
   if (code.trim() === '') {
     return res.status(400).json({ message: 'Code cannot be blank.' });
@@ -94,24 +101,22 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   // Add them to supabase
-  let { data, error } = await supabaseClient
-    .from<PasteType>('Pastes')
-    .insert([
-      {
-        title: filterBadWords(title),
-        description: filterBadWords(description),
-        code,
-        language,
-        userId,
-        pasteId,
-        pastePassword,
-        public: _public,
-        private: _private
-      }
-    ]);
+  let { data, error } = await supabaseClient.from<PasteType>('Pastes').insert([
+    {
+      title: filterBadWords(title),
+      description: filterBadWords(description),
+      code,
+      language,
+      userId,
+      pasteId,
+      pastePassword,
+      public: _public,
+      private: _private
+    }
+  ]);
 
   // Send back the responses.
   res.json({ data, error });
 };
 
-export default handler;
+export default withSession(handler);
