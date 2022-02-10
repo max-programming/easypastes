@@ -1472,12 +1472,12 @@
     query-string "^7.0.1"
     snakecase-keys "^5.1.2"
 
-"@clerk/clerk-react@2.11.0":
-  version "2.11.0"
-  resolved "https://registry.yarnpkg.com/@clerk/clerk-react/-/clerk-react-2.11.0.tgz#73f4623b48d3ab457ec1455fdea7bf729379390f"
-  integrity sha512-j2WPajKKj9+P2JqtSiJXWXcnsOvGbL//Uisvctgfvaw+FZyUELyQ/PAQsHyD/YUbNKCPXnX/YHFxUz/t4maOtw==
+"@clerk/clerk-react@3.0.0-alpha.6":
+  version "3.0.0-alpha.6"
+  resolved "https://registry.yarnpkg.com/@clerk/clerk-react/-/clerk-react-3.0.0-alpha.6.tgz#b6635d9eae003aa993f22e03ada9ed964dcb886d"
+  integrity sha512-33F3tuSF51HU+7r89UcHJi5e0EP8e7WrQI11OzH13YXeHntgDK24OSaER3Vtw9EsxhZU+HW0MNHSod4yXffglA==
   dependencies:
-    "@clerk/types" "1.25.0"
+    "@clerk/types" "2.0.0-alpha.5"
     tslib "^2.3.1"
 
 "@clerk/clerk-react@^1.21.2":
@@ -1502,7 +1502,7 @@
     lodash "^4.17.21"
     snakecase-keys "^3.2.1"
 
-"@clerk/clerk-sdk-node@^2.7.0":
+"@clerk/clerk-sdk-node@^2.8.0":
   version "2.9.0"
   resolved "https://registry.yarnpkg.com/@clerk/clerk-sdk-node/-/clerk-sdk-node-2.9.0.tgz#794cc92b5c1d19e0098f03d8cd2457670fdd474f"
   integrity sha512-bXQ5pd5+63hifCR7i1K9EdNzl38AcQZXqqGJ3NaS1mJ7vknUcm32tLso4Tkf9uKkH46viXRJX/hMNFunBdEZmw==
@@ -1518,14 +1518,14 @@
     snakecase-keys "^3.2.1"
     tslib "^2.3.1"
 
-"@clerk/nextjs@^2.11.0":
-  version "2.11.0"
-  resolved "https://registry.yarnpkg.com/@clerk/nextjs/-/nextjs-2.11.0.tgz#0756e57d005382baf7648e119485f42e2677c001"
-  integrity sha512-qZd5zJ3+vzup+I9VZKhaXzFk550h/Y9cPMl2ZHmiCY8QIKFNOMjOWL+N8VGp6Ji4iET43GdXdgxCdotvAjjPqw==
+"@clerk/nextjs@^3.0.0-alpha.5":
+  version "3.0.0-alpha.5"
+  resolved "https://registry.yarnpkg.com/@clerk/nextjs/-/nextjs-3.0.0-alpha.5.tgz#4c4e66dff70ec1c1407eea99ed0529deaa3ab871"
+  integrity sha512-a9zh+cftbPt/O8YwHALCN4aJjFahV2aFXlpLX8c/vxTyjrat8Q4sJcc+rLj4XSyOjMWx27dMPyupP9HcjQeQ3w==
   dependencies:
-    "@clerk/clerk-react" "2.11.0"
-    "@clerk/clerk-sdk-node" "^2.7.0"
-    "@clerk/types" "1.25.0"
+    "@clerk/clerk-react" "3.0.0-alpha.6"
+    "@clerk/clerk-sdk-node" "^2.8.0"
+    "@clerk/types" "2.0.0-alpha.5"
     tslib "^2.3.1"
 
 "@clerk/types@1.13.1":
@@ -1533,10 +1533,10 @@
   resolved "https://registry.npmjs.org/@clerk/types/-/types-1.13.1.tgz"
   integrity sha512-hjkD7DouHZGVQGMPwRA4DJhqyL3vUYEnVB933HghtCGpxr7M+i9hemAP04WAuxj3hHNcRvXS7bpWC5jCrQzzSg==
 
-"@clerk/types@1.25.0":
-  version "1.25.0"
-  resolved "https://registry.yarnpkg.com/@clerk/types/-/types-1.25.0.tgz#b7e5ca199aeff2cbd6f40f1cadc35d807ebc50a5"
-  integrity sha512-avtGiVV6fZIMKbQ5tBm7Ae3cROIv3hS4DdKxzU6vac2zIPxqnugY+kSaB0bjopohb+dZ6NOXPU4drdWvBT6ZRw==
+"@clerk/types@2.0.0-alpha.5":
+  version "2.0.0-alpha.5"
+  resolved "https://registry.yarnpkg.com/@clerk/types/-/types-2.0.0-alpha.5.tgz#41f633d3e3f083ca7690a02cd8403dc3e0964709"
+  integrity sha512-4CZ/5uTLFujNNH+d+ohiYjQJZ9biAVF/XJDa0Jz85Klc2apatx8DKggZOqWOGzOdvvxlNIGhfS7NGH94HL2UDQ==
 
 "@ctrl/tinycolor@^3.4.0":
   version "3.4.0"
