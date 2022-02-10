@@ -222,11 +222,6 @@ const PrivatePaste = ({ paste, currentUser }: Props) => {
     // @ts-ignore
     session: { user }
   } = useSession();
-  // useEffect(() => {
-  //   console.log(user);
-  //   // console.log(user.id);
-  //   console.log(paste.userId);
-  // }, [paste.userId]);
   return user.id !== paste.userId ? (
     <InfoAlert />
   ) : (
