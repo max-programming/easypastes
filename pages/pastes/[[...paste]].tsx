@@ -26,11 +26,11 @@ import {
 import { HiOutlineKey, HiOutlineUser, HiOutlineCode } from 'react-icons/hi';
 import { GetServerSideProps } from 'next';
 import { PasteType, User } from 'types';
-import { SignedIn, SignedOut, useUser } from '@clerk/nextjs';
+import { SignedIn, SignedOut, useSession } from '@clerk/nextjs';
 import { motion } from 'framer-motion';
 import axios from 'axios';
 import Link from 'next/link';
-import { useState, FormEventHandler } from 'react';
+import { useState, FormEventHandler, useEffect } from 'react';
 import { NextSeo } from 'next-seo';
 import bcrypt from 'bcryptjs';
 import toast from 'react-hot-toast';
@@ -218,8 +218,15 @@ const RenderPasteInfo = ({ paste, currentUser }: Props) => {
 };
 
 const PrivatePaste = ({ paste, currentUser }: Props) => {
-  const user = useUser();
-
+  const {
+    // @ts-ignore
+    session: { user }
+  } = useSession();
+  // useEffect(() => {
+  //   console.log(user);
+  //   // console.log(user.id);
+  //   console.log(paste.userId);
+  // }, [paste.userId]);
   return user.id !== paste.userId ? (
     <InfoAlert />
   ) : (
