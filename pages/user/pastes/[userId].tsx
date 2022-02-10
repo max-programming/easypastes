@@ -22,7 +22,7 @@ import { GetServerSideProps } from 'next';
 import { PasteType, User } from 'types';
 import Paste from 'components/CodePastes/Paste';
 import supabaseClient from 'utils/supabase';
-import { SignedOut, WithUser } from '@clerk/clerk-react';
+import { SignedOut, WithUser } from '@clerk/nextjs';
 import axios from 'axios';
 import useLocalStorage from 'use-local-storage';
 import Link from 'next/link';

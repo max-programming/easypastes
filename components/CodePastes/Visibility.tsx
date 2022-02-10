@@ -6,7 +6,7 @@ import {
   Select,
   useMediaQuery
 } from '@chakra-ui/react';
-import { SignedIn } from '@clerk/clerk-react';
+import { SignedIn } from '@clerk/nextjs';
 import type { ChangeEventHandler, Dispatch, SetStateAction } from 'react';
 
 interface Props {

@@ -17,7 +17,7 @@ import {
   useDisclosure,
   UseDisclosureProps
 } from '@chakra-ui/react';
-import { WithUser } from '@clerk/clerk-react';
+import { WithUser } from '@clerk/nextjs';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useState } from 'react';

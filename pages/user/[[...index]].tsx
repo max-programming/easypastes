@@ -1,4 +1,4 @@
-import { UserProfile } from '@clerk/clerk-react';
+import { UserProfile } from '@clerk/nextjs';
 import { Container } from '@chakra-ui/layout';
 import Layout from 'components/Layout';
 import { NextSeo } from 'next-seo';

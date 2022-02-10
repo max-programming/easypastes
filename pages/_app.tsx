@@ -1,6 +1,6 @@
 import { Box, BoxProps, ChakraProvider, CSSReset } from '@chakra-ui/react';
 import { useEffect } from 'react';
-import { ClerkProvider } from '@clerk/clerk-react';
+import { ClerkProvider } from '@clerk/nextjs';
 import type { AppProps } from 'next/app';
 import NextNProgress from 'nextjs-progressbar';
 import importLangs from 'utils/importLangs';
@@ -16,7 +16,7 @@ import '@fontsource/fira-code/500.css';
 import 'styles/globals.css';
 import 'emoji-mart/css/emoji-mart.css';
 
-const clerkFrontendApi = process.env.NEXT_PUBLIC_CLERK_FRONTEND_API;
+// const clerkFrontendApi = process.env.NEXT_PUBLIC_CLERK_FRONTEND_API;
 
 const MotionBox = motion<BoxProps>(Box);
 
@@ -24,10 +24,7 @@ const MyApp = ({ Component, pageProps, router }: AppProps) => {
   useEffect(importLangs, []);
   return (
     <>
-      <ClerkProvider
-        frontendApi={clerkFrontendApi}
-        navigate={to => router.push(to)}
-      >
+      <ClerkProvider>
         <DefaultSeo {...SEO} />
         <ChakraProvider theme={theme}>
           <MotionBox

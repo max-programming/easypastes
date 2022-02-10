@@ -26,7 +26,7 @@ import {
 import { HiOutlineKey, HiOutlineUser, HiOutlineCode } from 'react-icons/hi';
 import { GetServerSideProps } from 'next';
 import { PasteType, User } from 'types';
-import { SignedIn, SignedOut, useUser } from '@clerk/clerk-react';
+import { SignedIn, SignedOut, useUser } from '@clerk/nextjs';
 import { motion } from 'framer-motion';
 import axios from 'axios';
 import Link from 'next/link';

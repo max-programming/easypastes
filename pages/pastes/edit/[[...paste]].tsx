@@ -14,7 +14,7 @@ import {
 } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import { PasteType, User } from 'types';
-import { SignedIn, SignedOut, useUser, WithUser } from '@clerk/clerk-react';
+import { SignedIn, SignedOut, useUser, WithUser } from '@clerk/nextjs';
 import { motion } from 'framer-motion';
 import InputCode from 'components/CodePastes/InputCode';
 import { useState } from 'react';

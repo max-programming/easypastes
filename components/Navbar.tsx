@@ -14,7 +14,7 @@ import {
   useBreakpointValue,
   useDisclosure
 } from '@chakra-ui/react';
-import { SignedIn, SignedOut, UserButton, WithUser } from '@clerk/clerk-react';
+import { SignedIn, SignedOut, UserButton, WithUser } from '@clerk/nextjs';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { HiMenu, HiX } from 'react-icons/hi';
