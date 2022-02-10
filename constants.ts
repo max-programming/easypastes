@@ -39,5 +39,6 @@ export const languages = [
   'yaml',
   'rust',
   'java',
-  'none'
+  'none',
+  'scala'
 ];
