@@ -2,8 +2,12 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { PasteType } from 'types';
 import supabaseClient from 'utils/supabase';
 import filterBadWords from 'utils/filterBadWords';
+import { WithSessionProp, withSession } from '@clerk/nextjs/api';
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (
+  req: WithSessionProp<NextApiRequest>,
+  res: NextApiResponse
+) => {
   // Allow only POST requests
   if (req.method !== 'POST') {
     res.status(400).json({ message: 'Only POST requests allowed.' });
@@ -11,20 +15,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   // Get the records from body
-  let {
-    code,
-    language,
-    title,
-    description,
-    pasteId,
-    userId,
-    _public,
-    _private
-  } = req.body;
+  let { code, language, title, description, pasteId, _public, _private } =
+    req.body;
 
-  if (!userId) {
-    return res.status(400).json({ message: 'Cannot delete anonymous paste' });
-  }
+  if (!req.session)
+    return res.status(400).json({ message: 'User must be signed in.' });
 
   if (code.trim() === '') {
     return res.status(400).json({ message: 'Code cannot be blank.' });
@@ -36,7 +31,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       .json({ message: 'Paste cannot be public and private.' });
   }
 
-  if (_private && !userId) {
+  if (_private && !req.session.userId) {
     return res
       .status(400)
       .json({ message: 'Sign in to create a private paste.' });
@@ -67,4 +62,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   res.json({ data, error });
 };
 
-export default handler;
+export default withSession(handler);
