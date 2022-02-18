@@ -35,7 +35,7 @@ import Visibility from 'components/CodePastes/Visibility';
 import Layout from 'components/Layout';
 import useSWR from 'swr';
 import useLocalStorage from 'use-local-storage';
-import { SignedIn, SignedOut, useUser } from '@clerk/nextjs';
+import { SignedIn, SignedOut } from '@clerk/nextjs';
 import Link from 'next/link';
 import { HiOutlineEmojiHappy, HiOutlineLockClosed } from 'react-icons/hi';
 import PasswordModal from 'components/CodePastes/PasswordModal';
@@ -250,7 +250,6 @@ const SignedInButton = ({
   setIsUrlTaken
 }: ButtonProps) => {
   // const session = useSession();
-  const user = useUser();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   // const sessionId = session?.id;
@@ -274,7 +273,6 @@ const SignedInButton = ({
         description,
         _public: visibility === 'public',
         _private: visibility === 'private',
-        userId: user.id,
         pasteId: url,
         pastePassword: password
       });
