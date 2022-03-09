@@ -11,7 +11,7 @@
   <a href="https://choosealicense.com/licenses/mit/">
     <img src="https://img.shields.io/apm/l/atomic-design-ui.svg?" alt="License" />
   </a>
-  <img src="https://therealsujitk-vercel-badge.vercel.app/?app=easypastes" />
+  <img src="https://img.shields.io/github/deployments/max-programming/easypastes/production?label=vercel" />
 </p>
 
 #### ✨ The live [Instance](https://easypastes.tk)
