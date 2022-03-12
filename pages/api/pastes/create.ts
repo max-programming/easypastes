@@ -1,10 +1,14 @@
+import { WithSessionProp, withSession } from '@clerk/nextjs/api';
+
 import { NextApiRequest, NextApiResponse } from 'next';
+
 import bcrypt from 'bcryptjs';
+
 import { PasteType } from 'types';
+
 import supabaseClient from 'utils/supabase';
 import { generateNanoid } from 'utils/generateId';
 import filterBadWords from 'utils/filterBadWords';
-import { WithSessionProp, withSession } from '@clerk/nextjs/api';
 
 // Variables
 const salt = bcrypt.genSaltSync(10);
@@ -34,6 +38,7 @@ const handler = async (
 
   let userId: string;
   if (req.session) userId = req.session.userId;
+  console.log({ userId });
 
   if (code.trim() === '') {
     return res.status(400).json({ message: 'Code cannot be blank.' });
