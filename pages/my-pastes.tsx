@@ -23,7 +23,7 @@ import { PasteType, User } from 'types';
 import Paste from 'components/CodePastes/Paste';
 import supabaseClient from 'utils/supabase';
 import { SignedOut, withUser, WithUser } from '@clerk/nextjs';
-import type { UserResource } from '@clerk/types';
+import { UserResource } from '@clerk/types';
 import useLocalStorage from 'use-local-storage';
 import Link from 'next/link';
 import NoPastes from 'components/CodePastes/NoPastes';
