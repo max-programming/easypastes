@@ -1,4 +1,4 @@
-import { WithSessionProp, withSession } from '@clerk/nextjs/api';
+import { withAuth, WithAuthProp } from '@clerk/nextjs/api';
 
 import { NextApiRequest, NextApiResponse } from 'next';
 
@@ -14,7 +14,7 @@ import filterBadWords from 'utils/filterBadWords';
 const salt = bcrypt.genSaltSync(10);
 
 const handler = async (
-  req: WithSessionProp<NextApiRequest>,
+  req: WithAuthProp<NextApiRequest>,
   res: NextApiResponse
 ) => {
   // Allow only POST requests
@@ -124,4 +124,4 @@ const handler = async (
   res.json({ data, error });
 };
 
-export default withSession(handler);
+export default withAuth(handler);
