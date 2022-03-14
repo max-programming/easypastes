@@ -27,8 +27,9 @@ import { HiOutlineKey, HiOutlineUser, HiOutlineCode } from 'react-icons/hi';
 import { GetServerSideProps } from 'next';
 import { PasteType, User } from 'types';
 import { SignedIn, SignedOut, useSession } from '@clerk/nextjs';
+import { withServerSideAuth } from '@clerk/nextjs/ssr';
 import { motion } from 'framer-motion';
-import axios from 'axios';
+import { UserResource } from '@clerk/types';
 import Link from 'next/link';
 import { useState, FormEventHandler, useEffect } from 'react';
 import { NextSeo } from 'next-seo';
@@ -39,7 +40,7 @@ import reduceTitleLength from 'utils/reduceTitleLength';
 // Custom types
 interface Props {
   paste: PasteType & { longTitle: string };
-  currentUser: 'Anonymous' | User;
+  currentUser: 'Anonymous' | UserResource;
 }
 
 const MotionAlert = motion<AlertProps>(Alert);
@@ -101,51 +102,42 @@ const Paste = ({ paste, currentUser }: Props) => {
 };
 
 // Server side props override
-export const getServerSideProps: GetServerSideProps<Props> = async context => {
-  const paste = (context.params.paste as string[]).join('/');
-  const { data: pastes, error } = await supabaseClient
-    .from<PasteType>('Pastes')
-    .select('*')
-    .eq('pasteId', paste);
+export const getServerSideProps = withServerSideAuth(
+  async context => {
+    const paste = (context.params.paste as string[]).join('/');
+    const { data: pastes, error } = await supabaseClient
+      .from<PasteType>('Pastes')
+      .select('*')
+      .eq('pasteId', paste);
 
-  if (error || pastes.length < 1) {
-    console.log('NOT FOUND');
-    return {
-      notFound: true
-    };
-  }
+    if (error || pastes.length < 1) {
+      console.log('NOT FOUND');
+      return {
+        notFound: true
+      };
+    }
 
-  const currentPaste = reduceTitleLength(pastes[0]);
+    const currentPaste = reduceTitleLength(pastes[0]);
 
-  if (!currentPaste.userId) {
-    return {
-      props: { paste: currentPaste, currentUser: 'Anonymous' }
-    };
-  }
-  try {
-    const { data: user, status } = await axios.get<User>(
-      `https://api.clerk.dev/v1/users/${currentPaste.userId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.CLERK_API_KEY}`
+    if (!currentPaste.userId) {
+      return {
+        props: { paste: currentPaste, currentUser: 'Anonymous' }
+      };
+    }
+
+    // Check if the current user is the paste owner
+    const { userId } = context.auth;
+    if (currentPaste.userId === userId) {
+      return {
+        props: {
+          paste: currentPaste,
+          currentUser: JSON.parse(JSON.stringify(context.user))
         }
-      }
-    );
-    return {
-      props: { paste: currentPaste, currentUser: user || 'Anonymous' }
-    };
-  } catch (error) {
-    return {
-      props: { paste: currentPaste, currentUser: 'Anonymous' }
-    };
-  }
-
-  // if (status !== 200) {
-  //   return {
-  //     props: { paste: currentPaste, currentUser: 'Anonymous' }
-  //   };
-  // }
-};
+      };
+    }
+  },
+  { loadUser: true }
+);
 
 const InfoAlert = () => (
   <MotionAlert
@@ -176,11 +168,11 @@ const RenderPasteInfo = ({ paste, currentUser }: Props) => {
             <Link href={`/user/pastes/${currentUser.id}`}>
               <a>
                 <Tag size="lg" variant="subtle" colorScheme="purple">
-                  {currentUser.profile_image_url ? (
+                  {currentUser.profileImageUrl ? (
                     <Avatar
-                      src={currentUser.profile_image_url}
+                      src={currentUser.profileImageUrl}
                       size="xs"
-                      name={`${currentUser.first_name} ${currentUser.last_name}`}
+                      name={`${currentUser.firstName} ${currentUser.lastName}`}
                       ml={-1}
                       mr={2}
                     />
@@ -189,7 +181,7 @@ const RenderPasteInfo = ({ paste, currentUser }: Props) => {
                   )}
 
                   <TagLabel>
-                    {`${currentUser.first_name} ${currentUser.last_name}`}
+                    {`${currentUser.firstName} ${currentUser.lastName}`}
                   </TagLabel>
                 </Tag>
               </a>
@@ -222,6 +214,7 @@ const PrivatePaste = ({ paste, currentUser }: Props) => {
     // @ts-ignore
     session: { user }
   } = useSession();
+  console.log(paste.userId);
   return user.id !== paste.userId ? (
     <InfoAlert />
   ) : (

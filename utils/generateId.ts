@@ -20,7 +20,7 @@ const base62Encode = (n: number) => {
 };
 
 // Generate using nanoid
-const generateNanoid = (length: number) => nanoid(length);
+const generateNanoid = () => nanoid();
 
 // Export base62Encode and generateNanoid.
 export { base62Encode, generateNanoid };

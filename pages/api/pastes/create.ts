@@ -98,7 +98,7 @@ const handler = async (
 
     pasteId = filterBadWords(pasteId);
   } else {
-    pasteId = generateNanoid(12);
+    pasteId = generateNanoid();
   }
 
   if (hasPassword) {

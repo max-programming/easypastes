@@ -24,7 +24,7 @@ import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { FiAlertCircle, FiArrowRight } from 'react-icons/fi';
 import { BaseEmoji, Picker } from 'emoji-mart';
-import { ILanguage } from 'types';
+import { ILanguage, PasteType } from 'types';
 import axios from 'axios';
 
 // Components imports
@@ -35,13 +35,16 @@ import Visibility from 'components/CodePastes/Visibility';
 import Layout from 'components/Layout';
 import useSWR from 'swr';
 import useLocalStorage from 'use-local-storage';
-import { SignedIn, SignedOut } from '@clerk/nextjs';
+import { SignedIn, SignedOut, useAuth } from '@clerk/nextjs';
 import Link from 'next/link';
 import { HiOutlineEmojiHappy, HiOutlineLockClosed } from 'react-icons/hi';
 import PasswordModal from 'components/CodePastes/PasswordModal';
 import fetcher from 'utils/fetcher';
 import EmojiInput from 'components/CodePastes/EmojiInput';
 import toast from 'react-hot-toast';
+import supabaseClient from 'utils/supabase';
+import filterBadWords from 'utils/filterBadWords';
+import { generateNanoid } from 'utils/generateId';
 
 // Main pastes component
 const Pastes = () => {
@@ -184,7 +187,7 @@ const Pastes = () => {
               description={description}
               visibility={visibility}
               password={password}
-              url={url}
+              url={url ?? generateNanoid()}
               setIsUrlTaken={setIsUrlTaken}
             />
             <Button
@@ -251,6 +254,7 @@ const SignedInButton = ({
 }: ButtonProps) => {
   // const session = useSession();
   const router = useRouter();
+  const { getToken, userId } = useAuth();
   const [loading, setLoading] = useState(false);
   // const sessionId = session?.id;
 
@@ -265,19 +269,37 @@ const SignedInButton = ({
 
     try {
       setLoading(true);
+      const token = await getToken({ template: 'supabase' });
+      supabaseClient.auth.setAuth(token);
+      let { data, error } = await supabaseClient
+        .from<PasteType>('Pastes')
+        .insert([
+          {
+            title: filterBadWords(title),
+            description: filterBadWords(description),
+            language: language as ILanguage,
+            pasteId: url,
+            public: visibility === 'public',
+            private: visibility === 'private',
+            pastePassword: password,
+            userId,
+            code
+          }
+        ]);
+      console.log({ addedItem: data });
+      // ]);
+      // const res = await axios.post(`/api/pastes/create`, {
+      //   code,
+      //   language,
+      //   title,
+      //   description,
+      //   _public: visibility === 'public',
+      //   _private: visibility === 'private',
+      //   pasteId: url,
+      //   pastePassword: password
+      // });
 
-      const res = await axios.post(`/api/pastes/create`, {
-        code,
-        language,
-        title,
-        description,
-        _public: visibility === 'public',
-        _private: visibility === 'private',
-        pasteId: url,
-        pastePassword: password
-      });
-
-      const { data, error } = res.data;
+      // const { data, error } = res.data;
 
       if (data) {
         await router.push(`/pastes/${data[0].pasteId}`);
@@ -334,17 +356,18 @@ const SignedOutButton = ({
     try {
       setLoading(true);
 
-      const res = await axios.post(`/api/pastes/create`, {
-        code,
-        language,
-        title,
-        description,
-        _public: visibility === 'public',
-        _private: visibility === 'private',
-        pasteId: url
-      });
-
-      const { data, error } = res.data;
+      let { data, error } = await supabaseClient
+        .from<PasteType>('Pastes')
+        .insert([
+          {
+            title: filterBadWords(title),
+            description: filterBadWords(description),
+            language: language as ILanguage,
+            pasteId: generateNanoid(),
+            public: visibility === 'public',
+            code
+          }
+        ]);
 
       if (data) {
         await router.push(`/pastes/${data[0].pasteId}`);
