@@ -110,7 +110,8 @@ export const getServerSideProps = withServerSideAuth(
       .select('*')
       .eq('pasteId', paste);
 
-    if (error || pastes.length < 1) {
+    if (error || pastes.length > 1) {
+      console.error({ supabaseError: error });
       console.log('NOT FOUND');
       return {
         notFound: true
@@ -118,6 +119,8 @@ export const getServerSideProps = withServerSideAuth(
     }
 
     const currentPaste = reduceTitleLength(pastes[0]);
+
+    console.log({ currentPaste });
 
     if (!currentPaste.userId) {
       return {
