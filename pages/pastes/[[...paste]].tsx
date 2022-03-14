@@ -101,55 +101,6 @@ const Paste = ({ paste, currentUser }: Props) => {
   );
 };
 
-// Server side props override
-export const getServerSideProps = withServerSideAuth(
-  async context => {
-    const paste = (context.params.paste as string[]).join('/');
-    const { data: pastes, error } = await supabaseClient
-      .from<PasteType>('Pastes')
-      .select('*')
-      .eq('pasteId', paste);
-
-    if (error || pastes.length > 1) {
-      console.error({ supabaseError: error });
-      console.log('NOT FOUND');
-      return {
-        notFound: true
-      };
-    }
-
-    const currentPaste = reduceTitleLength(pastes[0]);
-
-    console.log({ currentPaste });
-
-    if (!currentPaste.userId) {
-      return {
-        props: { paste: currentPaste, currentUser: 'Anonymous' }
-      };
-    }
-
-    // Check if the current user is the paste owner
-    const { userId } = context.auth;
-    if (currentPaste.userId === userId) {
-      return {
-        props: {
-          paste: currentPaste,
-          currentUser: JSON.parse(JSON.stringify(context.user))
-        }
-      };
-    }
-    return {
-      props: {
-        paste: currentPaste,
-        currentUser: JSON.parse(
-          JSON.stringify(await users.getUser(currentPaste.userId))
-        )
-      }
-    };
-  },
-  { loadUser: true }
-);
-
 const InfoAlert = () => (
   <MotionAlert
     variant="left-accent"
@@ -291,5 +242,61 @@ const EnterPassword = ({
     </Flex>
   );
 };
+
+export const getServerSideProps = withServerSideAuth(
+  async context => {
+    const paste = (context.params.paste as string[]).join('/');
+    const { data: pastes, error } = await supabaseClient
+      .from<PasteType>('Pastes')
+      .select('*')
+      .eq('pasteId', paste);
+
+    if (error || pastes.length > 1) {
+      console.error({ supabaseError: error });
+      console.log('NOT FOUND');
+      return {
+        notFound: true
+      };
+    }
+
+    const currentPaste = reduceTitleLength(pastes[0]);
+
+    console.log({ currentPaste });
+
+    if (!currentPaste.userId) {
+      return {
+        props: { paste: currentPaste, currentUser: 'Anonymous' }
+      };
+    }
+
+    let currentUser = 'Anonymous';
+    try {
+      currentUser = JSON.parse(
+        JSON.stringify(await users.getUser(currentPaste.userId))
+      );
+    } catch (error) {
+      currentUser = 'Anonymous';
+    }
+    console.log({ currentUser });
+
+    // Check if the current user is the paste owner
+    const { userId } = context.auth;
+    if (currentPaste.userId === userId) {
+      return {
+        props: {
+          paste: currentPaste,
+          currentUser: JSON.parse(JSON.stringify(context.user))
+        }
+      };
+    }
+    return {
+      props: {
+        paste: currentPaste,
+        currentUser
+      }
+    };
+  },
+  { loadUser: true }
+);
 
 export default Paste;
