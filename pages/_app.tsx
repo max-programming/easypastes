@@ -32,50 +32,32 @@ const MyApp = ({ Component, pageProps, router }: AppProps) => {
   return (
     <>
       <ClerkProvider>
-        {isPublicPage ? (
-          <>
-            <DefaultSeo {...SEO} />
-            <ChakraProvider theme={theme}>
-              <MotionBox
-                key={router.route}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-              >
-                <CSSReset />
-                <NextNProgress
-                  color={theme.colors.purple[500]}
-                  options={{ showSpinner: false }}
-                />
-                <Toaster position="top-right" reverseOrder={false} />
-                <Component {...pageProps} />
-              </MotionBox>
-            </ChakraProvider>
-          </>
-        ) : (
-          <>
-            <SignedIn>
-              <DefaultSeo {...SEO} />
-              <ChakraProvider theme={theme}>
-                <MotionBox
-                  key={router.route}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                >
-                  <CSSReset />
-                  <NextNProgress
-                    color={theme.colors.purple[500]}
-                    options={{ showSpinner: false }}
-                  />
-                  <Toaster position="top-right" reverseOrder={false} />
+        <ChakraProvider theme={theme}>
+          <MotionBox
+            key={router.route}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            <CSSReset />
+            <NextNProgress
+              color={theme.colors.purple[500]}
+              options={{ showSpinner: false }}
+            />
+            <Toaster position="top-right" reverseOrder={false} />
+            {isPublicPage ? (
+              <Component {...pageProps} />
+            ) : (
+              <>
+                <SignedIn>
                   <Component {...pageProps} />
-                </MotionBox>
-              </ChakraProvider>
-            </SignedIn>
-            <SignedOut>
-              <RedirectToSignIn />
-            </SignedOut>
-          </>
-        )}
+                </SignedIn>
+                <SignedOut>
+                  <RedirectToSignIn />
+                </SignedOut>
+              </>
+            )}
+          </MotionBox>
+        </ChakraProvider>
       </ClerkProvider>
     </>
   );
