@@ -48,24 +48,6 @@ interface Props {
   user: UserResource;
 }
 
-export const getServerSideProps: GetServerSideProps = async context => {
-  const { data: pastes, error } = await supabaseClient
-    .from<PasteType>('Pastes')
-    .select(
-      'id, title, language, userId, pasteId, description, public, private, createdAt'
-    )
-    // @ts-ignore
-    .order('createdAt', { ascending: false });
-
-  const allPastes = pastes.map(p => reduceTitleLength(p));
-
-  return {
-    props: {
-      allPastes
-    }
-  };
-};
-
 function MyPastes({ allPastes, user }: Props) {
   const [showAlert, setShowAlert] = useLocalStorage('username-alert', false);
   const [matches] = useMediaQuery('(max-width: 768px)');
@@ -203,5 +185,23 @@ function MyPastes({ allPastes, user }: Props) {
     </WithUser>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async context => {
+  const { data: pastes, error } = await supabaseClient
+    .from<PasteType>('Pastes')
+    .select(
+      'id, title, language, userId, pasteId, description, public, private, createdAt'
+    )
+    // @ts-ignore
+    .order('createdAt', { ascending: false });
+
+  const allPastes = pastes.map(p => reduceTitleLength(p));
+
+  return {
+    props: {
+      allPastes
+    }
+  };
+};
 
 export default withUser(MyPastes);
