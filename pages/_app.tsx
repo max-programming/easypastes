@@ -7,20 +7,20 @@ import {
   SignedIn,
   SignedOut
 } from '@clerk/nextjs';
-import '@fontsource/fira-code/500.css';
-// CSS Imports
-import '@fontsource/poppins/400.css';
-import 'emoji-mart/css/emoji-mart.css';
 import { motion } from 'framer-motion';
 import { DefaultSeo } from 'next-seo';
 import SEO from 'next-seo.config';
 import NextNProgress from 'nextjs-progressbar';
 import { useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
-import 'styles/globals.css';
 
 import importLangs from 'utils/importLangs';
 import theme from 'utils/theme';
+
+import '@fontsource/fira-code/500.css';
+import '@fontsource/poppins/400.css';
+import 'emoji-mart/css/emoji-mart.css';
+import 'styles/globals.css';
 
 const publicPages = ['/', '/pastes/[[...paste]]', '/user/pastes/[userId].tsx'];
 
@@ -33,6 +33,7 @@ const MyApp = ({ Component, pageProps, router }: AppProps) => {
   return (
     <>
       <ClerkProvider>
+        <DefaultSeo {...SEO} />
         <ChakraProvider theme={theme}>
           <MotionBox
             key={router.route}
