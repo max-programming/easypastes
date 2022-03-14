@@ -6,7 +6,6 @@ import {
   Link,
   ListItem,
   Skeleton,
-  SkeletonText,
   Stack,
   Tag,
   Text,
