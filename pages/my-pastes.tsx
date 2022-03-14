@@ -25,9 +25,9 @@ import {
 } from 'react-icons/hi';
 import useLocalStorage from 'use-local-storage';
 
-import NoPastes from 'components/CodePastes/NoPastes';
-import Paste from 'components/CodePastes/Paste';
 import Layout from 'components/Layout';
+import NoPastes from 'components/Pastes/NoPastes';
+import Paste from 'components/Pastes/Paste';
 
 import reduceTitleLength from 'utils/reduceTitleLength';
 import supabaseClient from 'utils/supabase';

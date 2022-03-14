@@ -26,7 +26,7 @@ import supabaseClient from 'utils/supabase';
 
 import { PasteType } from 'types';
 
-import DisplayCode from './DisplayCode';
+import DisplayCode from '../Code/DisplayCode';
 
 const fetchPaste = async (key: string): Promise<PasteType> => {
   const { data, error } = await supabaseClient

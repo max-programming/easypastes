@@ -12,7 +12,7 @@ import { HiOutlineCode } from 'react-icons/hi';
 
 import { PasteType } from 'types';
 
-import PasteModal from './PasteModal';
+import PasteModal from '../Modal/PasteModal';
 
 interface Props {
   paste: PasteType & { longTitle: string };

@@ -1,5 +1,5 @@
 import { Box } from '@chakra-ui/react';
-import Highlight, { Language, defaultProps } from 'prism-react-renderer';
+import Highlight, { defaultProps } from 'prism-react-renderer';
 import nightOwl from 'prism-react-renderer/themes/nightOwl';
 import { Dispatch, SetStateAction } from 'react';
 import Editor from 'react-simple-code-editor';

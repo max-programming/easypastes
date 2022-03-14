@@ -18,10 +18,10 @@ import { GetServerSideProps } from 'next';
 import { useState } from 'react';
 import { FiArrowRight } from 'react-icons/fi';
 
-import InputCode from 'components/CodePastes/InputCode';
-import SelectLanguage from 'components/CodePastes/SelectLanguage';
-import Visibility from 'components/CodePastes/Visibility';
+import InputCode from 'components/Code/InputCode';
 import Layout from 'components/Layout';
+import SelectLanguage from 'components/Others/SelectLanguage';
+import Visibility from 'components/Others/Visibility';
 
 import supabaseClient from 'utils/supabase';
 

@@ -28,6 +28,7 @@ const MotionBox = motion<BoxProps>(Box);
 
 const MyApp = ({ Component, pageProps, router }: AppProps) => {
   useEffect(importLangs, []);
+
   const isPublicPage = publicPages.includes(router.pathname);
 
   return (

@@ -30,17 +30,16 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import toast from 'react-hot-toast';
 import { FiAlertCircle, FiArrowRight } from 'react-icons/fi';
 import { HiOutlineEmojiHappy, HiOutlineLockClosed } from 'react-icons/hi';
+import PublicPastes from 'sections/Public/PublicPastes';
 import useSWR from 'swr';
 import useLocalStorage from 'use-local-storage';
 
-import EmojiInput from 'components/CodePastes/EmojiInput';
-// Components imports
-import InputCode from 'components/CodePastes/InputCode';
-import PasswordModal from 'components/CodePastes/PasswordModal';
-import PublicPastes from 'components/CodePastes/PublicPastes';
-import SelectLanguage from 'components/CodePastes/SelectLanguage';
-import Visibility from 'components/CodePastes/Visibility';
+import InputCode from 'components/Code/InputCode';
+import EmojiInput from 'components/Emoji/EmojiInput';
 import Layout from 'components/Layout';
+import PasswordModal from 'components/Modal/PasswordModal';
+import SelectLanguage from 'components/Others/SelectLanguage';
+import Visibility from 'components/Others/Visibility';
 
 import fetcher from 'utils/fetcher';
 import filterBadWords from 'utils/filterBadWords';
@@ -51,21 +50,30 @@ import { ILanguage, PasteType } from 'types';
 
 // Main pastes component
 const Pastes = () => {
-  const [matches] = useMediaQuery('(max-width:768px)');
-  const { data, error } = useSWR('/api/pastes', fetcher);
+  // States
   const [code, setCode] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [password, setPassword] = useState('');
+  const [visibility, setVisibility] = useState('public');
   const [url, setUrl] = useState<string>(null);
+  const [isUrlTaken, setIsUrlTaken] = useState(false);
   const [showAlert, setShowAlert] = useState(true);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  const [isUrlTaken, setIsUrlTaken] = useState(false);
-  const [visibility, setVisibility] = useState('public');
-  const [password, setPassword] = useState('');
+
+  // Media queries
+  const [matches] = useMediaQuery('(max-width:768px)');
+
+  // Fetch API
+  const { data, error } = useSWR('/api/pastes', fetcher);
+
+  // Fetch last language
   const [language, setLanguage] = useLocalStorage<ILanguage>(
     'language',
     'none'
   );
+
+  // Modal
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const addEmoji = (emoji: BaseEmoji) => {
@@ -85,8 +93,8 @@ const Pastes = () => {
             <FiAlertCircle style={{ marginRight: 5 }} />
             <Link href="/sign-in">
               <a>Sign in</a>
-            </Link>
-            &nbsp;to customize the URL of your paste
+            </Link>{' '}
+            to customize the URL of your paste
             <CloseButton
               position="absolute"
               right="8px"
@@ -97,7 +105,6 @@ const Pastes = () => {
         </SignedOut>
         <Container maxW="container.xl" my="6">
           <SelectLanguage language={language} setLanguage={setLanguage} />
-
           <InputGroup position="relative">
             <EmojiInput
               placeholder="Title (optional)"
@@ -169,7 +176,6 @@ const Pastes = () => {
               flex="1"
               w={matches ? 'full' : 'initial'}
             >
-              {/* Visibility */}
               <label style={{ marginRight: 8 }}>Visibility: </label>
               <Visibility
                 visibility={visibility}
@@ -178,10 +184,8 @@ const Pastes = () => {
             </Flex>
           </Flex>
 
-          {/* Code for the paste */}
           <InputCode code={code} setCode={setCode} language={language} />
 
-          {/* Creating button */}
           <SignedIn>
             <SignedInButton
               code={code}
@@ -290,19 +294,6 @@ const SignedInButton = ({
           }
         ]);
       console.log({ addedItem: data });
-      // ]);
-      // const res = await axios.post(`/api/pastes/create`, {
-      //   code,
-      //   language,
-      //   title,
-      //   description,
-      //   _public: visibility === 'public',
-      //   _private: visibility === 'private',
-      //   pasteId: url,
-      //   pastePassword: password
-      // });
-
-      // const { data, error } = res.data;
 
       if (data) {
         await router.push(`/pastes/${data[0].pasteId}`);
@@ -310,6 +301,7 @@ const SignedInButton = ({
       }
     } catch (error) {
       setLoading(false);
+
       if (error.response.status === 400) {
         setIsUrlTaken(true);
         toast.error(error.response.data.message, {
@@ -320,6 +312,7 @@ const SignedInButton = ({
       }
     }
   };
+
   return (
     <Button
       fontWeight="normal"

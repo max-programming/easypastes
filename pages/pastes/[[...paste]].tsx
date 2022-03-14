@@ -32,7 +32,7 @@ import { FormEventHandler, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { HiOutlineCode, HiOutlineKey, HiOutlineUser } from 'react-icons/hi';
 
-import DisplayCode from 'components/CodePastes/DisplayCode';
+import DisplayCode from 'components/Code/DisplayCode';
 import Layout from 'components/Layout';
 
 import reduceTitleLength from 'utils/reduceTitleLength';
