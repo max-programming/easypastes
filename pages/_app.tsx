@@ -1,25 +1,25 @@
-import { Box, BoxProps, ChakraProvider, CSSReset } from '@chakra-ui/react';
-import { useEffect } from 'react';
+import type { AppProps } from 'next/app';
+
+import { Box, BoxProps, CSSReset, ChakraProvider } from '@chakra-ui/react';
 import {
   ClerkProvider,
   RedirectToSignIn,
   SignedIn,
   SignedOut
 } from '@clerk/nextjs';
-import type { AppProps } from 'next/app';
-import NextNProgress from 'nextjs-progressbar';
-import importLangs from 'utils/importLangs';
+import '@fontsource/fira-code/500.css';
+import '@fontsource/poppins/400.css';
+import 'emoji-mart/css/emoji-mart.css';
 import { motion } from 'framer-motion';
 import { DefaultSeo } from 'next-seo';
 import SEO from 'next-seo.config';
+import NextNProgress from 'nextjs-progressbar';
+import { useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
-import theme from 'utils/theme';
-
-// CSS Imports
-import '@fontsource/poppins/400.css';
-import '@fontsource/fira-code/500.css';
 import 'styles/globals.css';
-import 'emoji-mart/css/emoji-mart.css';
+
+import importLangs from 'utils/importLangs';
+import theme from 'utils/theme';
 
 const publicPages = ['/', '/pastes/[[...paste]]', '/user/pastes/[userId].tsx'];
 

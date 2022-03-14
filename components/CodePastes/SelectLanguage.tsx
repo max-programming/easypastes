@@ -1,8 +1,11 @@
 import { Box, Select, theme, useColorModeValue } from '@chakra-ui/react';
 import { Language } from 'prism-react-renderer';
 import { ChangeEventHandler, Dispatch, SetStateAction } from 'react';
-import { languages } from '../../constants';
+
 import { ILanguage } from 'types';
+
+import { languages } from '../../constants';
+
 interface Props {
   language: ILanguage;
   setLanguage: Dispatch<SetStateAction<ILanguage>>;

@@ -1,8 +1,10 @@
-import type { ReactNode } from 'react';
-import { Box } from '@chakra-ui/react';
-import Navbar from './Navbar';
-import Footer from './Footer';
 import { useRouter } from 'next/router';
+
+import { Box } from '@chakra-ui/react';
+import type { ReactNode } from 'react';
+
+import Footer from './Footer';
+import Navbar from './Navbar';
 
 // Types definition
 interface Props {

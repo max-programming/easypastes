@@ -1,36 +1,38 @@
+import { useRouter } from 'next/router';
+
 import {
   Box,
+  Button,
   IconButton,
-  Tooltip,
   Menu,
-  MenuItem,
   MenuButton,
+  MenuItem,
   MenuList,
   Modal,
-  ModalOverlay,
-  ModalHeader,
   ModalBody,
+  ModalCloseButton,
   ModalContent,
   ModalFooter,
-  ModalCloseButton,
-  Button,
-  useDisclosure,
-  UseDisclosureProps
+  ModalHeader,
+  ModalOverlay,
+  Tooltip,
+  UseDisclosureProps,
+  useDisclosure
 } from '@chakra-ui/react';
 import { WithUser } from '@clerk/nextjs';
 import axios from 'axios';
-import { useRouter } from 'next/router';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 import {
   FiCopy,
   FiEdit2,
+  FiFileText,
   FiLink2,
   FiMoreHorizontal,
-  FiTrash2,
-  FiFileText
+  FiTrash2
 } from 'react-icons/fi';
+
 import { PasteType } from 'types';
-import toast from 'react-hot-toast';
 
 interface Props {
   paste: PasteType;

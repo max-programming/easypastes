@@ -1,7 +1,8 @@
 import { Center, Heading } from '@chakra-ui/react';
-import Layout from 'components/Layout';
-import { FcNoIdea } from 'react-icons/fc';
 import { NextSeo } from 'next-seo';
+import { FcNoIdea } from 'react-icons/fc';
+
+import Layout from 'components/Layout';
 
 export default function Offline() {
   return (

@@ -1,9 +1,9 @@
 import {
-  RadioGroup,
-  Radio,
-  Stack,
   Box,
+  Radio,
+  RadioGroup,
   Select,
+  Stack,
   useMediaQuery
 } from '@chakra-ui/react';
 import { SignedIn } from '@clerk/nextjs';

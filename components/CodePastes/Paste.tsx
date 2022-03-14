@@ -1,15 +1,17 @@
 import {
   Box,
-  Text,
+  Flex,
   Tag,
   TagLabel,
   TagLeftIcon,
-  useDisclosure,
-  Flex,
-  Tooltip
+  Text,
+  Tooltip,
+  useDisclosure
 } from '@chakra-ui/react';
 import { HiOutlineCode } from 'react-icons/hi';
+
 import { PasteType } from 'types';
+
 import PasteModal from './PasteModal';
 
 interface Props {

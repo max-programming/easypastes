@@ -1,6 +1,6 @@
+import { zonedTimeToUtc } from 'date-fns-tz';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en.json';
-import { zonedTimeToUtc } from 'date-fns-tz';
 
 TimeAgo.addLocale(en);
 

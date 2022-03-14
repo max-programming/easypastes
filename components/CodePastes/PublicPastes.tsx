@@ -1,18 +1,21 @@
+import NextLink from 'next/link';
+
 import {
   Box,
   Heading,
   Link,
-  UnorderedList,
   ListItem,
-  Tag,
   Skeleton,
   SkeletonText,
   Stack,
-  Text
+  Tag,
+  Text,
+  UnorderedList
 } from '@chakra-ui/react';
-import { PasteType } from 'types';
-import NextLink from 'next/link';
+
 import formatTimeAgo from 'utils/formatTimeAgo';
+
+import { PasteType } from 'types';
 
 interface Props {
   publicPastes: PasteType[];

@@ -1,15 +1,15 @@
 // Thanks to https://chakra-templates.dev/ for this 💗
 import {
   Box,
-  chakra,
   Container,
   Stack,
   Text,
+  Tooltip,
   VisuallyHidden,
-  Tooltip
+  chakra
 } from '@chakra-ui/react';
-import { FaGithub, FaTwitter, FaYoutube } from 'react-icons/fa';
 import { ReactNode } from 'react';
+import { FaGithub, FaTwitter, FaYoutube } from 'react-icons/fa';
 
 export const SocialButton = ({
   children,

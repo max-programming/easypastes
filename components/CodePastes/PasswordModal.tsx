@@ -1,22 +1,22 @@
 /* eslint-disable react/no-children-prop */
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
   Button,
-  UseDisclosureProps,
   Input,
   InputGroup,
   InputLeftElement,
-  InputRightElement
+  InputRightElement,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  UseDisclosureProps
 } from '@chakra-ui/react';
 import { Dispatch, SetStateAction } from 'react';
-import { HiOutlineKey, HiOutlineLockClosed } from 'react-icons/hi';
 import { useState } from 'react';
+import { HiOutlineKey, HiOutlineLockClosed } from 'react-icons/hi';
 
 interface Props {
   password: string;

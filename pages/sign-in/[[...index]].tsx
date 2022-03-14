@@ -1,7 +1,8 @@
 import { Container } from '@chakra-ui/layout';
 import { SignIn } from '@clerk/nextjs';
-import Layout from 'components/Layout';
 import { NextSeo } from 'next-seo';
+
+import Layout from 'components/Layout';
 
 export default function SignInPage() {
   return (

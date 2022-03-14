@@ -1,4 +1,4 @@
-import { requireSession, RequireSessionProp } from '@clerk/nextjs/api';
+import { RequireSessionProp, requireSession } from '@clerk/nextjs/api';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 async function handler(
