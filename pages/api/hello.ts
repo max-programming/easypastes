@@ -1,11 +1,11 @@
-import { RequireSessionProp, requireSession } from '@clerk/nextjs/api';
+import { RequireAuthProp, requireAuth } from '@clerk/nextjs/api';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 async function handler(
-  req: RequireSessionProp<NextApiRequest>,
+  req: RequireAuthProp<NextApiRequest>,
   res: NextApiResponse
 ) {
   res.json({ uid: req.session.userId });
 }
 
-export default requireSession(handler);
+export default requireAuth(handler);

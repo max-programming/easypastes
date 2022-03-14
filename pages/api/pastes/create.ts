@@ -1,10 +1,10 @@
 import { WithAuthProp, withAuth } from '@clerk/nextjs/api';
 import bcrypt from 'bcryptjs';
+import supabaseClient from 'lib/supabase';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import filterBadWords from 'utils/filterBadWords';
 import { generateNanoid } from 'utils/generateId';
-import supabaseClient from 'utils/supabase';
 
 import { PasteType } from 'types';
 

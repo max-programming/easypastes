@@ -14,6 +14,7 @@ import {
 import { SignedIn, SignedOut, WithUser, useUser } from '@clerk/nextjs';
 import axios from 'axios';
 import { motion } from 'framer-motion';
+import supabaseClient from 'lib/supabase';
 import { GetServerSideProps } from 'next';
 import { useState } from 'react';
 import { FiArrowRight } from 'react-icons/fi';
@@ -22,8 +23,6 @@ import InputCode from 'components/Code/InputCode';
 import Layout from 'components/Layout';
 import SelectLanguage from 'components/Others/SelectLanguage';
 import Visibility from 'components/Others/Visibility';
-
-import supabaseClient from 'utils/supabase';
 
 import { PasteType, User } from 'types';
 

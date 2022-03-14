@@ -15,6 +15,7 @@ import {
 } from '@chakra-ui/react';
 import { SignedOut, WithUser, withUser } from '@clerk/nextjs';
 import { UserResource } from '@clerk/types';
+import supabaseClient from 'lib/supabase';
 import { GetServerSideProps } from 'next';
 import { NextSeo } from 'next-seo';
 import {
@@ -30,7 +31,6 @@ import NoPastes from 'components/Pastes/NoPastes';
 import Paste from 'components/Pastes/Paste';
 
 import reduceTitleLength from 'utils/reduceTitleLength';
-import supabaseClient from 'utils/supabase';
 
 import { PasteType, User } from 'types';
 

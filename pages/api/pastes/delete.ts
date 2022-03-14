@@ -1,12 +1,12 @@
-import { WithSessionProp, withSession } from '@clerk/nextjs/api';
+import { WithAuthProp, withAuth } from '@clerk/nextjs/api';
+import supabaseClient from 'lib/supabase';
 import { NextApiRequest, NextApiResponse } from 'next';
-
-import supabaseClient from 'utils/supabase';
+import PasteDeleteSchema from 'schema/pastes/delete';
 
 import { PasteType } from 'types';
 
 const handler = async (
-  req: WithSessionProp<NextApiRequest>,
+  req: WithAuthProp<NextApiRequest>,
   res: NextApiResponse
 ) => {
   // Allow only POST requests
@@ -15,11 +15,11 @@ const handler = async (
     return;
   }
 
-  // Get the record from body
-  const { pasteId } = req.body;
-
   if (!req.session)
     return res.status(401).json({ message: 'User must be signed in.' });
+
+  // Validate schema
+  const { pasteId } = PasteDeleteSchema.parse(req.body);
 
   const {
     data: [paste]
@@ -41,8 +41,7 @@ const handler = async (
   console.log(data);
   console.log(error);
 
-  // Send back the responses.
   res.json({ data, error });
 };
 
-export default withSession(handler);
+export default withAuth(handler);

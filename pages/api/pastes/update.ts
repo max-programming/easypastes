@@ -1,13 +1,13 @@
-import { WithSessionProp, withSession } from '@clerk/nextjs/api';
+import { WithAuthProp, withAuth } from '@clerk/nextjs/api';
+import supabaseClient from 'lib/supabase';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import filterBadWords from 'utils/filterBadWords';
-import supabaseClient from 'utils/supabase';
 
 import { PasteType } from 'types';
 
 const handler = async (
-  req: WithSessionProp<NextApiRequest>,
+  req: WithAuthProp<NextApiRequest>,
   res: NextApiResponse
 ) => {
   // Allow only POST requests
@@ -60,8 +60,7 @@ const handler = async (
   console.log(data);
   console.log(error);
 
-  // Send back the responses.
   res.json({ data, error });
 };
 
-export default withSession(handler);
+export default withAuth(handler);

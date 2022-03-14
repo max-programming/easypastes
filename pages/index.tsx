@@ -26,6 +26,7 @@ import {
 import { SignedIn, SignedOut, useAuth } from '@clerk/nextjs';
 import axios from 'axios';
 import { BaseEmoji, Picker } from 'emoji-mart';
+import supabaseClient from 'lib/supabase';
 import { Dispatch, SetStateAction, useState } from 'react';
 import toast from 'react-hot-toast';
 import { FiAlertCircle, FiArrowRight } from 'react-icons/fi';
@@ -44,7 +45,6 @@ import Visibility from 'components/Others/Visibility';
 import fetcher from 'utils/fetcher';
 import filterBadWords from 'utils/filterBadWords';
 import { generateNanoid } from 'utils/generateId';
-import supabaseClient from 'utils/supabase';
 
 import { ILanguage, PasteType } from 'types';
 

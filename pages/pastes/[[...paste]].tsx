@@ -27,6 +27,7 @@ import { withServerSideAuth } from '@clerk/nextjs/ssr';
 import { UserResource } from '@clerk/types';
 import bcrypt from 'bcryptjs';
 import { motion } from 'framer-motion';
+import supabaseClient from 'lib/supabase';
 import { NextSeo } from 'next-seo';
 import { FormEventHandler, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -36,7 +37,6 @@ import DisplayCode from 'components/Code/DisplayCode';
 import Layout from 'components/Layout';
 
 import reduceTitleLength from 'utils/reduceTitleLength';
-import supabaseClient from 'utils/supabase';
 
 import { PasteType, User } from 'types';
 
