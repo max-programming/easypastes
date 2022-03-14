@@ -24,10 +24,10 @@ import {
   Tooltip
 } from '@chakra-ui/react';
 import { HiOutlineKey, HiOutlineUser, HiOutlineCode } from 'react-icons/hi';
-import { GetServerSideProps } from 'next';
 import { PasteType, User } from 'types';
 import { SignedIn, SignedOut, useSession } from '@clerk/nextjs';
 import { withServerSideAuth } from '@clerk/nextjs/ssr';
+import { users } from '@clerk/nextjs/api';
 import { motion } from 'framer-motion';
 import { UserResource } from '@clerk/types';
 import Link from 'next/link';
@@ -138,6 +138,14 @@ export const getServerSideProps = withServerSideAuth(
         }
       };
     }
+    return {
+      props: {
+        paste: currentPaste,
+        currentUser: JSON.parse(
+          JSON.stringify(await users.getUser(currentPaste.userId))
+        )
+      }
+    };
   },
   { loadUser: true }
 );
