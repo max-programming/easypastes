@@ -1,14 +1,12 @@
-import { withAuth, WithAuthProp } from '@clerk/nextjs/api';
-
+import { WithAuthProp, withAuth } from '@clerk/nextjs/api';
+import bcrypt from 'bcryptjs';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import bcrypt from 'bcryptjs';
+import filterBadWords from 'utils/filterBadWords';
+import { generateNanoid } from 'utils/generateId';
+import supabaseClient from 'utils/supabase';
 
 import { PasteType } from 'types';
-
-import supabaseClient from 'utils/supabase';
-import { generateNanoid } from 'utils/generateId';
-import filterBadWords from 'utils/filterBadWords';
 
 // Variables
 const salt = bcrypt.genSaltSync(10);

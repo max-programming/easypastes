@@ -1,28 +1,32 @@
+import Link from 'next/link';
+
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  UseDisclosureProps,
-  Text,
+  Box,
   Center,
   Divider,
-  Box,
   IconButton,
-  useMediaQuery,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  Text,
+  Tooltip,
+  UseDisclosureProps,
   useColorModeValue,
-  Tooltip
+  useMediaQuery
 } from '@chakra-ui/react';
+import { HiExternalLink } from 'react-icons/hi';
 import ClipLoader from 'react-spinners/ClipLoader';
 import useSWR from 'swr';
-import { PasteType } from 'types';
+
 import formatTimeAgo from 'utils/formatTimeAgo';
-import DisplayCode from './DisplayCode';
 import supabaseClient from 'utils/supabase';
-import Link from 'next/link';
-import { HiExternalLink } from 'react-icons/hi';
+
+import { PasteType } from 'types';
+
+import DisplayCode from './DisplayCode';
 
 const fetchPaste = async (key: string): Promise<PasteType> => {
   const { data, error } = await supabaseClient

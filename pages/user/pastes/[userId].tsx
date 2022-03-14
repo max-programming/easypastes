@@ -1,34 +1,38 @@
+import Link from 'next/link';
+
 import {
-  Container,
-  Heading,
-  Tabs,
-  TabList,
-  TabPanels,
-  Tab,
-  TabPanel,
   Alert,
   CloseButton,
+  Container,
+  Heading,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
   Text,
   useMediaQuery
 } from '@chakra-ui/react';
-import {
-  HiOutlineViewList,
-  HiOutlineEye,
-  HiOutlineLockClosed,
-  HiOutlineLink
-} from 'react-icons/hi';
-import Layout from 'components/Layout';
-import { GetServerSideProps } from 'next';
-import { PasteType, User } from 'types';
-import Paste from 'components/CodePastes/Paste';
-import supabaseClient from 'utils/supabase';
 import { SignedOut, WithUser } from '@clerk/nextjs';
 import axios from 'axios';
-import useLocalStorage from 'use-local-storage';
-import Link from 'next/link';
-import NoPastes from 'components/CodePastes/NoPastes';
+import { GetServerSideProps } from 'next';
 import { NextSeo } from 'next-seo';
+import {
+  HiOutlineEye,
+  HiOutlineLink,
+  HiOutlineLockClosed,
+  HiOutlineViewList
+} from 'react-icons/hi';
+import useLocalStorage from 'use-local-storage';
+
+import NoPastes from 'components/CodePastes/NoPastes';
+import Paste from 'components/CodePastes/Paste';
+import Layout from 'components/Layout';
+
 import reduceTitleLength from 'utils/reduceTitleLength';
+import supabaseClient from 'utils/supabase';
+
+import { PasteType, User } from 'types';
 
 const links = [
   {

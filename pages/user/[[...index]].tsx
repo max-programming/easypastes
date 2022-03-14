@@ -1,7 +1,8 @@
-import { UserProfile } from '@clerk/nextjs';
 import { Container } from '@chakra-ui/layout';
-import Layout from 'components/Layout';
+import { UserProfile } from '@clerk/nextjs';
 import { NextSeo } from 'next-seo';
+
+import Layout from 'components/Layout';
 
 export default function UserProfilePage() {
   return (

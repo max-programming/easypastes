@@ -1,50 +1,53 @@
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+
 import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Alert,
+  Box,
   Button,
+  CloseButton,
   Container,
-  Input,
   Flex,
+  IconButton,
+  Input,
   InputGroup,
   InputLeftAddon,
-  Box,
-  Alert,
-  CloseButton,
-  useMediaQuery,
-  useDisclosure,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
-  Textarea,
   InputRightElement,
-  IconButton,
-  Tooltip
+  Textarea,
+  Tooltip,
+  useDisclosure,
+  useMediaQuery
 } from '@chakra-ui/react';
-import { useRouter } from 'next/router';
-import { Dispatch, SetStateAction, useState } from 'react';
-import { FiAlertCircle, FiArrowRight } from 'react-icons/fi';
-import { BaseEmoji, Picker } from 'emoji-mart';
-import { ILanguage, PasteType } from 'types';
+import { SignedIn, SignedOut, useAuth } from '@clerk/nextjs';
 import axios from 'axios';
-
-// Components imports
-import InputCode from 'components/CodePastes/InputCode';
-import SelectLanguage from 'components/CodePastes/SelectLanguage';
-import PublicPastes from 'components/CodePastes/PublicPastes';
-import Visibility from 'components/CodePastes/Visibility';
-import Layout from 'components/Layout';
+import { BaseEmoji, Picker } from 'emoji-mart';
+import { Dispatch, SetStateAction, useState } from 'react';
+import toast from 'react-hot-toast';
+import { FiAlertCircle, FiArrowRight } from 'react-icons/fi';
+import { HiOutlineEmojiHappy, HiOutlineLockClosed } from 'react-icons/hi';
 import useSWR from 'swr';
 import useLocalStorage from 'use-local-storage';
-import { SignedIn, SignedOut, useAuth } from '@clerk/nextjs';
-import Link from 'next/link';
-import { HiOutlineEmojiHappy, HiOutlineLockClosed } from 'react-icons/hi';
-import PasswordModal from 'components/CodePastes/PasswordModal';
-import fetcher from 'utils/fetcher';
+
 import EmojiInput from 'components/CodePastes/EmojiInput';
-import toast from 'react-hot-toast';
-import supabaseClient from 'utils/supabase';
+// Components imports
+import InputCode from 'components/CodePastes/InputCode';
+import PasswordModal from 'components/CodePastes/PasswordModal';
+import PublicPastes from 'components/CodePastes/PublicPastes';
+import SelectLanguage from 'components/CodePastes/SelectLanguage';
+import Visibility from 'components/CodePastes/Visibility';
+import Layout from 'components/Layout';
+
+import fetcher from 'utils/fetcher';
 import filterBadWords from 'utils/filterBadWords';
 import { generateNanoid } from 'utils/generateId';
+import supabaseClient from 'utils/supabase';
+
+import { ILanguage, PasteType } from 'types';
 
 // Main pastes component
 const Pastes = () => {

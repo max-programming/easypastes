@@ -1,7 +1,8 @@
-import { SignUp } from '@clerk/nextjs';
 import { Container } from '@chakra-ui/layout';
-import Layout from 'components/Layout';
+import { SignUp } from '@clerk/nextjs';
 import { NextSeo } from 'next-seo';
+
+import Layout from 'components/Layout';
 
 export default function SignUpPage() {
   return (

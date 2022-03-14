@@ -1,41 +1,44 @@
 /* eslint-disable react/no-children-prop */
 // Own imports
-import Layout from 'components/Layout';
-import DisplayCode from 'components/CodePastes/DisplayCode';
-import supabaseClient from 'utils/supabase';
+import Link from 'next/link';
 
 // Other imports
 import {
   Alert,
   AlertProps,
   Avatar,
+  Button,
+  Center,
   Container,
+  Flex,
   Heading,
   Input,
   InputGroup,
   InputLeftElement,
   InputRightElement,
-  Button,
-  Flex,
   Tag,
-  TagLeftIcon,
   TagLabel,
-  Center,
+  TagLeftIcon,
   Tooltip
 } from '@chakra-ui/react';
-import { HiOutlineKey, HiOutlineUser, HiOutlineCode } from 'react-icons/hi';
-import { PasteType, User } from 'types';
 import { SignedIn, SignedOut, useSession } from '@clerk/nextjs';
-import { withServerSideAuth } from '@clerk/nextjs/ssr';
 import { users } from '@clerk/nextjs/api';
-import { motion } from 'framer-motion';
+import { withServerSideAuth } from '@clerk/nextjs/ssr';
 import { UserResource } from '@clerk/types';
-import Link from 'next/link';
-import { useState, FormEventHandler, useEffect } from 'react';
-import { NextSeo } from 'next-seo';
 import bcrypt from 'bcryptjs';
+import { motion } from 'framer-motion';
+import { NextSeo } from 'next-seo';
+import { FormEventHandler, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { HiOutlineCode, HiOutlineKey, HiOutlineUser } from 'react-icons/hi';
+
+import DisplayCode from 'components/CodePastes/DisplayCode';
+import Layout from 'components/Layout';
+
 import reduceTitleLength from 'utils/reduceTitleLength';
+import supabaseClient from 'utils/supabase';
+
+import { PasteType, User } from 'types';
 
 // Custom types
 interface Props {

@@ -1,4 +1,5 @@
 import { Input, InputProps } from '@chakra-ui/react';
+import { BaseEmoji, emojiIndex } from 'emoji-mart';
 import {
   ChangeEventHandler,
   Dispatch,
@@ -7,7 +8,7 @@ import {
   SetStateAction,
   useState
 } from 'react';
-import { BaseEmoji, emojiIndex } from 'emoji-mart';
+
 import EmojiAutocomplete from './EmojiAutocomplete';
 
 interface Props {

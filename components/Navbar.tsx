@@ -1,26 +1,28 @@
 // Thanks to https://chakra-templates.dev/ for this 💗
+import Image from 'next/image';
+import NextLink from 'next/link';
+import { useRouter } from 'next/router';
+
 import {
   Box,
-  Flex,
-  Text,
-  IconButton,
   Button,
-  Stack,
-  Link,
   Collapse,
+  Flex,
+  IconButton,
+  Link,
   Popover,
   PopoverTrigger,
-  useColorModeValue,
+  Stack,
+  Text,
   useBreakpointValue,
+  useColorModeValue,
   useDisclosure
 } from '@chakra-ui/react';
 import { SignedIn, SignedOut, UserButton, WithUser } from '@clerk/nextjs';
-import NextLink from 'next/link';
-import { useRouter } from 'next/router';
-import { HiMenu, HiX } from 'react-icons/hi';
-import Image from 'next/image';
-import { SocialButton } from './Footer';
 import { FaGithub, FaReadme } from 'react-icons/fa';
+import { HiMenu, HiX } from 'react-icons/hi';
+
+import { SocialButton } from './Footer';
 
 export default function WithSubnavigation() {
   const router = useRouter();

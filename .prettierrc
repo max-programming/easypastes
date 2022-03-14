@@ -1,9 +1,21 @@
 {
-	"trailingComma": "none",
-	"arrowParens": "avoid",
-	"singleQuote": true,
-	"printWidth": 80,
-	"useTabs": false,
-	"tabWidth": 2,
-	"semi": true
+  "trailingComma": "none",
+  "arrowParens": "avoid",
+  "singleQuote": true,
+  "printWidth": 80,
+  "useTabs": false,
+  "tabWidth": 2,
+  "semi": true,
+  "endOfLine": "lf",
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "importOrder": [
+    "^react/(.*)$",
+    "^next/(.*)$",
+    "<THIRD_PARTY_MODULES>",
+    "^components",
+    "^utils",
+    "^types",
+    "^[./]"
+  ]
 }

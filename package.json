@@ -42,6 +42,7 @@
     "use-local-storage": "^2.2.4"
   },
   "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^3.2.0",
     "@types/bad-words": "^3.0.1",
     "@types/bcryptjs": "^2.4.2",
     "@types/diff": "^5.0.1",

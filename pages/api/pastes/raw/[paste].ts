@@ -1,7 +1,9 @@
+import { WithSessionProp, withSession } from '@clerk/nextjs/api';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { PasteType } from 'types';
+
 import supabaseClient from 'utils/supabase';
-import { withSession, WithSessionProp } from '@clerk/nextjs/api';
+
+import { PasteType } from 'types';
 
 async function handler(
   req: WithSessionProp<NextApiRequest>,
