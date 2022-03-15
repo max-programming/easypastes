@@ -27,26 +27,13 @@ import useLocalStorage from 'use-local-storage';
 
 import supabaseClient from 'lib/supabase';
 
-import Paste from 'components/CodePastes/Paste';
 import Layout from 'components/Layout';
 import NoPastes from 'components/Pastes/NoPastes';
+import Paste from 'components/Pastes/Paste';
 
 import reduceTitleLength from 'utils/reduceTitleLength';
 
 import { PasteType, User } from 'types';
-
-components / Pastes / Paste;
-
-const links = [
-  {
-    url: '/',
-    text: 'Home'
-  },
-  {
-    url: '/pastes',
-    text: 'Pastes'
-  }
-];
 
 interface Props {
   pastes: (PasteType & {
