@@ -1,3 +1,5 @@
+export const URL = process.env.PRODUCTION_URL || 'localhost:3000';
+
 export const languages = [
   'aspnet',
   'php',

@@ -1,8 +1,6 @@
 /* eslint-disable react/no-children-prop */
-// Own imports
 import Link from 'next/link';
 
-// Other imports
 import {
   Alert,
   AlertProps,
@@ -41,7 +39,6 @@ import reduceTitleLength from 'utils/reduceTitleLength';
 
 import { PasteType } from 'types';
 
-// Custom types
 interface Props {
   paste: PasteType & { longTitle: string };
   currentUser: 'Anonymous' | UserResource;
