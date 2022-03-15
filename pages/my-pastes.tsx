@@ -55,9 +55,11 @@ interface Props {
 
 function MyPastes({ allPastes, user }: Props) {
   const [showAlert, setShowAlert] = useLocalStorage('username-alert', false);
+
   const [matches] = useMediaQuery('(max-width: 768px)');
-  // const user = useUser();
+
   const pastes = allPastes.filter(paste => paste.userId === user.id);
+
   return (
     <WithUser>
       {user => (
