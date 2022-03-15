@@ -49,7 +49,9 @@ import { generateNanoid } from 'utils/generateId';
 import { ILanguage, PasteType } from 'types';
 
 // Load the public pastes dynamically
-const PublicPastesDynamic = dynamic(() => import('sections/Public/PublicPastes'));
+const PublicPastesDynamic = dynamic(
+  () => import('sections/Public/PublicPastes')
+);
 
 const Pastes = () => {
   // States

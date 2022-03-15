@@ -7,3 +7,6 @@ npm run format
 
 # Lint the codebase
 npm run lint
+
+# Add changes
+git add .
