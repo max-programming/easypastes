@@ -1,7 +1,8 @@
 import { WithAuthProp, withAuth } from '@clerk/nextjs/api';
 import bcrypt from 'bcryptjs';
-import supabaseClient from 'lib/supabase';
 import { NextApiRequest, NextApiResponse } from 'next';
+
+import supabaseClient from 'lib/supabase';
 
 import filterBadWords from 'utils/filterBadWords';
 import { generateNanoid } from 'utils/generateId';

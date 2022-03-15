@@ -1,5 +1,6 @@
-import supabaseClient from 'lib/supabase';
 import { NextApiRequest, NextApiResponse } from 'next';
+
+import supabaseClient from 'lib/supabase';
 
 import { PasteType } from 'types';
 

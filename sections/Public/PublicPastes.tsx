@@ -46,7 +46,7 @@ const PublicPastes = ({ publicPastes }: Props) => {
               {paste.title ? (
                 <Link as={NextLink} href={`/pastes/${paste.pasteId}`} passHref>
                   <Text as="a" _selection={{ backgroundColor: 'purple.700' }}>
-                    {paste.title} -{' '}
+                    {paste.title} •{' '}
                     <Tag variant="solid" colorScheme="purple">
                       {paste.language} | {formatTimeAgo(paste.createdAt)}
                     </Tag>

@@ -8,12 +8,13 @@ import {
   SignedOut
 } from '@clerk/nextjs';
 import { motion } from 'framer-motion';
-import theme from 'lib/theme';
 import { DefaultSeo } from 'next-seo';
 import SEO from 'next-seo.config';
 import NextNProgress from 'nextjs-progressbar';
 import { useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
+
+import theme from 'lib/theme';
 
 import importLangs from 'utils/importLangs';
 

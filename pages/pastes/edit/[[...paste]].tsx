@@ -14,10 +14,11 @@ import {
 import { SignedIn, SignedOut, WithUser, useUser } from '@clerk/nextjs';
 import axios from 'axios';
 import { motion } from 'framer-motion';
-import supabaseClient from 'lib/supabase';
 import { GetServerSideProps } from 'next';
 import { useState } from 'react';
 import { FiArrowRight } from 'react-icons/fi';
+
+import supabaseClient from 'lib/supabase';
 
 import InputCode from 'components/Code/InputCode';
 import Layout from 'components/Layout';

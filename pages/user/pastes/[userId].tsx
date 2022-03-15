@@ -15,7 +15,6 @@ import {
 } from '@chakra-ui/react';
 import { SignedOut, WithUser } from '@clerk/nextjs';
 import axios from 'axios';
-import supabaseClient from 'lib/supabase';
 import { GetServerSideProps } from 'next';
 import { NextSeo } from 'next-seo';
 import {
@@ -25,6 +24,8 @@ import {
   HiOutlineViewList
 } from 'react-icons/hi';
 import useLocalStorage from 'use-local-storage';
+
+import supabaseClient from 'lib/supabase';
 
 import Paste from 'components/CodePastes/Paste';
 import Layout from 'components/Layout';

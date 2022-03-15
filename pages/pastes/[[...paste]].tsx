@@ -27,18 +27,19 @@ import { withServerSideAuth } from '@clerk/nextjs/ssr';
 import { UserResource } from '@clerk/types';
 import bcrypt from 'bcryptjs';
 import { motion } from 'framer-motion';
-import supabaseClient from 'lib/supabase';
 import { NextSeo } from 'next-seo';
-import { FormEventHandler, useEffect, useState } from 'react';
+import { FormEventHandler, useState } from 'react';
 import toast from 'react-hot-toast';
 import { HiOutlineCode, HiOutlineKey, HiOutlineUser } from 'react-icons/hi';
+
+import supabaseClient from 'lib/supabase';
 
 import DisplayCode from 'components/Code/DisplayCode';
 import Layout from 'components/Layout';
 
 import reduceTitleLength from 'utils/reduceTitleLength';
 
-import { PasteType, User } from 'types';
+import { PasteType } from 'types';
 
 // Custom types
 interface Props {
@@ -202,8 +203,8 @@ const EnterPassword = ({
 
   const togglePassword = () => setShow(!show);
 
-  const handleSubmit: FormEventHandler = e => {
-    e.preventDefault();
+  const handleSubmit: FormEventHandler = ev => {
+    ev.preventDefault();
 
     const matches = bcrypt.compareSync(password, pastePwd);
 
@@ -263,7 +264,6 @@ export const getServerSideProps = withServerSideAuth(
     }
 
     const currentPaste = reduceTitleLength(pastes[0]);
-
     console.log({ currentPaste });
 
     if (!currentPaste.userId) {

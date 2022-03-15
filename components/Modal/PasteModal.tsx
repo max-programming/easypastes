@@ -17,10 +17,11 @@ import {
   useColorModeValue,
   useMediaQuery
 } from '@chakra-ui/react';
-import supabaseClient from 'lib/supabase';
 import { HiExternalLink } from 'react-icons/hi';
 import ClipLoader from 'react-spinners/ClipLoader';
 import useSWR from 'swr';
+
+import supabaseClient from 'lib/supabase';
 
 import formatTimeAgo from 'utils/formatTimeAgo';
 

@@ -13,6 +13,8 @@
     "^react/(.*)$",
     "^next/(.*)$",
     "<THIRD_PARTY_MODULES>",
+    "^lib",
+    "^sections",
     "^components",
     "^utils",
     "^types",

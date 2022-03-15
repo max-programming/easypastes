@@ -1,3 +1,4 @@
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -24,16 +25,15 @@ import {
   useMediaQuery
 } from '@chakra-ui/react';
 import { SignedIn, SignedOut, useAuth } from '@clerk/nextjs';
-import axios from 'axios';
 import { BaseEmoji, Picker } from 'emoji-mart';
-import supabaseClient from 'lib/supabase';
 import { Dispatch, SetStateAction, useState } from 'react';
 import toast from 'react-hot-toast';
 import { FiAlertCircle, FiArrowRight } from 'react-icons/fi';
 import { HiOutlineEmojiHappy, HiOutlineLockClosed } from 'react-icons/hi';
-import PublicPastes from 'sections/Public/PublicPastes';
 import useSWR from 'swr';
 import useLocalStorage from 'use-local-storage';
+
+import supabaseClient from 'lib/supabase';
 
 import InputCode from 'components/Code/InputCode';
 import EmojiInput from 'components/Emoji/EmojiInput';
@@ -48,7 +48,9 @@ import { generateNanoid } from 'utils/generateId';
 
 import { ILanguage, PasteType } from 'types';
 
-// Main pastes component
+// Load the public pastes dynamically
+const PublicPastesDynamic = dynamic(() => import('sections/Public/PublicPastes'));
+
 const Pastes = () => {
   // States
   const [code, setCode] = useState('');
@@ -229,7 +231,7 @@ const Pastes = () => {
           {error ? (
             <h2>{error}</h2>
           ) : (
-            <PublicPastes publicPastes={data && data.pastes} />
+            <PublicPastesDynamic publicPastes={data && data.pastes} />
           )}
         </Container>
       </Layout>

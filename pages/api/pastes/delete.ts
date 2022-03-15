@@ -1,7 +1,8 @@
 import { WithAuthProp, withAuth } from '@clerk/nextjs/api';
-import supabaseClient from 'lib/supabase';
 import { NextApiRequest, NextApiResponse } from 'next';
 import PasteDeleteSchema from 'schema/pastes/delete';
+
+import supabaseClient from 'lib/supabase';
 
 import { PasteType } from 'types';
 

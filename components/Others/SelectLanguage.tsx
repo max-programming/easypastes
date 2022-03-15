@@ -11,10 +11,11 @@ interface Props {
 }
 
 const SelectLanguage = ({ language, setLanguage }: Props) => {
-  const handleChange: ChangeEventHandler<HTMLSelectElement> = e => {
+  const handleChange: ChangeEventHandler<HTMLSelectElement> = ev => {
     // @ts-ignore
-    setLanguage(e.target.value);
+    setLanguage(ev.target.value);
   };
+
   return (
     <Box mb="4">
       <label htmlFor="select-language">Select a language</label>
