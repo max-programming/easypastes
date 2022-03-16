@@ -23,7 +23,13 @@ import '@fontsource/poppins/400.css';
 import 'emoji-mart/css/emoji-mart.css';
 import 'styles/globals.css';
 
-const publicPages = ['/', '/pastes/[[...paste]]', '/user/pastes/[userId].tsx'];
+const publicPages = [
+  '/',
+  '/sign-in/[[...index]]',
+  '/sign-up/[[...index]]',
+  '/pastes/[[...paste]]',
+  '/user/pastes/[userId].tsx'
+];
 
 const MotionBox = motion<BoxProps>(Box);
 
