@@ -266,10 +266,13 @@ const SignedInButton = ({
   password,
   setIsUrlTaken
 }: ButtonProps) => {
-  // const session = useSession();
   const router = useRouter();
+
   const { getToken, userId } = useAuth();
+
   const [loading, setLoading] = useState(false);
+
+  // const session = useSession();
   // const sessionId = session?.id;
 
   const handleClick = async () => {
@@ -283,8 +286,10 @@ const SignedInButton = ({
 
     try {
       setLoading(true);
+
       const token = await getToken({ template: 'supabase' });
       supabaseClient.auth.setAuth(token);
+
       let { data, error } = await supabaseClient
         .from<PasteType>('Pastes')
         .insert([
