@@ -281,6 +281,7 @@ export const getServerSideProps = withServerSideAuth(
 
     // Check if the current user is the paste owner
     const { userId } = context.auth;
+
     if (currentPaste.userId === userId) {
       return {
         props: {

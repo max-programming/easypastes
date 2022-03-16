@@ -1,3 +1,4 @@
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 
 import {
@@ -34,6 +35,9 @@ import Paste from 'components/Pastes/Paste';
 import reduceTitleLength from 'utils/reduceTitleLength';
 
 import { PasteType } from 'types';
+
+// Dynamic imports
+const NoPastesDynamic = dynamic(() => import('components/Pastes/NoPastes'));
 
 interface Props {
   allPastes: (PasteType & {
@@ -85,7 +89,7 @@ function MyPastes({ allPastes, user }: Props) {
               Pastes by {`${user.firstName} ${user.lastName}`}
             </Heading>
             {pastes.length === 0 ? (
-              <NoPastes />
+              <NoPastesDynamic />
             ) : (
               <Tabs
                 isFitted
@@ -139,7 +143,7 @@ function MyPastes({ allPastes, user }: Props) {
                   </TabPanel>
                   <TabPanel>
                     {pastes.filter(p => p.public).length === 0 ? (
-                      <NoPastes />
+                      <NoPastesDynamic />
                     ) : (
                       pastes
                         .filter(p => p.public)
@@ -148,7 +152,7 @@ function MyPastes({ allPastes, user }: Props) {
                   </TabPanel>
                   <TabPanel>
                     {pastes.filter(p => p.private).length === 0 ? (
-                      <NoPastes />
+                      <NoPastesDynamic />
                     ) : (
                       pastes
                         .filter(p => p.private)
@@ -158,7 +162,7 @@ function MyPastes({ allPastes, user }: Props) {
                   <TabPanel>
                     {pastes.filter(p => !p.private && !p.public).length ===
                     0 ? (
-                      <NoPastes />
+                      <NoPastesDynamic />
                     ) : (
                       pastes
                         .filter(p => !p.private && !p.public)

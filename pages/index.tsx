@@ -38,7 +38,6 @@ import supabaseClient from 'lib/supabase';
 import InputCode from 'components/Code/InputCode';
 import EmojiInput from 'components/Emoji/EmojiInput';
 import Layout from 'components/Layout';
-import PasswordModal from 'components/Modal/PasswordModal';
 import SelectLanguage from 'components/Others/SelectLanguage';
 import Visibility from 'components/Others/Visibility';
 
@@ -51,6 +50,10 @@ import { ILanguage, PasteType } from 'types';
 // Load the public pastes dynamically
 const PublicPastesDynamic = dynamic(
   () => import('sections/Public/PublicPastes')
+);
+
+const PasswordModalDynamic = dynamic(
+  () => import('components/Modal/PasswordModal')
 );
 
 const Pastes = () => {
@@ -212,7 +215,7 @@ const Pastes = () => {
             >
               Set password
             </Button>
-            <PasswordModal
+            <PasswordModalDynamic
               password={password}
               setPassword={setPassword}
               isOpen={isOpen}
