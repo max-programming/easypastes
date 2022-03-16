@@ -1,7 +1,6 @@
 // Thanks to https://chakra-templates.dev/ for this 💗
 import Image from 'next/image';
 import NextLink from 'next/link';
-import { useRouter } from 'next/router';
 
 import {
   Box,
@@ -25,7 +24,6 @@ import { HiMenu, HiX } from 'react-icons/hi';
 import { SocialButton } from './Footer';
 
 export default function WithSubnavigation() {
-  const router = useRouter();
   const { isOpen, onToggle } = useDisclosure();
 
   return (
@@ -140,8 +138,6 @@ export default function WithSubnavigation() {
 const DesktopNav = () => {
   const linkColor = useColorModeValue('gray.600', 'gray.200');
   const linkHoverColor = useColorModeValue('gray.800', 'white');
-  const popoverContentBgColor = useColorModeValue('white', 'gray.800');
-
   return (
     <Stack direction={'row'} spacing={4}>
       <WithUser>
@@ -181,21 +177,13 @@ const MobileNav = () => {
       fontFamily="Poppins"
     >
       <WithUser>
-        {user => (
-          <MobileNavItem
-            label="My Pastes"
-            href={`/my-pastes`}
-            // href={`/user/pastes/${!user.username ? user.id : user.username}`}
-          />
-        )}
+        {user => <MobileNavItem label="My Pastes" href={`/my-pastes`} />}
       </WithUser>
     </Stack>
   );
 };
 
 const MobileNavItem = ({ label, href }: NavItem) => {
-  const { isOpen } = useDisclosure();
-
   return (
     <Stack spacing={4}>
       <Flex
