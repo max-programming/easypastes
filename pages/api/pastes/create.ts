@@ -1,16 +1,13 @@
 import { WithAuthProp, withAuth } from '@clerk/nextjs/api';
-import bcrypt from 'bcryptjs';
 import { NextApiRequest, NextApiResponse } from 'next';
 
+import { hash } from 'lib/hashing';
 import supabaseClient from 'lib/supabase';
 
 import filterBadWords from 'utils/filterBadWords';
 import { generateNanoid } from 'utils/generateId';
 
 import { PasteType } from 'types';
-
-// Variables
-const salt = bcrypt.genSaltSync(10);
 
 const handler = async (
   req: WithAuthProp<NextApiRequest>,
@@ -101,7 +98,7 @@ const handler = async (
   }
 
   if (hasPassword) {
-    pastePassword = bcrypt.hashSync(pastePassword, salt);
+    pastePassword = hash(pastePassword);
   }
 
   // Add them to supabase

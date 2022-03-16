@@ -23,13 +23,13 @@ import { SignedIn, SignedOut, useSession } from '@clerk/nextjs';
 import { users } from '@clerk/nextjs/api';
 import { withServerSideAuth } from '@clerk/nextjs/ssr';
 import { UserResource } from '@clerk/types';
-import bcrypt from 'bcryptjs';
 import { motion } from 'framer-motion';
 import { NextSeo } from 'next-seo';
 import { FormEventHandler, useState } from 'react';
 import toast from 'react-hot-toast';
 import { HiOutlineCode, HiOutlineKey, HiOutlineUser } from 'react-icons/hi';
 
+import { verifyHash } from 'lib/hashing';
 import supabaseClient from 'lib/supabase';
 
 import DisplayCode from 'components/Code/DisplayCode';
@@ -203,7 +203,7 @@ const EnterPassword = ({
   const handleSubmit: FormEventHandler = ev => {
     ev.preventDefault();
 
-    const matches = bcrypt.compareSync(password, pastePwd);
+    const matches = verifyHash(password, pastePwd);
 
     if (matches) setIsCorrectPassword(true);
     else {

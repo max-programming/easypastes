@@ -1,5 +1,9 @@
 export const URL = process.env.PRODUCTION_URL || 'localhost:3000';
 
+// Hashing rounds
+export const HASH_ROUNDS = 12;
+
+// Paste languages
 export const languages = [
   'aspnet',
   'php',
