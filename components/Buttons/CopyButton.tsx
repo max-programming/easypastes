@@ -1,5 +1,4 @@
 import { Box, IconButton, Tooltip } from '@chakra-ui/react';
-import { useState } from 'react';
 import { FiCopy } from 'react-icons/fi';
 
 interface Props {

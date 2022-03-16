@@ -33,18 +33,7 @@ import Paste from 'components/Pastes/Paste';
 
 import reduceTitleLength from 'utils/reduceTitleLength';
 
-import { PasteType, User } from 'types';
-
-const links = [
-  {
-    url: '/',
-    text: 'Home'
-  },
-  {
-    url: '/pastes',
-    text: 'Pastes'
-  }
-];
+import { PasteType } from 'types';
 
 interface Props {
   allPastes: (PasteType & {
