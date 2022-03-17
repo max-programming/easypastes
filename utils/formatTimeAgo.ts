@@ -1,12 +1,6 @@
 import { zonedTimeToUtc } from 'date-fns-tz';
-import TimeAgo from 'javascript-time-ago';
-import en from 'javascript-time-ago/locale/en.json';
+import { format } from 'timeago.js';
 
-TimeAgo.addLocale(en);
+const formatTimeAgo = (time: string) => format(zonedTimeToUtc(time, 'gmt'));
 
-export default function formatTimeAgo(
-  time: string
-): string | [string, number?] {
-  const timeAgo = new TimeAgo('en-US');
-  return timeAgo.format(zonedTimeToUtc(time, 'gmt'));
-}
+export default formatTimeAgo;
