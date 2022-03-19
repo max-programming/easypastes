@@ -1,11 +1,9 @@
-import bcrypt from 'bcryptjs';
+import bcrypt from '@node-rs/bcrypt';
 
 import { HASH_ROUNDS } from '../constants';
 
-const salt = bcrypt.genSaltSync(HASH_ROUNDS);
-
 export function hash(text: string): string {
-  return bcrypt.hashSync(text, salt);
+  return bcrypt.hashSync(text, HASH_ROUNDS);
 }
 
 export function verifyHash(text: string, hash: string): boolean {
