@@ -41,16 +41,16 @@
     "swr": "^1.2.2",
     "timeago.js": "^4.0.2",
     "use-local-storage": "^2.3.6",
-    "zod": "^3.13.4"
+    "zod": "^3.14.2"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^3.2.0",
     "@types/bad-words": "^3.0.1",
     "@types/diff": "^5.0.2",
     "@types/emoji-mart": "^3.0.9",
-    "@types/prismjs": "^1.16.6",
-    "@types/react": "^17.0.24",
-    "eslint": "7.32.0",
+    "@types/prismjs": "^1.26.0",
+    "@types/react": "^17.0.41",
+    "eslint": "8.11.0",
     "eslint-config-next": "^12.1.0",
     "husky": "^7.0.4",
     "prettier": "^2.6.0",
