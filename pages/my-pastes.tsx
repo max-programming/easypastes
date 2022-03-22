@@ -29,7 +29,6 @@ import useLocalStorage from 'use-local-storage';
 import supabaseClient from 'lib/supabase';
 
 import Layout from 'components/Layout';
-import NoPastes from 'components/Pastes/NoPastes';
 import Paste from 'components/Pastes/Paste';
 
 import reduceTitleLength from 'utils/reduceTitleLength';
