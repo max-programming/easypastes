@@ -1,6 +1,6 @@
 import type { NextApiResponse } from 'next';
 
-export default function restrictHttpMethods(
+export function restrictHttpMethods(
   currentMethod: string,
   allowedMethods: string[],
   res: NextApiResponse
