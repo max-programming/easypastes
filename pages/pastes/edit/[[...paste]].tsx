@@ -1,7 +1,5 @@
-// Own imports
 import { useRouter } from 'next/router';
 
-// Other imports
 import {
   Alert,
   AlertProps,
@@ -27,7 +25,6 @@ import Visibility from 'components/Others/Visibility';
 
 import { PasteType, User } from 'types';
 
-// Custom types
 interface Props {
   paste: PasteType;
 }
@@ -37,13 +34,16 @@ const MotionAlert = motion<AlertProps>(Alert);
 // Server side props override
 export const getServerSideProps: GetServerSideProps = async context => {
   let currentUser: string | User;
+
   // @ts-ignore
   const paste = context.params.paste.join('/');
+
   const { data: pastes, error } = await supabaseClient
     .from<PasteType>('Pastes')
     .select('*')
     // @ts-ignore
     .eq('pasteId', paste);
+
   if (error || pastes.length === 0) {
     return {
       notFound: true
@@ -85,7 +85,6 @@ const InfoAlert = () => (
 );
 
 const EditPaste = ({ paste }: { paste: PasteType }) => {
-  const user = useUser();
   const [title, setTitle] = useState(paste.title);
   const [code, setCode] = useState(paste.code);
   const [loading, setLoading] = useState(false);
@@ -93,10 +92,12 @@ const EditPaste = ({ paste }: { paste: PasteType }) => {
   const [visibility, setVisibility] = useState(
     paste.public ? 'public' : paste.private ? 'private' : 'unlisted'
   );
+
   const router = useRouter();
 
   const handleClick = async () => {
     setLoading(true);
+
     const {
       data: { data, error }
     } = await axios.post('/api/pastes/update', {
@@ -108,6 +109,7 @@ const EditPaste = ({ paste }: { paste: PasteType }) => {
       _public: visibility === 'public',
       _private: visibility === 'private'
     });
+
     if (!error) {
       await router.push(`/pastes/${paste.pasteId}`);
       setLoading(false);
@@ -143,7 +145,6 @@ const EditPaste = ({ paste }: { paste: PasteType }) => {
   );
 };
 
-// Paste component
 const Paste = ({ paste }: Props) => {
   return (
     <Layout>

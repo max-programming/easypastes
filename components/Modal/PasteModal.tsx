@@ -36,8 +36,8 @@ const fetchPaste = async (key: string): Promise<PasteType> => {
     .filter('pasteId', 'eq', key);
 
   if (error || !data) return;
-  const paste = data[0];
-  return paste;
+
+  return data[0];
 };
 
 const PasteModal = ({
@@ -45,9 +45,11 @@ const PasteModal = ({
   onClose,
   pasteId
 }: UseDisclosureProps & { pasteId: string }) => {
-  const [matches] = useMediaQuery('(max-width: 500px)');
-  const spinnerColor = useColorModeValue('black', 'white');
   const { data: paste } = useSWR(pasteId, fetchPaste);
+
+  const [matches] = useMediaQuery('(max-width: 500px)');
+
+  const spinnerColor = useColorModeValue('black', 'white');
 
   return (
     <Box mx="5">
