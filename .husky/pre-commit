@@ -2,11 +2,4 @@
 
 . "$(dirname "$0")/_/husky.sh"
 
-# Run formatting
-npm run format
-
-# Lint the codebase
-npm run lint
-
-# Add changes
-git add .
+npx lint-staged
