@@ -19,7 +19,7 @@ const handler = async (
     return;
   }
 
-  /// Get the records from body
+  // Get the records from body
   let {
     title,
     description,
@@ -33,7 +33,7 @@ const handler = async (
   } = req.body;
 
   let userId: string;
-  if (req.session) userId = req.session.userId;
+  if (req.auth) userId = req.auth.userId;
   console.log({ userId });
 
   if (code.trim() === '') {

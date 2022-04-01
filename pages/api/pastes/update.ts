@@ -21,7 +21,7 @@ const handler = async (
   let { code, language, title, description, pasteId, _public, _private } =
     req.body;
 
-  if (!req.session)
+  if (!req.auth)
     return res.status(400).json({ message: 'User must be signed in.' });
 
   if (code.trim() === '') {
@@ -34,7 +34,7 @@ const handler = async (
       .json({ message: 'Paste cannot be public and private.' });
   }
 
-  if (_private && !req.session.userId) {
+  if (_private && !req.auth.userId) {
     return res
       .status(400)
       .json({ message: 'Sign in to create a private paste.' });

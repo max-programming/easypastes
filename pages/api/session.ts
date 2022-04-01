@@ -5,7 +5,7 @@ async function handler(
   req: RequireAuthProp<NextApiRequest>,
   res: NextApiResponse
 ) {
-  res.json({ uid: req.session.userId });
+  res.json({ uid: req.auth.userId });
 }
 
 export default requireAuth(handler);

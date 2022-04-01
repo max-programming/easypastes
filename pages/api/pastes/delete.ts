@@ -16,7 +16,7 @@ const handler = async (
     return;
   }
 
-  if (!req.session)
+  if (!req.auth)
     return res.status(401).json({ message: 'User must be signed in.' });
 
   // Validate schema
@@ -29,7 +29,7 @@ const handler = async (
     .select('userId')
     .eq('pasteId', pasteId);
 
-  if (paste.userId !== req.session.userId)
+  if (paste.userId !== req.auth.userId)
     return res.status(401).json({ message: "You can't delete this paste." });
 
   // Delete from supabase

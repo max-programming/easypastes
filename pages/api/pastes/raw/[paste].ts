@@ -23,7 +23,7 @@ async function handler(
 
   // Handle private paste
   if (paste.private) {
-    if (!req.session || req.session.userId !== paste.userId)
+    if (!req.auth || req.auth.userId !== paste.userId)
       return res.status(401).send('Private Paste');
 
     res.send(paste.code);
