@@ -207,11 +207,7 @@ const EnterPassword = ({
 
     if (matches) setIsCorrectPassword(true);
     else {
-      toast.error('Incorrect password', {
-        style: {
-          fontFamily: 'Poppins'
-        }
-      });
+      toast.error('Incorrect password');
       setIsCorrectPassword(false);
     }
   };

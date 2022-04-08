@@ -52,7 +52,15 @@ const MyApp = ({ Component, pageProps, router }: AppProps) => {
               color={theme.colors.purple[500]}
               options={{ showSpinner: false }}
             />
-            <Toaster position="top-right" reverseOrder={false} />
+            <Toaster
+              position="top-right"
+              reverseOrder={false}
+              toastOptions={{
+                style: {
+                  fontFamily: 'Poppins'
+                }
+              }}
+            />
             {isPublicPage ? (
               <Component {...pageProps} />
             ) : (

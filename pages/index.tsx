@@ -272,16 +272,9 @@ const SignedInButton = ({
 
   const [loading, setLoading] = useState(false);
 
-  // const session = useSession();
-  // const sessionId = session?.id;
-
   const handleClick = async () => {
     if (code.trim() === '') {
-      return toast.error('Code cannot be blank.', {
-        style: {
-          fontFamily: 'Poppins'
-        }
-      });
+      return toast.error('Code cannot be blank.');
     }
 
     try {
@@ -355,11 +348,7 @@ const SignedOutButton = ({
   const [loading, setLoading] = useState(false);
   const handleClick = async () => {
     if (code.trim() === '') {
-      return toast.error('Code cannot be blank.', {
-        style: {
-          fontFamily: 'Poppins'
-        }
-      });
+      return toast.error('Code cannot be blank.');
     }
     try {
       setLoading(true);
