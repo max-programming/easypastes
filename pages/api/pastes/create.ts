@@ -25,7 +25,6 @@ const handler = async (
     description,
     code,
     language,
-    // userId,
     pasteId,
     pastePassword,
     _public,

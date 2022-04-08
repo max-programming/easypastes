@@ -20,7 +20,7 @@ const handler = async (
     return res.status(401).json({ message: 'User must be signed in.' });
 
   // Validate schema
-  const { pasteId } = PasteDeleteSchema.parse(req.body);
+  const { pasteId } = await PasteDeleteSchema.parseAsync(req.body);
 
   const {
     data: [paste]
