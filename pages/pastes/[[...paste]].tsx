@@ -245,8 +245,8 @@ const EnterPassword = ({
 };
 
 export const getServerSideProps = withServerSideAuth(
-  async context => {
-    const paste = (context.params.paste as string[]).join('/');
+  async ({ req, params }) => {
+    const paste = (params.paste as string[]).join('/');
     const { data: pastes, error } = await supabaseClient
       .from<PasteType>('Pastes')
       .select('*')
@@ -280,13 +280,13 @@ export const getServerSideProps = withServerSideAuth(
     console.log({ currentUser });
 
     // Check if the current user is the paste owner
-    const { userId } = context.auth;
+    const { userId } = req.auth;
 
     if (currentPaste.userId === userId) {
       return {
         props: {
           paste: currentPaste,
-          currentUser: JSON.parse(JSON.stringify(context.user))
+          currentUser: JSON.parse(JSON.stringify(req.user))
         }
       };
     }
