@@ -1,6 +1,5 @@
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 import {
   Accordion,
@@ -10,7 +9,6 @@ import {
   AccordionPanel,
   Alert,
   Box,
-  Button,
   CloseButton,
   Container,
   Flex,
@@ -21,19 +19,19 @@ import {
   InputRightElement,
   Textarea,
   Tooltip,
-  useDisclosure,
   useMediaQuery
 } from '@chakra-ui/react';
-import { SignedIn, SignedOut, useAuth } from '@clerk/nextjs';
+import { SignedIn, SignedOut } from '@clerk/nextjs';
 import { BaseEmoji, Picker } from 'emoji-mart';
-import { Dispatch, SetStateAction, useState } from 'react';
-import toast from 'react-hot-toast';
-import { FiAlertCircle, FiArrowRight } from 'react-icons/fi';
-import { HiOutlineEmojiHappy, HiOutlineLockClosed } from 'react-icons/hi';
+import { useState } from 'react';
+import { FiAlertCircle } from 'react-icons/fi';
+import { HiOutlineEmojiHappy } from 'react-icons/hi';
 import useSWR from 'swr';
 import useLocalStorage from 'use-local-storage';
 
-import supabaseClient from 'lib/supabase';
+import PasteSettings from 'sections/Home/PasteSettings';
+import SignedInHome from 'sections/Home/SignedInHome';
+import SignedOutHome from 'sections/Home/SignedOutHome';
 
 import InputCode from 'components/Code/InputCode';
 import EmojiInput from 'components/Emoji/EmojiInput';
@@ -42,18 +40,12 @@ import SelectLanguage from 'components/Others/SelectLanguage';
 import Visibility from 'components/Others/Visibility';
 
 import fetcher from 'utils/fetcher';
-import filterBadWords from 'utils/filterBadWords';
-import { generateNanoid } from 'utils/generateId';
 
-import { ILanguage, PasteType } from 'types';
+import { ILanguage } from 'types';
 
 // Load the public pastes dynamically
 const PublicPastesDynamic = dynamic(
   () => import('sections/Public/PublicPastes')
-);
-
-const PasswordModalDynamic = dynamic(
-  () => import('components/Modal/PasswordModal')
 );
 
 const Pastes = () => {
@@ -79,9 +71,6 @@ const Pastes = () => {
     'language',
     'none'
   );
-
-  // Modal
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const addEmoji = (emoji: BaseEmoji) => {
     setTitle(prevTitle => `${prevTitle}${emoji.native}`);
@@ -158,79 +147,37 @@ const Pastes = () => {
             </AccordionItem>
           </Accordion>
 
-          <Flex
-            align="center"
-            justify="center"
-            mt="4"
-            flexDir={matches ? 'column' : 'row'}
-          >
-            <SignedIn>
-              <InputGroup size="md" flex="2">
-                <InputLeftAddon>easypastes.tk/pastes/</InputLeftAddon>
-                <Input
-                  placeholder="Custom URL (optional)"
-                  focusBorderColor="purple.200"
-                  value={url}
-                  onChange={e => setUrl(e.target.value)}
-                  isInvalid={isUrlTaken}
-                />
-              </InputGroup>
-            </SignedIn>
-            <Flex
-              justify="center"
-              align="center"
-              my="3"
-              flex="1"
-              w={matches ? 'full' : 'initial'}
-            >
-              <label style={{ marginRight: 8 }}>Visibility: </label>
-              <Visibility
-                visibility={visibility}
-                setVisibility={setVisibility}
-              />
-            </Flex>
-          </Flex>
+          <PasteSettings
+            {...{ matches, isUrlTaken, url, visibility, setUrl, setVisibility }}
+          />
 
           <InputCode code={code} setCode={setCode} language={language} />
 
           <SignedIn>
-            <SignedInButton
-              code={code}
-              language={language}
-              title={title}
-              description={description}
-              visibility={visibility}
-              password={password}
-              url={url ?? generateNanoid()}
-              setIsUrlTaken={setIsUrlTaken}
-            />
-            <Button
-              leftIcon={<HiOutlineLockClosed />}
-              colorScheme="purple"
-              variant="outline"
-              float="right"
-              mt="4"
-              mr="3"
-              onClick={onOpen}
-            >
-              Set password
-            </Button>
-            <PasswordModalDynamic
-              password={password}
-              setPassword={setPassword}
-              isOpen={isOpen}
-              onClose={onClose}
+            <SignedInHome
+              {...{
+                code,
+                description,
+                language,
+                password,
+                setIsUrlTaken,
+                setPassword,
+                title,
+                url,
+                visibility
+              }}
             />
           </SignedIn>
           <SignedOut>
-            <SignedOutButton
-              code={code}
-              language={language}
-              title={title}
-              description={description}
-              visibility={visibility}
-              url={url}
-              setIsUrlTaken={setIsUrlTaken}
+            <SignedOutHome
+              {...{
+                title,
+                code,
+                description,
+                visibility,
+                language,
+                setIsUrlTaken
+              }}
             />
           </SignedOut>
           {error ? (
@@ -241,161 +188,6 @@ const Pastes = () => {
         </Container>
       </Layout>
     </>
-  );
-};
-
-interface ButtonProps {
-  code: string;
-  language: string;
-  title: string;
-  description: string;
-  visibility: string;
-  url: string;
-  password?: string;
-  setIsUrlTaken: Dispatch<SetStateAction<boolean>>;
-}
-
-// Sign in buttons
-const SignedInButton = ({
-  code,
-  language,
-  title,
-  description,
-  visibility,
-  url,
-  password,
-  setIsUrlTaken
-}: ButtonProps) => {
-  const router = useRouter();
-
-  const { getToken, userId } = useAuth();
-
-  const [loading, setLoading] = useState(false);
-
-  const handleClick = async () => {
-    if (code.trim() === '') {
-      return toast.error('Code cannot be blank.');
-    }
-
-    try {
-      setLoading(true);
-
-      const token = await getToken({ template: 'supabase' });
-      supabaseClient.auth.setAuth(token);
-
-      let { data, error } = await supabaseClient
-        .from<PasteType>('Pastes')
-        .insert([
-          {
-            title: filterBadWords(title),
-            description: filterBadWords(description),
-            language: language as ILanguage,
-            pasteId: url,
-            public: visibility === 'public',
-            private: visibility === 'private',
-            pastePassword: password,
-            userId,
-            code
-          }
-        ]);
-      console.log({ addedItem: data });
-
-      if (data) {
-        await router.push(`/pastes/${data[0].pasteId}`);
-        setLoading(false);
-      }
-    } catch (error) {
-      setLoading(false);
-
-      if (error.response.status === 400) {
-        setIsUrlTaken(true);
-        toast.error(error.response.data.message, {
-          style: {
-            fontFamily: 'Poppins'
-          }
-        });
-      }
-    }
-  };
-
-  return (
-    <Button
-      fontWeight="normal"
-      my="4"
-      colorScheme="purple"
-      float="right"
-      rightIcon={<FiArrowRight />}
-      onClick={handleClick}
-      isLoading={loading}
-      spinnerPlacement="end"
-      loadingText="Creating"
-    >
-      Create
-    </Button>
-  );
-};
-
-const SignedOutButton = ({
-  code,
-  language,
-  title,
-  description,
-  visibility,
-  url,
-  setIsUrlTaken
-}: ButtonProps) => {
-  const router = useRouter();
-  const [loading, setLoading] = useState(false);
-  const handleClick = async () => {
-    if (code.trim() === '') {
-      return toast.error('Code cannot be blank.');
-    }
-    try {
-      setLoading(true);
-
-      let { data, error } = await supabaseClient
-        .from<PasteType>('Pastes')
-        .insert([
-          {
-            title: filterBadWords(title),
-            description: filterBadWords(description),
-            language: language as ILanguage,
-            pasteId: generateNanoid(),
-            public: visibility === 'public',
-            code
-          }
-        ]);
-
-      if (data) {
-        await router.push(`/pastes/${data[0].pasteId}`);
-        setLoading(false);
-      }
-    } catch (error) {
-      setLoading(false);
-      if (error.response.status === 400) {
-        setIsUrlTaken(true);
-        toast.error(error.response.data.message, {
-          style: {
-            fontFamily: 'Poppins'
-          }
-        });
-      }
-    }
-  };
-  return (
-    <Button
-      fontWeight="normal"
-      my="4"
-      colorScheme="purple"
-      float="right"
-      rightIcon={<FiArrowRight />}
-      onClick={handleClick}
-      isLoading={loading}
-      spinnerPlacement="end"
-      loadingText="Creating"
-    >
-      Create
-    </Button>
   );
 };
 

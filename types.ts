@@ -1,4 +1,5 @@
 import { Language } from 'prism-react-renderer';
+import { Dispatch, SetStateAction } from 'react';
 
 export interface PasteType {
   id: number;
@@ -43,3 +44,5 @@ export type ILanguage =
   | 'rust'
   | 'java'
   | 'none';
+
+export type SetState<T> = Dispatch<SetStateAction<T>>;
