@@ -38,11 +38,11 @@ const config = {
     type: 'website',
     locale: 'en_US',
     url: 'https://easypastes.tk',
-    title: 'Easy Pastes - Easiest Way to create and share code pastes',
+    title: 'Easy Pastes - Easiest way to create and share code pastes',
     description: `Use Easy Pastes to create, store, share code snippets by simply pasting them with syntax highlight.`,
     images: [
       {
-        url: 'https://easypastes.tk/logo.png',
+        url: '/logo.png',
         width: 100,
         height: 100,
         alt: 'Og Image Alt'
@@ -55,9 +55,9 @@ const config = {
   twitter: {
     creator: '@MaxProgramming1',
     cardType: 'summary',
-    image: 'https://easypastes.tk/logo.png',
     title: 'Easy Pastes - Easiest Way to create and share code pastes',
-    url: 'https://easypastes.tk'
+    url: 'https://easypastes.tk',
+    image: '/logo.png'
   }
 };
 

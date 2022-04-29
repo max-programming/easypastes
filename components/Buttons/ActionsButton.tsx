@@ -95,9 +95,7 @@ const ActionsButton = ({ paste }: Props) => {
   const copyCode = () => {
     // Rewrite this for cross-browser support
     navigator.clipboard.writeText(paste.code);
-    toast.success('Code copied', {
-      style: { fontFamily: 'Poppins' }
-    });
+    toast.success('Code copied!');
   };
 
   const copyLink = () => {
@@ -105,9 +103,7 @@ const ActionsButton = ({ paste }: Props) => {
     navigator.clipboard.writeText(
       `https://easypastes.tk/pastes/${paste.pasteId}`
     );
-    toast.success('Link copied', {
-      style: { fontFamily: 'Poppins' }
-    });
+    toast.success('Link copied!');
   };
 
   const editCode = () => {
