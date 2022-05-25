@@ -3,6 +3,12 @@ export const URL = process.env.PRODUCTION_URL || 'localhost:3000';
 // Hashing rounds
 export const HASH_ROUNDS = 12;
 
+// Zustand
+export type ZustandSetType<T> = (
+  partial: T | Partial<T> | ((state: T) => T | Partial<T>),
+  replace?: boolean
+) => void;
+
 // Paste languages
 export const languages = [
   'aspnet',
