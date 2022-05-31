@@ -38,10 +38,6 @@ const handler = async (
     .delete()
     .eq('pasteId', pasteId);
 
-  // Debugging
-  console.log(data);
-  console.log(error);
-
   res.json({ data, error });
 };
 
