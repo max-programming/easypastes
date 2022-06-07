@@ -13,9 +13,9 @@ import SEO from 'next-seo.config';
 import NextNProgress from 'nextjs-progressbar';
 import { useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
+import theme from 'theme';
 
 import importLangs from 'utils/importLangs';
-import theme from 'utils/theme';
 
 import '@fontsource/fira-code/500.css';
 import '@fontsource/poppins/400.css';
@@ -34,6 +34,7 @@ const MotionBox = motion<BoxProps>(Box);
 
 const MyApp = ({ Component, pageProps, router }: AppProps) => {
   useEffect(importLangs, []);
+
   const isPublicPage = publicPages.includes(router.pathname);
 
   return (
@@ -51,7 +52,15 @@ const MyApp = ({ Component, pageProps, router }: AppProps) => {
               color={theme.colors.purple[500]}
               options={{ showSpinner: false }}
             />
-            <Toaster position="top-right" reverseOrder={false} />
+            <Toaster
+              position="top-right"
+              reverseOrder={false}
+              toastOptions={{
+                style: {
+                  fontFamily: 'Poppins'
+                }
+              }}
+            />
             {isPublicPage ? (
               <Component {...pageProps} />
             ) : (

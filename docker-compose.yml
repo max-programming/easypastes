@@ -1,13 +1,11 @@
-version: "3.8"
+version: '3.8'
 
 services:
   web:
     build:
       context: .
       dockerfile: Dockerfile
-
     tty: true
     env_file: .env.local
-
     ports:
-        - 3000:3000
+      - 3000:3000

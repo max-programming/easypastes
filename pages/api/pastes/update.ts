@@ -1,13 +1,14 @@
-import { WithSessionProp, withSession } from '@clerk/nextjs/api';
+import { WithAuthProp, withAuth } from '@clerk/nextjs/api';
 import { NextApiRequest, NextApiResponse } from 'next';
 
+import supabaseClient from 'lib/supabase';
+
 import filterBadWords from 'utils/filterBadWords';
-import supabaseClient from 'utils/supabase';
 
 import { PasteType } from 'types';
 
 const handler = async (
-  req: WithSessionProp<NextApiRequest>,
+  req: WithAuthProp<NextApiRequest>,
   res: NextApiResponse
 ) => {
   // Allow only POST requests
@@ -20,7 +21,7 @@ const handler = async (
   let { code, language, title, description, pasteId, _public, _private } =
     req.body;
 
-  if (!req.session)
+  if (!req.auth)
     return res.status(400).json({ message: 'User must be signed in.' });
 
   if (code.trim() === '') {
@@ -33,7 +34,7 @@ const handler = async (
       .json({ message: 'Paste cannot be public and private.' });
   }
 
-  if (_private && !req.session.userId) {
+  if (_private && !req.auth.userId) {
     return res
       .status(400)
       .json({ message: 'Sign in to create a private paste.' });
@@ -60,8 +61,7 @@ const handler = async (
   console.log(data);
   console.log(error);
 
-  // Send back the responses.
   res.json({ data, error });
 };
 
-export default withSession(handler);
+export default withAuth(handler);

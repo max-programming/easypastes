@@ -1,9 +1,8 @@
-version: "3.8"
+version: '3.8'
 
 services:
   web:
     restart: always
     command: start
-
     environment:
-        NODE_ENV: "production"
+      NODE_ENV: 'production'

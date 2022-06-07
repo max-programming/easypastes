@@ -6,12 +6,10 @@ import type { ReactNode } from 'react';
 import Footer from './Footer';
 import Navbar from './Navbar';
 
-// Types definition
 interface Props {
   children?: ReactNode;
 }
 
-// Layout element with Footer and navbars
 const Layout = ({ children }: Props) => {
   const router = useRouter();
   return (

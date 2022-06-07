@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import supabaseClient from 'utils/supabase';
+import supabaseClient from 'lib/supabase';
 
 export default async function pasteId(
   req: NextApiRequest,

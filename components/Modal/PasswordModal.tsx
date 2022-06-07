@@ -30,10 +30,13 @@ const PasswordModal = ({
   setPassword
 }: UseDisclosureProps & Props) => {
   const [show, setShow] = useState(false);
+
+  const togglePassword = () => setShow(!show);
+
   const lockPaste = () => {
     onClose();
   };
-  const togglePassword = () => setShow(!show);
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />

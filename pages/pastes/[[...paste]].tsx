@@ -1,8 +1,6 @@
 /* eslint-disable react/no-children-prop */
-// Own imports
 import Link from 'next/link';
 
-// Other imports
 import {
   Alert,
   AlertProps,
@@ -25,22 +23,22 @@ import { SignedIn, SignedOut, useSession } from '@clerk/nextjs';
 import { users } from '@clerk/nextjs/api';
 import { withServerSideAuth } from '@clerk/nextjs/ssr';
 import { UserResource } from '@clerk/types';
-import bcrypt from 'bcryptjs';
 import { motion } from 'framer-motion';
 import { NextSeo } from 'next-seo';
-import { FormEventHandler, useEffect, useState } from 'react';
+import { FormEventHandler, useState } from 'react';
 import toast from 'react-hot-toast';
 import { HiOutlineCode, HiOutlineKey, HiOutlineUser } from 'react-icons/hi';
 
-import DisplayCode from 'components/CodePastes/DisplayCode';
+import { verifyHash } from 'lib/hashing';
+import supabaseClient from 'lib/supabase';
+
+import DisplayCode from 'components/Code/DisplayCode';
 import Layout from 'components/Layout';
 
 import reduceTitleLength from 'utils/reduceTitleLength';
-import supabaseClient from 'utils/supabase';
 
-import { PasteType, User } from 'types';
+import { PasteType } from 'types';
 
-// Custom types
 interface Props {
   paste: PasteType & { longTitle: string };
   currentUser: 'Anonymous' | UserResource;
@@ -202,18 +200,14 @@ const EnterPassword = ({
 
   const togglePassword = () => setShow(!show);
 
-  const handleSubmit: FormEventHandler = e => {
-    e.preventDefault();
+  const handleSubmit: FormEventHandler = ev => {
+    ev.preventDefault();
 
-    const matches = bcrypt.compareSync(password, pastePwd);
+    const matches = verifyHash(password, pastePwd);
 
     if (matches) setIsCorrectPassword(true);
     else {
-      toast.error('Incorrect password', {
-        style: {
-          fontFamily: 'Poppins'
-        }
-      });
+      toast.error('Incorrect password');
       setIsCorrectPassword(false);
     }
   };
@@ -247,8 +241,8 @@ const EnterPassword = ({
 };
 
 export const getServerSideProps = withServerSideAuth(
-  async context => {
-    const paste = (context.params.paste as string[]).join('/');
+  async ({ req, params }) => {
+    const paste = (params.paste as string[]).join('/');
     const { data: pastes, error } = await supabaseClient
       .from<PasteType>('Pastes')
       .select('*')
@@ -263,7 +257,6 @@ export const getServerSideProps = withServerSideAuth(
     }
 
     const currentPaste = reduceTitleLength(pastes[0]);
-
     console.log({ currentPaste });
 
     if (!currentPaste.userId) {
@@ -283,12 +276,13 @@ export const getServerSideProps = withServerSideAuth(
     console.log({ currentUser });
 
     // Check if the current user is the paste owner
-    const { userId } = context.auth;
+    const { userId } = req.auth;
+
     if (currentPaste.userId === userId) {
       return {
         props: {
           paste: currentPaste,
-          currentUser: JSON.parse(JSON.stringify(context.user))
+          currentUser: JSON.parse(JSON.stringify(req.user))
         }
       };
     }

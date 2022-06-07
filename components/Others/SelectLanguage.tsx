@@ -1,5 +1,4 @@
 import { Box, Select, theme, useColorModeValue } from '@chakra-ui/react';
-import { Language } from 'prism-react-renderer';
 import { ChangeEventHandler, Dispatch, SetStateAction } from 'react';
 
 import { ILanguage } from 'types';
@@ -12,10 +11,11 @@ interface Props {
 }
 
 const SelectLanguage = ({ language, setLanguage }: Props) => {
-  const handleChange: ChangeEventHandler<HTMLSelectElement> = e => {
+  const handleChange: ChangeEventHandler<HTMLSelectElement> = ev => {
     // @ts-ignore
-    setLanguage(e.target.value);
+    setLanguage(ev.target.value);
   };
+
   return (
     <Box mb="4">
       <label htmlFor="select-language">Select a language</label>

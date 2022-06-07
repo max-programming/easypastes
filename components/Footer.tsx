@@ -1,4 +1,3 @@
-// Thanks to https://chakra-templates.dev/ for this 💗
 import {
   Box,
   Container,

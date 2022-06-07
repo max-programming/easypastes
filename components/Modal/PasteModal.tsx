@@ -21,12 +21,13 @@ import { HiExternalLink } from 'react-icons/hi';
 import ClipLoader from 'react-spinners/ClipLoader';
 import useSWR from 'swr';
 
+import supabaseClient from 'lib/supabase';
+
 import formatTimeAgo from 'utils/formatTimeAgo';
-import supabaseClient from 'utils/supabase';
 
 import { PasteType } from 'types';
 
-import DisplayCode from './DisplayCode';
+import DisplayCode from '../Code/DisplayCode';
 
 const fetchPaste = async (key: string): Promise<PasteType> => {
   const { data, error } = await supabaseClient
@@ -35,8 +36,8 @@ const fetchPaste = async (key: string): Promise<PasteType> => {
     .filter('pasteId', 'eq', key);
 
   if (error || !data) return;
-  const paste = data[0];
-  return paste;
+
+  return data[0];
 };
 
 const PasteModal = ({
@@ -44,9 +45,11 @@ const PasteModal = ({
   onClose,
   pasteId
 }: UseDisclosureProps & { pasteId: string }) => {
-  const [matches] = useMediaQuery('(max-width: 500px)');
-  const spinnerColor = useColorModeValue('black', 'white');
   const { data: paste } = useSWR(pasteId, fetchPaste);
+
+  const [matches] = useMediaQuery('(max-width: 500px)');
+
+  const spinnerColor = useColorModeValue('black', 'white');
 
   return (
     <Box mx="5">

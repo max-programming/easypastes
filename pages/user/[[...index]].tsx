@@ -1,4 +1,4 @@
-import { Container } from '@chakra-ui/layout';
+import { Container } from '@chakra-ui/react';
 import { UserProfile } from '@clerk/nextjs';
 import { NextSeo } from 'next-seo';
 

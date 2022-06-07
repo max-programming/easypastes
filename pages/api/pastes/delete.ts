@@ -1,12 +1,13 @@
-import { WithSessionProp, withSession } from '@clerk/nextjs/api';
+import { WithAuthProp, withAuth } from '@clerk/nextjs/api';
 import { NextApiRequest, NextApiResponse } from 'next';
+import PasteDeleteSchema from 'schema/pastes/delete';
 
-import supabaseClient from 'utils/supabase';
+import supabaseClient from 'lib/supabase';
 
 import { PasteType } from 'types';
 
 const handler = async (
-  req: WithSessionProp<NextApiRequest>,
+  req: WithAuthProp<NextApiRequest>,
   res: NextApiResponse
 ) => {
   // Allow only POST requests
@@ -15,11 +16,11 @@ const handler = async (
     return;
   }
 
-  // Get the record from body
-  const { pasteId } = req.body;
-
-  if (!req.session)
+  if (!req.auth)
     return res.status(401).json({ message: 'User must be signed in.' });
+
+  // Validate schema
+  const { pasteId } = await PasteDeleteSchema.parseAsync(req.body);
 
   const {
     data: [paste]
@@ -28,7 +29,7 @@ const handler = async (
     .select('userId')
     .eq('pasteId', pasteId);
 
-  if (paste.userId !== req.session.userId)
+  if (paste.userId !== req.auth.userId)
     return res.status(401).json({ message: "You can't delete this paste." });
 
   // Delete from supabase
@@ -37,12 +38,7 @@ const handler = async (
     .delete()
     .eq('pasteId', pasteId);
 
-  // Debugging
-  console.log(data);
-  console.log(error);
-
-  // Send back the responses.
   res.json({ data, error });
 };
 
-export default withSession(handler);
+export default withAuth(handler);

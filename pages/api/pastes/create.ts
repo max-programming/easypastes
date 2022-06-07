@@ -1,15 +1,13 @@
 import { WithAuthProp, withAuth } from '@clerk/nextjs/api';
-import bcrypt from 'bcryptjs';
 import { NextApiRequest, NextApiResponse } from 'next';
+
+import { hash } from 'lib/hashing';
+import supabaseClient from 'lib/supabase';
 
 import filterBadWords from 'utils/filterBadWords';
 import { generateNanoid } from 'utils/generateId';
-import supabaseClient from 'utils/supabase';
 
 import { PasteType } from 'types';
-
-// Variables
-const salt = bcrypt.genSaltSync(10);
 
 const handler = async (
   req: WithAuthProp<NextApiRequest>,
@@ -21,13 +19,12 @@ const handler = async (
     return;
   }
 
-  /// Get the records from body
+  // Get the records from body
   let {
     title,
     description,
     code,
     language,
-    // userId,
     pasteId,
     pastePassword,
     _public,
@@ -35,7 +32,7 @@ const handler = async (
   } = req.body;
 
   let userId: string;
-  if (req.session) userId = req.session.userId;
+  if (req.auth) userId = req.auth.userId;
   console.log({ userId });
 
   if (code.trim() === '') {
@@ -100,7 +97,7 @@ const handler = async (
   }
 
   if (hasPassword) {
-    pastePassword = bcrypt.hashSync(pastePassword, salt);
+    pastePassword = hash(pastePassword);
   }
 
   // Add them to supabase

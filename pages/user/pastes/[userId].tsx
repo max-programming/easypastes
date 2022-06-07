@@ -1,3 +1,4 @@
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 
 import {
@@ -25,25 +26,17 @@ import {
 } from 'react-icons/hi';
 import useLocalStorage from 'use-local-storage';
 
-import NoPastes from 'components/CodePastes/NoPastes';
-import Paste from 'components/CodePastes/Paste';
+import supabaseClient from 'lib/supabase';
+
 import Layout from 'components/Layout';
+import Paste from 'components/Pastes/Paste';
 
 import reduceTitleLength from 'utils/reduceTitleLength';
-import supabaseClient from 'utils/supabase';
 
 import { PasteType, User } from 'types';
 
-const links = [
-  {
-    url: '/',
-    text: 'Home'
-  },
-  {
-    url: '/pastes',
-    text: 'Pastes'
-  }
-];
+// Dynamic imports
+const NoPastesDynamic = dynamic(() => import('components/Pastes/NoPastes'));
 
 interface Props {
   pastes: (PasteType & {
@@ -130,7 +123,7 @@ export default function MyPastes({ pastes, fullName, id, username }: Props) {
           Pastes by {fullName}
         </Heading>
         {pastes.length === 0 ? (
-          <NoPastes />
+          <NoPastesDynamic />
         ) : (
           <WithUser>
             {user =>
@@ -187,7 +180,7 @@ export default function MyPastes({ pastes, fullName, id, username }: Props) {
                     </TabPanel>
                     <TabPanel>
                       {pastes.filter(p => p.public).length === 0 ? (
-                        <NoPastes />
+                        <NoPastesDynamic />
                       ) : (
                         pastes
                           .filter(p => p.public)
@@ -196,7 +189,7 @@ export default function MyPastes({ pastes, fullName, id, username }: Props) {
                     </TabPanel>
                     <TabPanel>
                       {pastes.filter(p => p.private).length === 0 ? (
-                        <NoPastes />
+                        <NoPastesDynamic />
                       ) : (
                         pastes
                           .filter(p => p.private)
@@ -206,7 +199,7 @@ export default function MyPastes({ pastes, fullName, id, username }: Props) {
                     <TabPanel>
                       {pastes.filter(p => !p.private && !p.public).length ===
                       0 ? (
-                        <NoPastes />
+                        <NoPastesDynamic />
                       ) : (
                         pastes
                           .filter(p => !p.private && !p.public)
@@ -216,7 +209,7 @@ export default function MyPastes({ pastes, fullName, id, username }: Props) {
                   </TabPanels>
                 </Tabs>
               ) : pastes.filter(p => p.public).length === 0 ? (
-                <NoPastes />
+                <NoPastesDynamic />
               ) : (
                 pastes
                   .filter(p => p.public)
@@ -233,7 +226,7 @@ export default function MyPastes({ pastes, fullName, id, username }: Props) {
         )}
         <SignedOut>
           {pastes.filter(p => p.public).length === 0 ? (
-            <NoPastes />
+            <NoPastesDynamic />
           ) : (
             pastes
               .filter(p => p.public)

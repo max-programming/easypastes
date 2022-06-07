@@ -1,11 +1,12 @@
-from node:16.6.1-slim
+from node:16.15.0-slim
 
-# Get the dependencies ready
+# Get dependencies ready
 RUN apt-get -y update \
-    && apt-get install git -y \
-    && rm -rf /root/.cache/pip/* \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    && apt-get install git -y
+
+# Cleanup
+RUN rm -rf /var/lib/apt/lists/* \
+    && apt-get clean
 
 # Define the working directory
 WORKDIR /app
@@ -23,10 +24,10 @@ RUN yarn install
 COPY . .
 
 # Run build command
-RUN npm run build
+RUN yarn build
 
 # Expose the PORT
 EXPOSE 3000
 
 # Start the container
-ENTRYPOINT ["npm", "run"]
+ENTRYPOINT ["yarn", "run"]
