@@ -2,7 +2,6 @@
 
 . "$(dirname "$0")/_/husky.sh"
 
-npm run --silent lint
-npm run --silent format
+npx lint-staged --concurrent false
 
 git add .
