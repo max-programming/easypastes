@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@chakra-ui/react": "^1.7.4",
-    "@clerk/nextjs": "^3.0.0-alpha.9",
+    "@clerk/nextjs": "^3.8.3",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
     "@fontsource/fira-code": "^4.5.1",
