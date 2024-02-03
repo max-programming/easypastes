@@ -1,26 +1,32 @@
 {
-  "name": "easypastes",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "next": "14.1.0",
-    "react": "^18",
-    "react-dom": "^18"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "1.5.3",
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "autoprefixer": "^10.0.1",
-    "postcss": "^8",
-    "tailwindcss": "^3.3.0",
-    "typescript": "^5"
-  }
+	"name": "easypastes",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint",
+		"supabase:typegen": "supabase gen types typescript --project-id \"vmeusqgrjzqqygatmrsk\" --schema public > src/types/supabase.ts"
+	},
+	"dependencies": {
+		"@clerk/nextjs": "^4.29.5",
+		"@supabase/supabase-js": "^2.39.3",
+		"@t3-oss/env-nextjs": "^0.8.0",
+		"next": "14.1.0",
+		"react": "^18",
+		"react-dom": "^18",
+		"zod": "^3.22.4"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.5.3",
+		"@types/node": "^20",
+		"@types/react": "^18",
+		"@types/react-dom": "^18",
+		"autoprefixer": "^10.0.1",
+		"postcss": "^8",
+		"supabase": "^1.136.3",
+		"tailwindcss": "^3.3.0",
+		"typescript": "^5"
+	}
 }
