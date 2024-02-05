@@ -7,6 +7,7 @@ export default function Home() {
 			<div className="flex gap-2">
 				<Link href="/sign-in">Sign in</Link>
 				<Link href="/sign-up">Sign up</Link>
+				<Link href="/pastes/new">New Paste</Link>
 			</div>
 		</>
 	);
